@@ -10,12 +10,12 @@ git clone git@github.com:JoeMiller04/35L-project.git
 cd 35L-project
 ```
 
-**Build Docker Image:**
+**Build Backend Docker Image:**
 ```
 docker build -t my-backend ./server
 ```
 
-**Run Container:**
+**Run Backend Container:**
 ```
 docker run -d --name backend -p 5000:5000 my-backend
 ```
@@ -25,7 +25,12 @@ docker run -d --name backend -p 5000:5000 my-backend
 docker logs backend
 ```
 
-Should say:
+Should say: "Server.py ran"
+
+**Build and Run Frontend:**
 ```
-Server.py ran
+docker build -t my-frontend ./client
+docker run -d --name frontend -p 3000:3000 my-frontend
 ```
+
+To check, go to http://localhost:3000/
