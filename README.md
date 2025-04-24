@@ -6,7 +6,7 @@ Make sure you Docker installed.
 
 **Clone with:**
 ```
-git clone git@github.com:JoeMiller04/35L-project.git
+git clone https://github.com/JoeMiller04/35L-project.git
 cd 35L-project
 ```
 
