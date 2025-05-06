@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import './App.css';
 import React from 'react';
 
-function Home3() {
+function InfoPage() {
     const navigate = useNavigate();
 
     return (
@@ -10,9 +10,9 @@ function Home3() {
             <h1>Welcome to the Home3 Page</h1>
             <p>This is the third page of our application.</p>
             <button onClick={() => navigate('/Home')}>Go to Home</button>
-            <button onClick={() => navigate('/Home2')}>Go to Home2</button>
+            <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
         </div>
     );
 }
 
-export default Home3;
+export default InfoPage;

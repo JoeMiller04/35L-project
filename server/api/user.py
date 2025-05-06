@@ -16,6 +16,7 @@ async def create_user(user: UserCreate):
     Create a new user.
     Checks if the username already exists in the database.
     """
+    print(user.username, flush=True)
     existing = await users_collection.find_one({"username": user.username})
     if existing:
         raise HTTPException(status_code=400, detail="Username already registered")

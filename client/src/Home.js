@@ -9,8 +9,22 @@ function Home() {
         <div>
             <h1>Welcome to the Home Page</h1>
             <p>This is the home page of our application.</p>
-            <button onClick={() => navigate('/Home2')}>Go to Home2</button>
-            <button onClick={() => navigate('/Home3')}>Go to Home3</button>
+            <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
+            <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     );
 }
