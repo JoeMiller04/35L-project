@@ -22,8 +22,8 @@ async def create_user(user: UserCreate):
     
     hashed_password = pwd_context.hash(user.password)
 
-    user_data = jsonable_encoder(user, exclude_none=True)
-    user_data["password_hash"] = hashed_password
+    user_data = {"username": user.username, "password_hash": hashed_password}
+
     new_user = await users_collection.insert_one(user_data)
     created_user = await users_collection.find_one({"_id": new_user.inserted_id})
     if created_user is None:
