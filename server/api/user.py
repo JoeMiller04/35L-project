@@ -4,6 +4,7 @@ from server.db.mongodb import users_collection
 from fastapi.encoders import jsonable_encoder
 from passlib.context import CryptContext
 from bson import ObjectId
+from bson.errors import InvalidId
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -47,15 +48,19 @@ async def read_user(user_id: str):
         user = await users_collection.find_one({"_id": oid})
         if user is None:
             raise HTTPException(status_code=404, detail="User not found")
-    except Exception:
+            
+        # Convert ObjectId to string
+        if "_id" in user:
+            user["_id"] = str(user["_id"])
+        
+        return user
+    except InvalidId:  # Specific exception for invalid ObjectId format
         raise HTTPException(status_code=400, detail="Invalid ID format")
-    
-    # Convert ObjectId to string
-    if "_id" in user:
-        user["_id"] = str(user["_id"])
-    
-    return user
-
+    except Exception as e:
+        # For other exceptions, check if it's already an HTTPException
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
 @router.post("/login", response_model=UserResponse)
 async def login(username: str, password: str):
@@ -85,3 +90,22 @@ async def login(username: str, password: str):
     # Return user ID if authentication successful
     return user
 
+
+@router.delete("/users/{user_id}", status_code=204)
+async def delete_user(user_id: str):
+    """
+    Delete a user by ID.
+    Returns 204 No Content on success.
+    """
+    try:
+        oid = ObjectId(user_id)
+        result = await users_collection.delete_one({"_id": oid})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="User not found")
+            
+        return None  # 204 No Content
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=400, detail=f"Invalid ID format: {str(e)}")
