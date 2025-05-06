@@ -44,6 +44,7 @@ docker run -d --name frontend -p 3000:3000 my-frontend
 
 ```
 conda create --name NAME python=3.13
+conda activate NAME
 pip install -r requirements.txt
 ```
 

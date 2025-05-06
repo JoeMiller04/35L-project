@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from server.api.user import router as user_router
 
 app = FastAPI()
 
@@ -19,3 +20,5 @@ app.add_middleware(
 def read_root():
     return {"message": "Welcome to the 35L Project API!"}
 
+
+app.include_router(user_router, prefix="/api", tags=["users"])

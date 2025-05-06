@@ -1,0 +1,6 @@
+FastAPI
+uvicorn
+pymongo
+python-dotenv
+motor
+passlib

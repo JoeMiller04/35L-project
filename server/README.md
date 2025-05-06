@@ -21,6 +21,7 @@ Make sure you have the following installed:
 2. Install the required packages:
    ```
    conda create --name NAME python=3.13
+   conda activate NAME
    pip install -r requirements.txt
    ```
 
