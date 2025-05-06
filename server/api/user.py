@@ -84,3 +84,22 @@ async def login(username: str, password: str):
     # Return user ID if authentication successful
     return user
 
+
+@router.delete("/users/{user_id}", status_code=204)
+async def delete_user(user_id: str):
+    """
+    Delete a user by ID.
+    Returns 204 No Content on success.
+    """
+    try:
+        oid = ObjectId(user_id)
+        result = await users_collection.delete_one({"_id": oid})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="User not found")
+            
+        return None  # 204 No Content
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=400, detail=f"Invalid ID format: {str(e)}")
