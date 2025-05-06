@@ -4,3 +4,7 @@ pymongo
 python-dotenv
 motor
 passlib
+pytest
+pytest-asyncio
+httpx
+bcrypt
