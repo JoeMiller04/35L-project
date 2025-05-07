@@ -54,3 +54,37 @@ async def read_course(course_id: str):
         if isinstance(e, HTTPException):
             raise e
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+    
+
+@router.put("/courses/{course_id}", response_model=CourseResponse, dependencies=[Depends(validate_admin_key)])
+async def update_course(course_id: str, course_update: CourseUpdate):
+    """
+    Update a course
+    """
+    try:
+        oid = ObjectId(course_id)
+        
+        # Filter out None values
+        # We only want to update fields that are provided
+        update_data = {k: v for k, v in course_update.model_dump().items() if v is not None}
+        
+        # If there's nothing to update
+        if not update_data:
+            raise HTTPException(status_code=400, detail="No valid update data provided")
+        
+        # Update the course
+        result = await course_collection.update_one(
+            {"_id": oid},
+            {"$set": update_data}
+        )
+        
+        if result.matched_count == 0:
+            raise HTTPException(status_code=404, detail="Course not found")
+        
+        # Return the updated course
+        updated_course = await course_collection.find_one({"_id": oid})
+        updated_course["_id"] = str(updated_course["_id"])
+        
+        return updated_course
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid ID format")
