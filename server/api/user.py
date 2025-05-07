@@ -5,6 +5,7 @@ from fastapi.encoders import jsonable_encoder
 from passlib.context import CryptContext
 from bson import ObjectId
 from bson.errors import InvalidId
+from server.api.security import validate_admin_key
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -16,6 +17,8 @@ async def create_user(user: UserCreate):
     """
     Create a new user.
     Checks if the username already exists in the database.
+    Returns 400 if it does.
+    Otherwise, creates the user and returns the created user object.
     """
     print(user.username, flush=True)
     existing = await users_collection.find_one({"username": user.username})
@@ -42,6 +45,9 @@ async def create_user(user: UserCreate):
 async def read_user(user_id: str):
     """
     Get a user by ID.
+    Currently, users have no additional fields.
+    Returns the user object if found.
+    Otherwise, raises HTTPException 404 or 400.
     """
     try:
         oid = ObjectId(user_id)
@@ -67,7 +73,7 @@ async def login(username: str, password: str):
     """
     Simple login endpoint that verifies username/password
     and returns the user ID if successful.
-    This is a temporary setup and let's replace it later.
+    This is a temporary setup and let's improve it later.
     """
     # Find the user by username
     user = await users_collection.find_one({"username": username})
@@ -91,11 +97,13 @@ async def login(username: str, password: str):
     return user
 
 
-@router.delete("/users/{user_id}", status_code=204)
+@router.delete("/users/{user_id}", status_code=204, dependencies=[Depends(validate_admin_key)])
 async def delete_user(user_id: str):
     """
+    Requires admin key in headers.
     Delete a user by ID.
     Returns 204 No Content on success.
+    Otherwise, raises HTTPException 404 or 400.
     """
     try:
         oid = ObjectId(user_id)

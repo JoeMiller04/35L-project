@@ -1,11 +1,14 @@
 import pytest
 from fastapi.testclient import TestClient
 from bson import ObjectId
+import os
 
 # Import app after patching MongoDB in conftest.py
 from server.main import app
 
 client = TestClient(app)
+
+ADMIN_KEY = os.getenv("ADMIN_KEY")  
 
 # Simple test to verify testing setup works
 def test_test():
@@ -29,10 +32,40 @@ def test_create_user(client):  # Add client as parameter to get it from fixture
     finally:
         # Use the delete API for cleanup
         if 'user_id' in locals():
-            client.delete(f"/users/{user_id}")
+            client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
 
 
-def test_create_duplicate_user(client):  # Add client as parameter
+def test_delete_user(client):  
+    """Test user deletion endpoint"""
+    username = "deleteuser"
+    user_id = None
+    try:
+        # First create a user
+        response = client.post(
+            "/users",
+            json={"username": username, "password": "testpassword"}
+        )
+        user_id = response.json()["_id"]
+
+        # Use wrong API key
+        response = client.delete(f"/users/{user_id}", headers={"x-api-key": "wrongkey"})
+        assert response.status_code == 401
+        assert "Unauthorized" in response.json()["detail"]
+        
+        # Delete the user
+        response = client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
+        assert response.status_code == 204
+        
+        # Try to get the deleted user
+        response = client.get(f"/users/{user_id}")
+        assert response.status_code == 404
+    finally:
+        # If the user was not deleted, clean up here
+        if user_id and response.status_code != 200:
+            client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
+
+
+def test_create_duplicate_user(client):  
     """Test creating a user with an existing username"""
     username = "duplicate"
     user_id = None
@@ -55,7 +88,7 @@ def test_create_duplicate_user(client):  # Add client as parameter
     finally:
         # Use the delete API for cleanup
         if user_id:
-            client.delete(f"/users/{user_id}")
+            client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
 
 
 def test_get_user_by_id(client):  # Add client as parameter
@@ -79,7 +112,7 @@ def test_get_user_by_id(client):  # Add client as parameter
     finally:
         # Use the delete API for cleanup
         if user_id:
-            client.delete(f"/users/{user_id}")
+            client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
 
 
 def test_invalid_user_id_format(client):
@@ -123,7 +156,7 @@ def test_login_success(client):  # Add client as parameter
     finally:
         # Use the delete API for cleanup
         if user_id:
-            client.delete(f"/users/{user_id}")
+            client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
 
 
 def test_login_wrong_password(client):  # Add client as parameter
@@ -148,4 +181,4 @@ def test_login_wrong_password(client):  # Add client as parameter
     finally:
         # Use the delete API for cleanup
         if user_id:
-            client.delete(f"/users/{user_id}")
+            client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
