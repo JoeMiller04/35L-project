@@ -8,6 +8,15 @@ from server.main import app
 
 client = TestClient(app)
 
+"""Test suite for the user API endpoints.
+Currently tests the following endpoints:
+- POST /users
+- DELETE /users/{id}
+- GET /users/{id}
+- POST /login
+"""
+
+
 ADMIN_KEY = os.getenv("ADMIN_KEY")  
 
 # Simple test to verify testing setup works

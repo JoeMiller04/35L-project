@@ -2,8 +2,16 @@ import pytest
 from fastapi.testclient import TestClient
 from bson import ObjectId
 import os
-
 from server.main import app
+
+"""Test suite for the course API endpoints.
+Currently tests the following endpoints:
+- POST /courses
+- DELETE /courses/{id}
+- GET /courses/{id}
+- PUT /courses/{id}
+"""
+
 
 client = TestClient(app)
 
@@ -42,9 +50,45 @@ def test_create_course(client):
         course_id = data["_id"]
     finally:
         # Use the delete API for cleanup
-        # There is no delete API right now, but we will pretend there is one for now
         if 'course_id' in locals():
             client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
+
+
+def test_delete_course(client):  
+    """Test course deletion endpoint"""
+    try:
+        # First create a course
+        response = client.post(
+            "/courses",
+            json={
+                "real": False,
+                "term": "23F",
+                "subject": "AA",
+                "catalog": "BB",
+                "title": "CC",
+                "instructor": "Delete Course Test"
+                },
+            headers={"x-api-key": ADMIN_KEY}
+        )
+        course_id = response.json()["_id"]
+
+        # Use wrong API key
+        response = client.delete(f"/courses/{course_id}", headers={"x-api-key": "wrongkey"})
+        assert response.status_code == 401
+        assert "Unauthorized" in response.json()["detail"]
+        
+        # Delete the course
+        response = client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
+        assert response.status_code == 204
+        
+        # Try to get the deleted course
+        response = client.get(f"/courses/{course_id}")
+        assert response.status_code == 404
+    finally:
+        # If the course was not deleted, clean up here
+        if course_id and response.status_code != 200:
+            client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
+
 
 def test_get_course_by_id(client):
     """Test getting a course by ID"""
@@ -83,8 +127,7 @@ def test_get_course_by_id(client):
     finally:
         # Clean up: delete the created course
         if course_id:
-            # Uncomment when the delete API is implemented
-            # client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
+            client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
             pass
 
 def test_get_nonexistent_course(client):
@@ -156,8 +199,7 @@ def test_update_course(client):
     finally:
         # Clean up
         if course_id:
-            # Uncomment when delete API is implemented
-            # client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
+            client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
             pass
             
             
@@ -222,8 +264,7 @@ def test_update_course_no_data(client):
     finally:
         # Clean up
         if course_id:
-            # Uncomment when delete API is implemented
-            # client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
+            client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
             pass
             
             
@@ -259,8 +300,7 @@ def test_update_course_unauthorized(client):
     finally:
         # Clean up
         if course_id:
-            # Uncomment when delete API is implemented
-            # client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
+            client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
             pass
 
 

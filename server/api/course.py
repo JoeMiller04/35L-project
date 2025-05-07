@@ -88,3 +88,23 @@ async def update_course(course_id: str, course_update: CourseUpdate):
         return updated_course
     except InvalidId:
         raise HTTPException(status_code=400, detail="Invalid ID format")
+
+@router.delete("/courses/{course_id}", status_code=204, dependencies=[Depends(validate_admin_key)])
+async def delete_course(course_id: str):
+    """
+    Requires admin key in headers.
+    Delete a course by ID.
+    Returns 204 No Content on success.
+    Otherwise, raises HTTPException 404 or 400.
+    """
+    try:
+        oid = ObjectId(course_id)
+        result = await course_collection.delete_one({"_id": oid})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Course not found")
+        
+        return None # 204 No Content, Successful deletion
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid ID format")
+
