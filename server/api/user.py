@@ -15,7 +15,7 @@ router = APIRouter()
 @router.post("/users", response_model=UserResponse)
 async def create_user(user: UserCreate):
     """
-    Create a new user.
+    Creates a new user.
     Checks if the username already exists in the database.
     Returns 400 if it does.
     Otherwise, creates the user and returns the created user object.
