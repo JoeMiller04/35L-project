@@ -1,6 +1,26 @@
-
 body {
-
     background-color: #9cbcc5;
- 
+}
+
+.daysOfWeekTitle {
+    font-weight: bold;
+    grid-row: 1;
+    text-align: center;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid {
+    position: relative; 
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 40px repeat(40, 15px);
+    gap: 0px;
+    padding: 0px;
+    border: 1px solid black;
+    width: 75%;
+    margin: 0 auto;
+    background-color: white;
 }
