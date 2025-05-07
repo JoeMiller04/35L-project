@@ -8,12 +8,12 @@ from server.models.user import PyObjectId  # Reuse ObjectId validator
 TimeSchedule = Dict[str, Tuple[int, int]]
 
 
-class Class(BaseModel):
+class Course(BaseModel):
     """
-    Class model for MongoDB
+    Course model for MongoDB
     """
     id: Optional[PyObjectId] = Field(alias="_id", default=None)
-    real: bool = True  # Flag to differentiate real classes from test classes
+    real: bool = True  # Flag to differentiate real courses from test courses
     term: str  # e.g. "22F"
     subject: str  # e.g. "COM SCI"
     catalog: str  # e.g. "35L"
@@ -27,11 +27,11 @@ class Class(BaseModel):
     )
 
 
-class ClassCreate(BaseModel):
+class CourseCreate(BaseModel):
     """
-    Model for creating a new class
+    Model for creating a new course
     """
-    real: bool = False  # Default to false, override for real classes
+    real: bool = False  # Default to false, override for real courses
     term: str
     subject: str
     catalog: str
@@ -40,9 +40,9 @@ class ClassCreate(BaseModel):
     times: Optional[TimeSchedule] = None  
 
 
-class ClassResponse(BaseModel):
+class CourseResponse(BaseModel):
     """
-    Class model for API response
+    Course model for API response
     """
     id: Optional[PyObjectId] = Field(alias="_id", default=None)
     term: str
@@ -59,9 +59,9 @@ class ClassResponse(BaseModel):
     )
 
 
-class ClassUpdate(BaseModel):
+class CourseUpdate(BaseModel):
     """
-    Model for updating an existing class
+    Model for updating an existing course
     """
     real: Optional[bool] = None
     term: Optional[str] = None
