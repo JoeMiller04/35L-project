@@ -13,6 +13,7 @@ db = client[DATABASE_NAME]
 async_client = AsyncIOMotorClient(MONGO_DETAILS)
 async_db = async_client[DATABASE_NAME]
 users_collection = async_db.get_collection("users")
+course_collection = async_db.get_collection("courses")
 
 def get_collection(collection_name):
     return db[collection_name]
