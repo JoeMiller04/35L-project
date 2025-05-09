@@ -1,8 +1,6 @@
-from utils.term import term_to_num #add later
-from pymongo import MongoClient
+from server.utils.term import term_to_num #add later
+from server.db.mongodb import valid_course_collection as db
 
-client = MongoClient()
-db = client["project_db"] #Replace with actual database name
 
 def get_class_info(subject, catalog):
     return db.classes.find_one({"Subject": subject, "Catalog": catalog})

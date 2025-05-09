@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from server.api.user import router as user_router
 from server.api.course import router as course_router
+from server.api.validation import router as valid_router
 
 app = FastAPI()
 
@@ -25,3 +26,4 @@ def read_root():
 
 app.include_router(user_router, tags=["users"])
 app.include_router(course_router, tags=["courses"])
+app.include_router(valid_router, tags=["valid"])
