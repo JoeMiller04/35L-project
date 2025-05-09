@@ -66,7 +66,7 @@ function CreateUser() {
             setError(false);
         }
 
-        if (password.length < 8) {
+        if (false) { //Change this to password.length < 8 later
             setError(false);
             setUserAlreadyExists(false);
             setUserTooShort(false);
