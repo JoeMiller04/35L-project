@@ -7,6 +7,8 @@ function Home() {
     const [classes, setClasses] = useState([{ name: "PHYSICS 1C Lec 2", day: "Monday", start: "1400", end: "1515", location: "Kinsey Science Teaching" }, {name:"CS35L", day: "Tuesday", start:"1600", end:"1800", location:"Franz"}]);
     const colors = ['#FFD1DC', '#FFABAB', '#FFC3A0', '#FF677D', '#D4A5A5', '#392F5A', '#31A2AC', '#61C0BF', '#6B4226', '#D9BF77'];
     const [index, setIndex] = useState(-1);
+    const [dropdown, setDropdown] = useState("");
+    const [dropdownClass, setDropdownClass] = useState("");
 
     // Run changeColor every time a new class is rendered
     useEffect(() => {
@@ -72,67 +74,127 @@ function Home() {
         }
     }
 
+    const options = [
+    { value: '', label: '— Select a Department —' },
+    { value: 'COM SCI', label: 'Computer Science (COM SCI)' },
+    
+  ];
+
+  const classOptions = [
+    { value: '', label: '— Select a Class —' },
+    { value: '31', label: '31' },
+    {value: '32', label:'32'}
+    
+  ];
+
+    //dropdown change function
+    function handleChange(drop) {
+        setDropdown(drop.target.value);
+    }
+
+    function handleClassChange(drop) {
+        setDropdownClass(drop.target.value);
+    }
+
     
     return (
-        <div>
-            <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Schedule Planner Thing</h1>
+        <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
+            <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '200vh' }}></div>
+            <div style={{ width: '80%' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button onClick={() => navigate('/SearchPage')} style={{marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Edit Class History</button>
+                    <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Schedule Planner Thing</h1>
+                    <button onClick={() => navigate('/InfoPage')} style={{marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Future Requirements</button>
+                </div>
 
-            <div className='grid'>
-                <div className='daysOfWeekTitle'>Sunday</div>
-                <div className='daysOfWeekTitle'>Monday</div>
-                <div className='daysOfWeekTitle'>Tuesday</div>
-                <div className='daysOfWeekTitle'>Wednesday</div>
-                <div className='daysOfWeekTitle'>Thursday</div>
-                <div className='daysOfWeekTitle'>Friday</div>
-                <div className='daysOfWeekTitle'>Saturday</div>
+                <div className='grid'>
+                    <div className='daysOfWeekTitle'>Sunday</div>
+                    <div className='daysOfWeekTitle'>Monday</div>
+                    <div className='daysOfWeekTitle'>Tuesday</div>
+                    <div className='daysOfWeekTitle'>Wednesday</div>
+                    <div className='daysOfWeekTitle'>Thursday</div>
+                    <div className='daysOfWeekTitle'>Friday</div>
+                    <div className='daysOfWeekTitle'>Saturday</div>
 
-                {/* Render the grid lines */}
-                {Array.from({ length: 40 }).map((_, rowIndex) => (
-                    Array.from({ length: 7 }).map((_, colIndex) => (
-                        <div
-                            key={`${rowIndex}-${colIndex}`}
-                            style={{
-                                borderTop: rowIndex % 4 === 0 ? '1px solid black' : 'none',
-                                borderLeft: '1px solid black',
-                                borderRight: colIndex === 6 ? '1px solid black' : 'none',
-                                borderBottom: rowIndex === 39 ? '1px solid black' : 'none',
-                                height: '15px',
-                            }}
-                        ></div>
-                    ))
-                ))}
+                    {/* Render the grid lines */}
+                    {Array.from({ length: 40 }).map((_, rowIndex) => (
+                        Array.from({ length: 7 }).map((_, colIndex) => (
+                            <div
+                                key={`${rowIndex}-${colIndex}`}
+                                style={{
+                                    borderTop: rowIndex % 4 === 0 ? '1px solid black' : 'none',
+                                    borderLeft: '1px solid black',
+                                    borderRight: colIndex === 6 ? '1px solid black' : 'none',
+                                    borderBottom: rowIndex === 39 ? '1px solid black' : 'none',
+                                    height: '15px',
+                                }}
+                            ></div>
+                        ))
+                    ))}
 
-                {/* Render the class blocks */}
-                {classes.map((cls, index) => {
-                    const position = calcGridPosition(cls);
-                    return (
-                        <div
-                            key={index}
-                            style={{
-                                position: 'absolute', 
-                                top: `${40 + (position.gridRow - 2) * 15}px`, 
-                                left: `${(position.gridColumn - 1) * (100 / 7)}%`, 
-                                height: `${(position.gridRowEnd.split(' ')[1] || 1) * 15}px`,
-                                width: `${100 / 7}%`, 
-                                border: '1px solid red',
-                                backgroundColor: colors[index], 
-                                display: 'flex', 
-                                justifyContent: 'center', 
-                                alignItems:'center', 
-                                textAlign: 'center'
-                                
-                            }}
-                        >
-                            {cls.name}
-                            <br />
-                            {cls.location}
-                        </div>
-                    );
-                })}
+                    <h1 style={{position:'absolute', top:'10px', left:'-62px', fontSize:'20px'}}>8 am</h1>
+                    <h1 style={{position:'absolute', top:'70px', left:'-62px', fontSize:'20px'}}>9 am</h1>
+                    <h1 style={{position:'absolute', top:'130px', left:'-75px', fontSize:'20px'}}>10 am</h1>
+                    <h1 style={{position:'absolute', top:'190px', left:'-75px', fontSize:'20px'}}>11 am</h1>
+                    <h1 style={{position:'absolute', top:'250px', left:'-75px', fontSize:'20px'}}>12 pm</h1>
+                    <h1 style={{position:'absolute', top:'310px', left:'-64px', fontSize:'20px'}}>1 pm</h1>
+                    <h1 style={{position:'absolute', top:'370px', left:'-64px', fontSize:'20px'}}>2 pm</h1>
+                    <h1 style={{position:'absolute', top:'430px', left:'-64px', fontSize:'20px'}}>3 pm</h1>
+                    <h1 style={{position:'absolute', top:'490px', left:'-64px', fontSize:'20px'}}>4 pm</h1>
+                    <h1 style={{position:'absolute', top:'550px', left:'-64px', fontSize:'20px'}}>5 pm</h1>
+                    <h1 style={{position:'absolute', top:'610px', left:'-64px', fontSize:'20px'}}>6 pm</h1>
+
+                    {/* Render the class blocks */}
+                    {classes.map((cls, index) => {
+                        const position = calcGridPosition(cls);
+                        return (
+                            <div
+                                key={index}
+                                style={{
+                                    position: 'absolute', 
+                                    top: `${40 + (position.gridRow - 2) * 15}px`, 
+                                    left: `${(position.gridColumn - 1) * (100 / 7)}%`, 
+                                    height: `${(position.gridRowEnd.split(' ')[1] || 1) * 15}px`,
+                                    width: `${100 / 7}%`, 
+                                    border: '1px solid red',
+                                    backgroundColor: colors[index], 
+                                    display: 'flex', 
+                                    justifyContent: 'center', 
+                                    alignItems:'center', 
+                                    textAlign: 'center'
+                                    
+                                }}
+                            >
+                                {cls.name}
+                                <br />
+                                {cls.location}
+                            </div>
+                        );
+                    })}
+                </div>
+
+                <hr style={{color:'black', backgroundColor:'black', height:'3px', border:'none', marginTop:'50px'}}/>
+
+                {/*working on dropdown search*/}
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '30px', gap: '20px' }}>
+                    <select value={dropdown} onChange={handleChange} style={{ width: '250px', height: '30px' }}>
+                        {options.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                                {opt.label}
+                            </option>
+                        ))}
+                    </select>
+
+                    <select value={dropdownClass} onChange={handleClassChange} style={{ width: '75px', height: '30px' }}>
+                        {classOptions.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                                {opt.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </div>
-
-            <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
-            <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
+            <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '200vh' }}></div>
         </div>
     );
 }
