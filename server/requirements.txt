@@ -9,3 +9,4 @@ pytest-asyncio
 httpx
 bcrypt
 python-multipart
+pandas
