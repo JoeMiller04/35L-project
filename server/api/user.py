@@ -20,7 +20,6 @@ async def create_user(user: UserCreate):
     Returns 400 if it does.
     Otherwise, creates the user and returns the created user object.
     """
-    print(user.username, flush=True)
     existing = await users_collection.find_one({"username": user.username})
     if existing:
         raise HTTPException(status_code=400, detail="Username already registered")
