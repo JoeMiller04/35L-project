@@ -20,6 +20,13 @@ class Course(BaseModel):
     title: str  # e.g. "Software Construction"
     instructor: str  # e.g. "Paul Eggert"
     times: Optional[TimeSchedule] = None  # Map of day to (start_time, end_time) in 24hr format
+
+    section: Optional[str] = None  # This is not discussion section
+    enrolled_total: Optional[int] = None  # Total number of students enrolled
+    grades: Optional[Dict[str, int]] = None  # Grade distribution
+    # Available grade keys: A+, A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F
+    # P, NP, other
+
     
     model_config = ConfigDict(
         populate_by_name=True,
