@@ -133,6 +133,7 @@ function Home() {
 
             <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
             <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
+            <button onClick={() => navigate('/PastCourses')}>Go to Home3</button>
         </div>
     );
 }
