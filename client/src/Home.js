@@ -173,6 +173,10 @@ function Home() {
                     })}
                 </div>
 
+            <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
+            <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
+            <button onClick={() => navigate('/PastCourses')}>Go to Home4</button>
+            <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
                 <hr style={{color:'black', backgroundColor:'black', height:'3px', border:'none', marginTop:'50px'}}/>
 
                 {/*working on dropdown search*/}

@@ -12,6 +12,8 @@ function SearchPage() {
             <p>This is the second page of our application.</p>
             <button onClick={() => navigate('/Home')}>Go to Home</button>
             <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
+            <button onClick={() => navigate('/PastCourses')}>Go to Home4</button>
+            <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
         </div>
     );
 }
