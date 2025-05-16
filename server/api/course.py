@@ -3,7 +3,7 @@ from server.models.course import Course, CourseCreate, CourseResponse, CourseUpd
 from server.db.mongodb import course_collection
 from bson import ObjectId
 from bson.errors import InvalidId
-from typing import List
+from typing import List, Optional
 from server.api.security import validate_admin_key
 
 router = APIRouter()
@@ -107,4 +107,67 @@ async def delete_course(course_id: str):
         return None # 204 No Content, Successful deletion
     except InvalidId:
         raise HTTPException(status_code=400, detail="Invalid ID format")
+
+
+@router.get("/courses", response_model=List[CourseResponse])
+async def query_courses(
+    term: Optional[str] = None,
+    subject: Optional[str] = None,
+    catalog: Optional[str] = None,
+    instructor: Optional[str] = None,
+    title: Optional[str] = None,
+    real: Optional[bool] = None,
+    skip: int = 0,
+    limit: int = 20,
+):
+    """
+    Query courses with optional filters.
+    
+    Parameters:
+    - term: Filter by term (e.g., "22F")
+    - subject: Filter by subject (e.g., "COM SCI")
+    - catalog: Filter by catalog number (e.g., "35L")
+    - instructor: Filter by instructor name (partial match, case insensitive)
+    - title: Filter by course title (partial match, case insensitive)
+    - real: Filter by whether the course is real or test data
+    - skip: Number of records to skip (for pagination)
+    - limit: Maximum number of records to return
+    
+    Returns a list of courses matching the criteria.
+    """
+    try:
+        # Build query filter
+        query = {}
+        
+        if term:
+            query["term"] = term
+        if subject:
+            query["subject"] = subject
+        if catalog:
+            query["catalog"] = catalog
+        if instructor:
+            # Case-insensitive partial match for instructor
+            query["instructor"] = {"$regex": instructor, "$options": "i"}
+        if title:
+            # Case-insensitive partial match for title
+            query["title"] = {"$regex": title, "$options": "i"}
+        if real is not None:  # Explicitly check if it's None since false is a valid value
+            query["real"] = real
+        
+        # Count total matching documents for pagination info
+        total_count = await course_collection.count_documents(query)
+        
+        # Execute the query with pagination
+        cursor = course_collection.find(query).skip(skip).limit(limit)
+        courses = await cursor.to_list(length=limit)
+        
+        # Convert ObjectIds to strings
+        for course in courses:
+            course["_id"] = str(course["_id"])
+        
+        # Return response with pagination metadata
+        return courses
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error querying courses: {str(e)}")
 
