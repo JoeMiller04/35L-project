@@ -1,11 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
-from server.models.user import User, UserCreate, UserResponse
+from server.models.user import User, UserCreate, UserResponse, UserCourseUpdate
 from server.db.mongodb import users_collection
 from fastapi.encoders import jsonable_encoder
 from passlib.context import CryptContext
 from bson import ObjectId
 from bson.errors import InvalidId
 from server.api.security import validate_admin_key
+from server.db.mongodb import course_collection
+from typing import Dict, List
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -116,3 +118,80 @@ async def delete_user(user_id: str):
         if isinstance(e, HTTPException):
             raise e
         raise HTTPException(status_code=400, detail=f"Invalid ID format: {str(e)}")
+
+
+@router.post("/users/{user_id}/courses", response_model=UserResponse)
+async def update_user_courses(user_id: str, update: UserCourseUpdate):
+    """
+    Add or remove a course from a user's saved courses list.
+    Action field in the request body must be either "add" or "remove".
+    Returns the updated user object.
+    """
+    try:
+        oid = ObjectId(user_id)
+        user = await users_collection.find_one({"_id": oid})
+        
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Initialize saved_courses if it doesn't exist
+        if "saved_courses" not in user:
+            user["saved_courses"] = []
+            
+        # Process the update
+        if update.action == "add":
+            if update.course_name not in user["saved_courses"]:
+                result = await users_collection.update_one(
+                    {"_id": oid},
+                    {"$push": {"saved_courses": update.course_name}}
+                ) 
+        elif update.action == "remove":
+            # Remove the course name
+            # Succeeds even if the course name is not in the list
+            result = await users_collection.update_one(
+                {"_id": oid},
+                {"$pull": {"saved_courses": update.course_name}}
+            )
+        else:
+            raise HTTPException(status_code=400, detail="Invalid action. Use 'add' or 'remove'")
+            
+        # Get the updated user
+        updated_user = await users_collection.find_one({"_id": oid})
+        if updated_user and "_id" in updated_user:
+            updated_user["_id"] = str(updated_user["_id"])
+            
+        return updated_user
+        
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid user ID format")
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+
+
+@router.get("/users/{user_id}/courses", response_model=List[str])
+async def get_user_courses(user_id: str):
+    """
+    Get all courses saved by a user.
+    Returns a list of strings.
+    """
+    try:
+        oid = ObjectId(user_id)
+        user = await users_collection.find_one({"_id": oid})
+        
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+            
+        # Check if user has saved courses
+        if "saved_courses" not in user or not user["saved_courses"]:
+            return []
+        
+        return user["saved_courses"]
+        
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid user ID format")
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
