@@ -83,6 +83,8 @@ async def update_course(course_id: str, course_update: CourseUpdate):
         
         # Return the updated course
         updated_course = await course_collection.find_one({"_id": oid})
+        if updated_course is None:
+            raise HTTPException(status_code=500, detail="Database error: Course not found after update")
         updated_course["_id"] = str(updated_course["_id"])
         
         return updated_course
