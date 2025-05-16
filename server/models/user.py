@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, GetJsonSchemaHandler, GetCoreSchemaHandle
 from pydantic.json_schema import JsonSchemaValue
 from pydantic_core import core_schema
 from bson import ObjectId
-from typing import Optional, Any, Annotated
+from typing import Optional, Any, Annotated, List
 
 
 class PyObjectId(str):
@@ -36,6 +36,7 @@ class User(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id")
     username: str
     password_hash: str
+    saved_courses: List[str] = []  # List of course names saved by the user
 
     # Updated configuration syntax for Pydantic v2
     model_config = ConfigDict(
@@ -47,6 +48,7 @@ class User(BaseModel):
 class UserCreate(BaseModel):
     username: str
     password: str
+    saved_courses: List[str] = []  # Optional during creation
 
 
 class UserResponse(BaseModel):
@@ -55,9 +57,18 @@ class UserResponse(BaseModel):
     """
     id: Optional[PyObjectId] = Field(alias="_id")
     username: str
+    saved_courses: List[str] = [] 
     
     model_config = ConfigDict(
         populate_by_name=True,
         json_encoders={ObjectId: str}
     )
+
+
+class UserCourseUpdate(BaseModel):
+    """
+    Model for adding or removing courses from a user's list
+    """
+    course_name: str # For now, we're just doing coursenames, not the actual course IDs
+    action: str  # "add" or "remove"
 

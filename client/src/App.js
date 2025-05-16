@@ -5,6 +5,8 @@ import SearchPage from './SearchPage';
 import InfoPage from './InfoPage';
 import LogIn from './LogIn';
 import CreateUser from './CreateUser'; // Import the CreateUser component
+import PastCourses from './PastCourses';
+import FuturePlanner from './FuturePlanner';
 
 function Navigation() {
   return (
@@ -16,6 +18,8 @@ function Navigation() {
       <Route path="/SearchPage" element={<SearchPage />} />
       <Route path="/InfoPage" element={<InfoPage />} />
       <Route path="/CreateUser" element={<CreateUser />} /> 
+      <Route path="/PastCourses" element={<PastCourses />} />
+      <Route path="/FuturePlanner" element={<FuturePlanner />} />
     </Routes>
     </div>
   );
