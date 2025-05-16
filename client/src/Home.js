@@ -112,7 +112,7 @@ function Home() {
             <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '200vh' }}></div>
             <div style={{ width: '80%' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/SearchPage')} style={{marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Edit Class History</button>
+                    <button onClick={() => navigate('/PastCourses')} style={{marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Degree Information</button>
                     <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Schedule Planner Thing</h1>
                     <button onClick={() => navigate('/InfoPage')} style={{marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Future Requirements</button>
                 </div>
@@ -198,11 +198,7 @@ function Home() {
 
                 <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'20px'}}/>
 
-            <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
-            <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
-            <button onClick={() => navigate('/PastCourses')}>Go to Home4</button>
-            <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
-                <hr style={{color:'black', backgroundColor:'black', height:'3px', border:'none', marginTop:'50px'}}/>
+           
 
                 {/*working on dropdown search*/}
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '30px', gap: '20px' }}>
@@ -228,9 +224,27 @@ function Home() {
                 </div>
 
                  <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'30px'}}/>
-                        
+                            
+
+
+
+
+
+
+
+
+
+
+
+            <button onClick={() => navigate('/PastCourses')}>Go to Home4</button>
+            <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
+               
             </div>
+
+            
             <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '200vh' }}></div>
+
+       
         </div>
     );
 }
