@@ -148,8 +148,10 @@ def export_to_mongodb(data):
         return 0
     
 
-def fix_catalog_spaces():
-    """Fix trailing spaces in catalog numbers in existing MongoDB collection"""
+def fix_trailing_spaces():
+    """Fix trailing spaces in several fields in existing MongoDB collection
+    For some reason, the original data has trailing spaces in several columns.
+    Currently fixes the catalog, subject, and section fields."""
     from pymongo import MongoClient
     import os
     
@@ -169,20 +171,39 @@ def fix_catalog_spaces():
         
         # Fix each course
         for course in courses:
+            updates = {}
+            
+            # Check catalog field
             if 'catalog' in course and isinstance(course['catalog'], str):
                 stripped = course['catalog'].strip()
                 if stripped != course['catalog']:
-                    collection.update_one(
-                        {"_id": course["_id"]},
-                        {"$set": {"catalog": stripped}}
-                    )
-                    fixed_count += 1
+                    updates['catalog'] = stripped
+            
+            # Check subject field
+            if 'subject' in course and isinstance(course['subject'], str):
+                stripped = course['subject'].strip()
+                if stripped != course['subject']:
+                    updates['subject'] = stripped
+            
+            # Check section field
+            if 'section' in course and isinstance(course['section'], str):
+                stripped = course['section'].strip()
+                if stripped != course['section']:
+                    updates['section'] = stripped
+            
+            # Update the document if any fields need fixing
+            if updates:
+                collection.update_one(
+                    {"_id": course["_id"]},
+                    {"$set": updates}
+                )
+                fixed_count += 1
         
         print(f"Fixed trailing spaces in {fixed_count} records")
         return fixed_count
     
     except Exception as e:
-        print(f"Error fixing catalog spaces: {e}")
+        print(f"Error fixing spaces: {e}")
         return 0
 
 
@@ -190,5 +211,5 @@ def fix_catalog_spaces():
 if __name__ == "__main__":
     print("Exporting data to MongoDB...")
     count = export_to_mongodb(tidy)
-    fix_catalog_spaces()
+    fix_trailing_spaces()
     print(f"Export completed. {count} records exported.")
