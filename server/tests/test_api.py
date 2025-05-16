@@ -41,7 +41,7 @@ def test_create_user(client):  # Add client as parameter to get it from fixture
     finally:
         # Use the delete API for cleanup
         if 'user_id' in locals():
-            client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
+            client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY}) # type: ignore
 
 
 def test_delete_user(client):  
@@ -70,7 +70,7 @@ def test_delete_user(client):
         assert response.status_code == 404
     finally:
         # If the user was not deleted, clean up here
-        if user_id and response.status_code != 200:
+        if user_id and response.status_code != 200: # type: ignore
             client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
 
 
