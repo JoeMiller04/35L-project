@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 import { useState, useEffect } from 'react';
+import {COMSCIClassOptions} from './ClassesLists'
 
 function Home() {
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ function Home() {
     const [dropdown, setDropdown] = useState("");
     const [dropdownClass, setDropdownClass] = useState("");
     const [quarter, setQuarter] = useState("S25");
+    const [dataFromQuery, setDataFromQuery] = useState([]);
 
     // Run changeColor every time a new class is rendered
     useEffect(() => {
@@ -49,6 +51,48 @@ function Home() {
         }
     }
 
+    const classOptionsMap = {
+         COMSCI: COMSCIClassOptions,
+
+    };
+
+    const classOptions = [
+         { value: '', label: '— Select Dept —' }
+    ]
+
+
+    //query class function
+    async function classQuery() {
+        try {
+            const  temp = dropdown;
+            if (temp === "COM SCI") {
+                temp = "COMSCI";
+            }
+            
+            const response = await fetch(`http://127.0.0.1:8000/courses?subject=${dropdown}&catalog=${dropdownClass}`, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                });
+            if (response.ok) {
+                const data = await response.json()
+                setDataFromQuery(data);
+              
+            } else if (response.status === 400) {
+                alert("NOOO")
+                
+                
+            } else {
+                alert(response.status);
+                
+            }
+        } catch (error) {
+            alert('Error:' + error.message);
+        }
+        }
+    
+
     //get row from time
     function getTimeRow(time) {
         const hour = parseInt(time.slice(0, 2), 10);
@@ -77,16 +121,14 @@ function Home() {
 
     const options = [
     { value: '', label: '— Select a Department —' },
-    { value: 'COM SCI', label: 'Computer Science (COM SCI)' },
+    { value: 'COMSCI', label: 'Computer Science (COM SCI)' },
+    {value: 'EC ENGR', label:'Electrical Engineering (EC ENGR)'}
+    , {value:'PHYSICS', label:'Physics (PHYSICS)'}, 
+    {value:'MATH   ', label:'Mathematics (MATH)'}
     
   ];
 
-  const classOptions = [
-    { value: '', label: '— Select Class —' },
-    { value: '31', label: '31' },
-    {value: '32', label:'32'}
-    
-  ];
+  
 
   const quarterOptions = [
     { value: 'S25', label: 'Spring 2025' }
@@ -104,6 +146,11 @@ function Home() {
 
     function handleClassChange(drop) {
         setDropdownClass(drop.target.value);
+    }
+
+    function handleClassQuery() {
+        classQuery();
+
     }
 
     
@@ -215,7 +262,7 @@ function Home() {
                     </select>
 
                     <select value={dropdownClass} onChange={handleClassChange} style={{ width: '140px', height: '30px', border:'2px solid black' }}>
-                        {classOptions.map((opt) => (
+                        {(classOptionsMap[dropdown]||classOptions).map((opt) => (
                             <option key={opt.value} value={opt.value}>
                                 {opt.label}
                             </option>
@@ -226,9 +273,14 @@ function Home() {
                  <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'30px'}}/>
                             
 
+                    
 
-
-
+                <div style={{ marginTop: '20px', padding: '10px', background: '#fff', border: '1px solid #ccc', borderRadius: '4px' }}>
+  {Array.isArray(dataFromQuery) || typeof dataFromQuery === 'object'
+    ? <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{JSON.stringify(dataFromQuery, null, 2)}</pre>
+    : <span>{dataFromQuery}</span>
+  }
+</div>
 
 
 
@@ -238,6 +290,7 @@ function Home() {
 
             <button onClick={() => navigate('/PastCourses')}>Go to Home4</button>
             <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
+            <button onClick={()=> handleClassQuery()}>query</button>
                
             </div>
 
