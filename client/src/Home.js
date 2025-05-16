@@ -9,6 +9,7 @@ function Home() {
     const [index, setIndex] = useState(-1);
     const [dropdown, setDropdown] = useState("");
     const [dropdownClass, setDropdownClass] = useState("");
+    const [quarter, setQuarter] = useState("S25");
 
     // Run changeColor every time a new class is rendered
     useEffect(() => {
@@ -81,15 +82,24 @@ function Home() {
   ];
 
   const classOptions = [
-    { value: '', label: '— Select a Class —' },
+    { value: '', label: '— Select Class —' },
     { value: '31', label: '31' },
     {value: '32', label:'32'}
     
   ];
 
+  const quarterOptions = [
+    { value: 'S25', label: 'Spring 2025' }
+   
+  ];
+
     //dropdown change function
     function handleChange(drop) {
         setDropdown(drop.target.value);
+    }
+
+    function handleQuarterChange(drop) {
+        setQuarter(drop.target.value);
     }
 
     function handleClassChange(drop) {
@@ -172,12 +182,29 @@ function Home() {
                         );
                     })}
                 </div>
+                <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', marginTop: '30px', gap: '20px' , marginLeft:'300px'}}>
+                    <h1 style={{fontSize:'25px'}}>Select Quarter:</h1>
+                    <select value={quarter} onChange={handleQuarterChange} style={{ width: '120px', height: '30px', border:'2px solid black' }}>
+                        {quarterOptions.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                                {opt.label}
+                            </option>
+                        ))}
+                    </select>
+                    <button style={{ width: '170px', height: '40px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer', marginLeft:'75px' }}>Validate Schedule</button>
+                </div>
 
-                <hr style={{color:'black', backgroundColor:'black', height:'3px', border:'none', marginTop:'50px'}}/>
+                
+
+                <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'20px'}}/>
 
                 {/*working on dropdown search*/}
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '30px', gap: '20px' }}>
-                    <select value={dropdown} onChange={handleChange} style={{ width: '250px', height: '30px' }}>
+                    {/*Quarter dropdown*/}
+                    
+                    {/*class dropdown*/}
+                    <h1 style={{fontSize:'25px'}}>Search for Class:</h1>
+                    <select value={dropdown} onChange={handleChange} style={{ width: '250px', height: '30px', border:'2px solid black' }}>
                         {options.map((opt) => (
                             <option key={opt.value} value={opt.value}>
                                 {opt.label}
@@ -185,7 +212,7 @@ function Home() {
                         ))}
                     </select>
 
-                    <select value={dropdownClass} onChange={handleClassChange} style={{ width: '75px', height: '30px' }}>
+                    <select value={dropdownClass} onChange={handleClassChange} style={{ width: '140px', height: '30px', border:'2px solid black' }}>
                         {classOptions.map((opt) => (
                             <option key={opt.value} value={opt.value}>
                                 {opt.label}
@@ -193,6 +220,9 @@ function Home() {
                         ))}
                     </select>
                 </div>
+
+                 <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'30px'}}/>
+                        
             </div>
             <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '200vh' }}></div>
         </div>
