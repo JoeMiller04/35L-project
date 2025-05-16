@@ -132,6 +132,9 @@ async def query_courses(
     - real: Filter by whether the course is real or test data
     - skip: Number of records to skip (for pagination)
     - limit: Maximum number of records to return
+
+    skip and limit can be used if you want to read a subset of the courses.
+    E.g. Pagesize of 20, skip 0 for the first page, skip 20 for the second page, etc.
     
     Returns a list of courses matching the criteria.
     """
@@ -165,7 +168,6 @@ async def query_courses(
         for course in courses:
             course["_id"] = str(course["_id"])
         
-        # Return response with pagination metadata
         return courses
         
     except Exception as e:

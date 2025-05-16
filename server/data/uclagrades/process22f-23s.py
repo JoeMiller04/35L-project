@@ -146,9 +146,49 @@ def export_to_mongodb(data):
     except Exception as e:
         print(f"Error exporting to MongoDB: {e}")
         return 0
+    
+
+def fix_catalog_spaces():
+    """Fix trailing spaces in catalog numbers in existing MongoDB collection"""
+    from pymongo import MongoClient
+    import os
+    
+    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+    DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
+    
+    try:
+        # Connect to MongoDB
+        print(f"Connecting to MongoDB at {MONGO_URI}...")
+        client = MongoClient(MONGO_URI)
+        db = client[DATABASE_NAME]
+        collection = db["courses"]
+        
+        # Get all courses
+        courses = list(collection.find({}))
+        fixed_count = 0
+        
+        # Fix each course
+        for course in courses:
+            if 'catalog' in course and isinstance(course['catalog'], str):
+                stripped = course['catalog'].strip()
+                if stripped != course['catalog']:
+                    collection.update_one(
+                        {"_id": course["_id"]},
+                        {"$set": {"catalog": stripped}}
+                    )
+                    fixed_count += 1
+        
+        print(f"Fixed trailing spaces in {fixed_count} records")
+        return fixed_count
+    
+    except Exception as e:
+        print(f"Error fixing catalog spaces: {e}")
+        return 0
+
 
 # Call the export function
 if __name__ == "__main__":
     print("Exporting data to MongoDB...")
     count = export_to_mongodb(tidy)
+    fix_catalog_spaces()
     print(f"Export completed. {count} records exported.")
