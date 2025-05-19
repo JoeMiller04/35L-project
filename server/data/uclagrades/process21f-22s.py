@@ -1,5 +1,5 @@
 """
-This is a script to process the UCLA grades data for the 2023 Summer through 2024 Spring semesters.
+This is a script to process the UCLA grades data for the 2021 Fall through 2022 Summer semesters.
 It includes functions to read the data, clean it, and save it to a MongoDB database.
 Run from inside the data/uclagrades directory.
 IF YOU RUN MULTIPLE TIMES, IT WILL CONTINUE TO APPEND TO THE DATABASE.
@@ -7,11 +7,11 @@ IF YOU RUN MULTIPLE TIMES, IT WILL CONTINUE TO APPEND TO THE DATABASE.
 
 import pandas as pd
 
-file  = "grades-23f-24s.csv"
+file  = "grades-21f-222.csv"
 
-column_names = ['term', 'long subject', 'catalog', 'section', 'grade',
+column_names = ['term', 'subject', 'catalog', 'section', 'grade',
        'grade_count', 'enrolled_total', 'instructor', 'unused_INSTR_CD', 'title',
-       'subject', 'unused_INTL_CATL', 'unused_INTL_SECT'] # column names for importing
+       'idk', 'unused_INTL_CATL', 'unused_INTL_SECT', "creation_date", "idk2"] # column names for importing
 
 df = pd.read_csv(file, header=None, names=column_names)
 use_columns = ['term', 'subject', 'catalog', 'section', 'grade',
@@ -20,13 +20,7 @@ df = df[use_columns] # select the columns we wil actually use
 
 # Sanity Checks
 assert int(df.isna().sum().sum()) == 0 # We shouldn't have missing data for this file
-assert len(df) == 47743 # There should be 47743 points for 23F-24S
-
-df = df.drop(index=0) # drop the first row because it's just headers
-
-# Convert some columns to numeric
-df["grade_count"] = pd.to_numeric(df["grade_count"])
-df["enrolled_total"] = pd.to_numeric(df["enrolled_total"])
+# assert len(df) == 42475 # There should be 42475 points for 23F-24S
 
 # grp_cols = ["term", "subject", "catalog", "instructor", "title"]
 grp_cols = ["term", "subject", "catalog", "instructor", "title", "section"]
@@ -79,18 +73,17 @@ pivot["P"] = pivot["P"] + pivot["S"]
 pivot["NP"] = pivot["NP"] + pivot["U"]
 pivot["F"] = pivot["F"] + pivot["NC"]
 pivot.drop(columns=["S", "U", "NC"], inplace=True)
-extra = ["DR", "I"]
+extra = ["DR", "I", "IP", "R", "NR"]
 pivot["other"] = pivot[extra].sum(axis=1)
 pivot.drop(columns=extra, inplace=True)
 
 pivot["real"] = True # So we know this is real data
 
-# In 22F-23S, we only had 17 rows that didn't match up for enrollment totals
-# But for here, we have 1,000+ rows that don't match up.
-# So let's just keep them even if they don't match up.
+# Only 22 coures have mismatched enrollments for this dataset
+# So let's drop those
 filtered = (
     pivot
-    .loc[pivot["real"]]   # keep only the good rows
+    .loc[~pivot["enrl_mismatch"] & pivot["real"]]   # keep only the good rows
     .drop(columns=["enrl_mismatch"])                # drop this column
     .reset_index(drop=True)
 )
@@ -104,7 +97,7 @@ filtered["grades"] = (
 tidy = filtered.drop(columns=remaining_grades)
 
 print("Exporting", len(tidy), "rows")
-# tidy.to_csv("grades_backup_23f-24s.csv", index=False)
+# tidy.to_csv("grades_backup_21f-22s.csv", index=False)
 
 def export_to_mongodb(data):
     """Export the processed data to MongoDB"""
@@ -214,7 +207,7 @@ def fix_trailing_spaces():
 
 # Call the export function
 if __name__ == "__main__":
-    print("Processing UCLA grades data from 2023 Summer to 2024 Spring...")
+    print("Processing UCLA grades data from 2021 Fall to 2022 Summer...")
     print("Exporting data to MongoDB...")
     count = export_to_mongodb(tidy)
     fix_trailing_spaces()

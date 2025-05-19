@@ -1,5 +1,5 @@
 """
-This is a script to process the UCLA grades data for the 2022 Fall and 2023 Spring semesters.
+This is a script to process the UCLA grades data for the 2022 Fall through 2023 Spring semesters.
 It includes functions to read the data, clean it, and save it to a MongoDB database.
 Run from inside the data/uclagrades directory.
 IF YOU RUN MULTIPLE TIMES, IT WILL CONTINUE TO APPEND TO THE DATABASE.
