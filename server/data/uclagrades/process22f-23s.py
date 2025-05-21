@@ -128,7 +128,7 @@ def export_to_mongodb(data):
         collection = db["courses"]
         
         # Uncomment the next line to drop the collection if needed
-        # collection.drop()
+        collection.drop()
         
         collection.create_index([
             ("term", 1),

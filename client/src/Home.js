@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 import { useState, useEffect } from 'react';
-import {COMSCIClassOptions} from './ClassesLists'
+import {COMSCIClassOptions, MATHClassOptions} from './ClassesLists'
 
 function Home() {
     const navigate = useNavigate();
@@ -53,6 +53,7 @@ function Home() {
 
     const classOptionsMap = {
          COMSCI: COMSCIClassOptions,
+         MATH: MATHClassOptions
 
     };
 
@@ -124,7 +125,7 @@ function Home() {
     { value: 'COMSCI', label: 'Computer Science (COM SCI)' },
     {value: 'EC ENGR', label:'Electrical Engineering (EC ENGR)'}
     , {value:'PHYSICS', label:'Physics (PHYSICS)'}, 
-    {value:'MATH   ', label:'Mathematics (MATH)'}
+    {value:'MATH', label:'Mathematics (MATH)'}
     
   ];
 
@@ -153,11 +154,15 @@ function Home() {
 
     }
 
+    // Utility function to capitalize every letter after a space or at the start
+    function capitalizeWords(str) {
+        return str.replace(/\b\w/g, c => c.toUpperCase());
+    }
     
     return (
         <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
-            <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '200vh' }}></div>
-            <div style={{ width: '80%' }}>
+        <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
+        <div style={{ width: '80%', marginLeft: '10%', marginRight: '10%', zIndex: 2 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <button onClick={() => navigate('/PastCourses')} style={{marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Degree Information</button>
                     <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Schedule Planner Thing</h1>
@@ -230,14 +235,7 @@ function Home() {
                     })}
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', marginTop: '30px', gap: '20px' , marginLeft:'300px'}}>
-                    <h1 style={{fontSize:'25px'}}>Select Quarter:</h1>
-                    <select value={quarter} onChange={handleQuarterChange} style={{ width: '120px', height: '30px', border:'2px solid black' }}>
-                        {quarterOptions.map((opt) => (
-                            <option key={opt.value} value={opt.value}>
-                                {opt.label}
-                            </option>
-                        ))}
-                    </select>
+                   
                     <button style={{ width: '170px', height: '40px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer', marginLeft:'75px' }}>Validate Schedule</button>
                 </div>
 
@@ -268,19 +266,67 @@ function Home() {
                             </option>
                         ))}
                     </select>
+                    <select value={quarter} onChange={handleQuarterChange} style={{ width: '120px', height: '30px', border:'2px solid black' }}>
+                        {quarterOptions.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                                {opt.label}
+                            </option>
+                        ))}
+                    </select>
                 </div>
+
+                
 
                  <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'30px'}}/>
                             
 
                     
 
-                <div style={{ marginTop: '20px', padding: '10px', background: '#fff', border: '1px solid #ccc', borderRadius: '4px' }}>
-  {Array.isArray(dataFromQuery) || typeof dataFromQuery === 'object'
-    ? <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{JSON.stringify(dataFromQuery, null, 2)}</pre>
-    : <span>{dataFromQuery}</span>
-  }
+                <div style={{ marginTop: '20px', padding: '10px', background: '#f0f0f0', border: '1px solid #ccc', borderRadius: '4px' }}>
+  {Array.isArray(dataFromQuery) && dataFromQuery.length > 0 ? (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+      {dataFromQuery.map((item, idx) => (
+        <div key={idx} style={{ border: '1px solid #aaa', borderRadius: '8px', padding: '16px', background: '#f9f9f9', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '20px' }}>
+            <span style={{ textAlign: 'left' }}>{capitalizeWords(item.subject.toLowerCase())} {item.catalog}</span>
+            <span style={{ textAlign: 'right', fontWeight: 'normal', fontSize: '16px', color: 'black' }}>{item.term}</span>
+          </div>
+          <div style={{fontSize:'15px'}}>{capitalizeWords(item.instructor.toLowerCase())}</div>
+          
+          <button style={{}}>Add to Plan</button>
+
+
+        </div>
+      ))}
+    </div>
+  ) : typeof dataFromQuery === 'object' && dataFromQuery !== null && Object.keys(dataFromQuery).length > 0 ? (
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ border: '1px solid #aaa', borderRadius: '8px', padding: '16px', background: '#f9f9f9', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+        {Object.entries(dataFromQuery).map(([key, value]) => (
+
+            
+
+
+
+
+          <div key={key} style={{ marginBottom: '8px' }}>
+            <span style={{ fontWeight: 'bold', color: '#333' }}>{key}: </span>
+            <span style={{ color: '#555' }}>{String(value)}</span>
+          </div>
+
+
+
+
+
+        ))}
+      </div>
+    </div>
+  ) : (
+    <span>{dataFromQuery}</span>
+  )}
 </div>
+
+
 
 
 
@@ -295,7 +341,7 @@ function Home() {
             </div>
 
             
-            <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '200vh' }}></div>
+            <div style={{ position: 'fixed', right: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
 
        
         </div>

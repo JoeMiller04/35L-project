@@ -7,4 +7,9 @@ export const COMSCIClassOptions = [
     
   ];
 
+  export const MATHClassOptions = [
+      { value: '', label: '— Select Class —' },
+        { value: '32A', label: '32A' },
+          { value: '32B', label: '32B' }
+  ]
 
