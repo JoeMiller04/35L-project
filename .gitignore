@@ -3,3 +3,4 @@
 *~
 *.pyc
 server/.env
+/server/data/scrape-test
