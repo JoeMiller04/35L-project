@@ -1,10 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// Add a save button to save taken courses in database which will be used in isValid
-// users should default have empty taken courses
-
+// List of required or typical CSE courses
 const cseCourses = [
   "COM SCI 31", "COM SCI 32", "COM SCI 33", "COM SCI 35L", "COM SCI M51A", "ECE 3", "ECE 100", "ECE 102", "ECE 115C",
   "COM SCI 111", "COM SCI 118", "COM SCI 131", "COM SCI 180", "COM SCI M151B",
@@ -13,13 +11,62 @@ const cseCourses = [
 ];
 
 export default function PastCourses() {
+  // Track which courses have been checked (i.e., taken by the user)
   const [takenCourses, setTakenCourses] = useState({});
   const navigate = useNavigate();
-  const toggleCourse = (course) => {
+
+  // Not right
+   const userId = localStorage.getItem("user_id");
+
+  // Load saved courses from backend when the component first mounts
+  useEffect(() => {
+    const fetchTakenCourses = async () => {
+      try {
+        const response = await fetch(`/users/${userId}/courses`);
+        if (!response.ok) throw new Error("Failed to load courses");
+        const data = await response.json(); // List of strings like "COM SCI 32"
+
+
+        // Convert the list to an object for quick checkbox state lookup
+        const initial = {};
+        data.forEach((course) => {
+          initial[course] = true;
+        });
+        setTakenCourses(initial);
+      } catch (err) {
+        console.error("Error loading courses:", err);
+      }
+    };
+
+    if (userId) fetchTakenCourses();
+  }, [userId]);
+
+  // Toggle checkbox state and update the backend accordingly
+  const toggleCourse = async (course) => {
+    const isNowChecked = !takenCourses[course];
+
+    // Update UI state immediately
     setTakenCourses((prev) => ({
-      ...prev,  
-      [course]: !prev[course],
+      ...prev,
+      [course]: isNowChecked,
     }));
+
+
+    // Update backend with add/remove action
+    try {
+      const response = await fetch(`/users/${userId}/courses`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          course_name: course,
+          action: isNowChecked ? 'add' : 'remove'
+        })
+      });
+
+      if (!response.ok) throw new Error("Failed to update backend");
+    } catch (err) {
+      console.error("Error syncing course:", err);
+    }
   };
 
   return (
@@ -31,7 +78,7 @@ export default function PastCourses() {
             <input
               type="checkbox"
               id={course}
-              checked={takenCourses[course] || false}
+              checked={takenCourses[course] || false} // Default to false if not present
               onChange={() => toggleCourse(course)}
               className="mr-3"
             />

@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 
-// Make a secondary list of quarters and classes which users can choose from
-// For updating possible quarters, get current date, determine quarter and add 11 quarters past it
 // Add a save planner button which passes the plan to isValid and returns if the plan is valid, if so save users plan in database
-// Make it so the order is W, S, F
 
-
+// Options for dropdowns
 const availableTerms = ["25W", "25S", "25F", "26W", "26S", "26F"];
 const availableCourses = [
   "COM SCI 31", "COM SCI 32", "COM SCI 33", "COM SCI 35L", "COM SCI M51A", "ECE 3", "ECE 100", "ECE 102", "ECE 115C",
@@ -16,18 +13,77 @@ const availableCourses = [
   "PHYSICS 1A", "PHYSICS 1B", "PHYSICS 1C", "PHYSICS 4AL/4BL"
 ];
 
-export default function FuturePlanner() {
-  const [plan, setPlan] = useState([]);
-  const [selectedTerm, setSelectedTerm] = useState('');
-  const [selectedCourse, setSelectedCourse] = useState('');
-  const navigate = useNavigate();
-
+  // Helper to sort terms: e.g., 25W -> 251, 25S -> 252
   const termToSortable = (term) => {
   const year = parseInt(term.slice(0, 2)); // "25W" → 25
   const quarterCode = { W: 1, S: 2, F: 3 }[term[2]]; // "W" → 1, "S" → 2, "F" → 3
   return year * 10 + quarterCode;
 };
 
+export default function FuturePlanner() {
+  const [plan, setPlan] = useState([]); // Main state: [{ term: "25F", classes: ["COM SCI 32"] }]
+  const [selectedTerm, setSelectedTerm] = useState('');
+  const [selectedCourse, setSelectedCourse] = useState('');
+  const navigate = useNavigate();
+
+  // Dont think this works
+  //const userId = 681e758d4b121097b1e43aef;
+  const userId = localStorage.getItem("user_id");
+
+      // POST to backend to update user’s course list
+    const updateCourseInDB = async (courseName, action) => {
+    try {
+      const response = await fetch(`/users/${userId}/courses`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          course_name: courseName,
+          action: action,
+        }),
+      });
+      return await response.json();
+    } catch (err) {
+      console.error("Error updating course:", err);
+    }
+  };
+
+  // GET saved courses from the backend
+  useEffect(() => {
+  const loadSaved = async () => {
+    const fetchSavedCourses = async () => {
+      try {
+        const response = await fetch(`/users/${userId}/courses`);
+        if (!response.ok) throw new Error("Failed to fetch saved courses");
+        const data = await response.json();
+        return data;
+      } catch (err) {
+        console.error("Error fetching saved courses:", err);
+        return [];
+      }
+    };
+
+    if (!userId) return;
+    const savedCourses = await fetchSavedCourses();
+
+    // Doesnt save term at the moment
+    const grouped = {};
+    savedCourses.forEach((course) => {
+      if (!grouped["UNSPECIFIED"]) grouped["UNSPECIFIED"] = [];
+      grouped["UNSPECIFIED"].push(course);
+    });
+
+    const newPlan = Object.entries(grouped).map(([term, classes]) => ({
+      term,
+      classes,
+    }));
+
+    setPlan(newPlan);
+  };
+
+  loadSaved();
+}, [userId]);
+
+  // Add selected course to selected term in plan
   const addCourseToQuarter = () => {
     if (!selectedTerm || !selectedCourse) return;
 
@@ -44,9 +100,11 @@ export default function FuturePlanner() {
       }
     });
 
+    updateCourseInDB(selectedCourse, "add");
     setSelectedCourse('');
   };
 
+  // Remove course from a specific term
   const removeCourse = (term, courseToRemove) => {
     setPlan((prevPlan) =>
       prevPlan
@@ -57,12 +115,15 @@ export default function FuturePlanner() {
         )
         .filter((entry) => entry.classes.length > 0)
     );
+
+    updateCourseInDB(courseToRemove, "remove");
   };
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Future Course Planner</h1>
 
+      {/* Dropdowns to select term and course */}
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <select
           value={selectedTerm}
@@ -98,6 +159,7 @@ export default function FuturePlanner() {
         </button>
       </div>
 
+      {/* Display user's plan */}
       {plan.length > 0 ? (
         <div className="space-y-4">
           {plan
