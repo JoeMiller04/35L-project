@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 import { useState, useEffect } from 'react';
-import {COMSCIClassOptions, MATHClassOptions} from './ClassesLists'
+import {COMSCIClassOptions, MATHClassOptions, ECENGRClassOptions, PHYSICSClassOptions} from './ClassesLists'
 
 function Home() {
     const navigate = useNavigate();
@@ -31,6 +31,15 @@ function Home() {
         };
     }
 
+    function makeTimeNice(time) {
+
+       
+
+
+
+
+    }
+
     //Get column from day fo the week
     function getDayColumn(day) {
         switch (day) {
@@ -53,7 +62,9 @@ function Home() {
 
     const classOptionsMap = {
          COMSCI: COMSCIClassOptions,
-         MATH: MATHClassOptions
+         MATH: MATHClassOptions, 
+         ECENGR: ECENGRClassOptions, 
+         PHYSICS: PHYSICSClassOptions
 
     };
 
@@ -123,7 +134,7 @@ function Home() {
     const options = [
     { value: '', label: '— Select a Department —' },
     { value: 'COMSCI', label: 'Computer Science (COM SCI)' },
-    {value: 'EC ENGR', label:'Electrical Engineering (EC ENGR)'}
+    {value: 'ECENGR', label:'Electrical Engineering (EC ENGR)'}
     , {value:'PHYSICS', label:'Physics (PHYSICS)'}, 
     {value:'MATH', label:'Mathematics (MATH)'}
     
@@ -292,6 +303,27 @@ function Home() {
             <span style={{ textAlign: 'right', fontWeight: 'normal', fontSize: '16px', color: 'black' }}>{item.term}</span>
           </div>
           <div style={{fontSize:'15px'}}>{capitalizeWords(item.instructor.toLowerCase())}</div>
+          
+          {/*this is to map the time object to text*/}
+          <div>
+            {item.times && typeof item.times === 'object' ? (
+              <div>
+                {Object.entries(item.times).map(([day, time]) => (
+                    
+                  <div key={day} style={{fontSize:'15px'}}>
+                    <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {time}
+                   
+                  </div>
+                   
+                ))}
+              </div>
+            ) : (
+              <div>{item.times}</div>
+            )}
+          </div>
+
+
+
           
           <button style={{}}>Add to Plan</button>
 
