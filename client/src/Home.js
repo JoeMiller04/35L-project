@@ -24,11 +24,14 @@ function Home() {
     useEffect(() => {
         setClasses([]);
         fetchClasses();
+      
     }, []);
 
     async function fetchClasses() {
 
         setClasses([]);
+
+        
 
 
 
