@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
-from server.models.user import User, UserCreate, UserResponse, UserCourseUpdate, SavedCourse
-from server.db.mongodb import users_collection
+from server.models.user import User, UserCreate, UserResponse, UserCourseUpdate, SavedCourse, CourseListUpdate
+from server.db.mongodb import users_collection, course_collection
 from fastapi.encoders import jsonable_encoder
 from passlib.context import CryptContext
 from bson import ObjectId
 from bson.errors import InvalidId
 from server.api.security import validate_admin_key
-from server.db.mongodb import course_collection
 from typing import Dict, List
 
 
@@ -202,6 +201,116 @@ async def get_user_courses(user_id: str):
             return []
         
         return user["saved_courses"]
+        
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid user ID format")
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+
+
+@router.post("/users/{user_id}/course-list", response_model=UserResponse)
+async def update_user_course_list(user_id: str, update: CourseListUpdate):
+    """
+    Add or remove a course ID from a user's course list.
+    This is a simple bookmarking system that stores MongoDB course IDs.
+    """
+    try:
+        oid = ObjectId(user_id)
+        user = await users_collection.find_one({"_id": oid})
+        
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Validate the course_id format
+        try:
+            course_oid = ObjectId(update.course_id)
+        except InvalidId:
+            raise HTTPException(status_code=400, detail="Invalid course ID format")
+            
+        # Check if the course exists
+        course = await course_collection.find_one({"_id": course_oid})
+        if course is None:
+            raise HTTPException(status_code=404, detail="Course not found")
+        
+        # Initialize course_list if it doesn't exist
+        if "course_list" not in user:
+            user["course_list"] = []
+        
+        # Convert all course IDs to strings for consistent comparison
+        course_id_str = str(course_oid)
+        user_course_list = [str(cid) for cid in user["course_list"]]
+            
+        if update.action == "add":
+            # Add only if not already in the list
+            if course_id_str not in user_course_list:
+                result = await users_collection.update_one(
+                    {"_id": oid},
+                    {"$push": {"course_list": course_id_str}}
+                )
+                
+                if result.modified_count == 0:
+                    raise HTTPException(status_code=400, detail="Failed to add course to list")
+                
+        elif update.action == "remove":
+            # Remove if present
+            result = await users_collection.update_one(
+                {"_id": oid},
+                {"$pull": {"course_list": course_id_str}}
+            )
+            
+        else:
+            raise HTTPException(status_code=400, detail="Invalid action. Use 'add' or 'remove'")
+            
+        # Get the updated user
+        updated_user = await users_collection.find_one({"_id": oid})
+        if updated_user and "_id" in updated_user:
+            updated_user["_id"] = str(updated_user["_id"])
+            
+        return updated_user
+        
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid user ID format")
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+
+
+@router.get("/users/{user_id}/course-list", response_model=List[Dict])
+async def get_user_course_list(user_id: str):
+    """
+    Get all courses in a user's course list.
+    Returns the full course details for each course ID.
+    """
+    try:
+        oid = ObjectId(user_id)
+        user = await users_collection.find_one({"_id": oid})
+        
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+            
+        # Check if user has a course list
+        if "course_list" not in user or not user["course_list"]:
+            return []
+        
+        # Get the full course details for each course ID
+        result = []
+        for course_id in user["course_list"]:
+            try:
+                course_oid = ObjectId(course_id)
+                course = await course_collection.find_one({"_id": course_oid})
+                
+                if course:
+                    # Convert ObjectId to string
+                    course["_id"] = str(course["_id"])
+                    result.append(course)
+            except (InvalidId, Exception) as e:
+                # Skip invalid entries but continue processing
+                continue
+                
+        return result
         
     except InvalidId:
         raise HTTPException(status_code=400, detail="Invalid user ID format")
