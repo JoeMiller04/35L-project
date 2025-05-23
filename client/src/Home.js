@@ -12,6 +12,7 @@ function Home() {
     const [dropdownClass, setDropdownClass] = useState("");
     const [quarter, setQuarter] = useState("25S");
     const [dataFromQuery, setDataFromQuery] = useState([]);
+    const [id, setId] = useState(null);
 
     // Run changeColor every time a new class is rendered
     useEffect(() => {
@@ -22,19 +23,44 @@ function Home() {
 
     // update class list when user loads in
     useEffect(() => {
+        const userID = localStorage.getItem('user_id');
+        setId(userID);
+        alert(userID);
         setClasses([]);
-        fetchClasses();
+        
       
     }, []);
 
-    async function fetchClasses() {
+    //fetch classes from backend
+    async function updateUserCourseList(userId, courseId) {
+        if (!userId) {
+            userId = JSON.parse(localStorage.getItem('user_id'));
+            userId = userId._id;
+            setId(userId);
+        }
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/users/${userId}/course-list`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ course_id: courseId, action:"add" }),
+              
+            });
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Failed to update course list');
+            }
+            return await response.json();
+              alert("Class added");
+        } catch (err) {
+            alert(userId);
+            alert('Error: ' + err.message);
+        }
+    }
 
-        setClasses([]);
-
-        
-
-
-
+    function addClass(id, courseId, action) {
+        updateUserCourseList(id, courseId, action);
     }
 
     //Get grid column and row for each class
@@ -366,7 +392,7 @@ function Home() {
 
 
           
-          <button style={{}}>Add to Plan</button>
+          <button style={{}} onClick={()=>(addClass(id._id, item._id))}>Add to Plan</button>
 
 
         </div>
