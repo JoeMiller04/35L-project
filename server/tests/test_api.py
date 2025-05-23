@@ -197,6 +197,7 @@ def test_add_course_to_user(client):
     """Test adding a course to a user's saved list"""
     username = "courseuser1"
     course_name = "CS 35L"
+    term = "23F"  
     user_id = None
     
     try:
@@ -211,7 +212,7 @@ def test_add_course_to_user(client):
         # Add a course to user's saved list
         response = client.post(
             f"/users/{user_id}/courses",
-            json={"course_name": course_name, "action": "add"}
+            json={"term": term, "course_name": course_name, "action": "add"}
         )
         
         # Verify the response
@@ -219,13 +220,32 @@ def test_add_course_to_user(client):
         data = response.json()
         assert data["_id"] == user_id
         assert data["username"] == username
-        assert course_name in data["saved_courses"]
+        
+        # Check that the course is in saved_courses
+        saved_courses = data["saved_courses"]
+        assert isinstance(saved_courses, list)
+        assert len(saved_courses) > 0
+        
+        found = False
+        for course in saved_courses:
+            if course["term"] == term and course["course_name"] == course_name:
+                found = True
+                break
+        assert found, f"Course {term} {course_name} not found in saved courses"
         
         # Get the user's courses list directly
         response = client.get(f"/users/{user_id}/courses")
         assert response.status_code == 200
         courses = response.json()
-        assert course_name in courses
+        assert isinstance(courses, list)
+        
+        # Verify the returned courses contain the course
+        found = False
+        for course in courses:
+            if course["term"] == term and course["course_name"] == course_name:
+                found = True
+                break
+        assert found, f"Course {term} {course_name} not found in courses endpoint response"
         
     finally:
         # Use the delete API for cleanup
@@ -237,6 +257,7 @@ def test_add_duplicate_course(client):
     """Test adding the same course twice to a user's list"""
     username = "courseuser2"
     course_name = "MATH 31A"
+    term = "24W"
     user_id = None
     
     try:
@@ -248,20 +269,28 @@ def test_add_duplicate_course(client):
         
         client.post(
             f"/users/{user_id}/courses",
-            json={"course_name": course_name, "action": "add"}
+            json={"term": term, "course_name": course_name, "action": "add"}
         )
         
         # Add the same course a second time
         response = client.post(
             f"/users/{user_id}/courses",
-            json={"course_name": course_name, "action": "add"}
+            json={"term": term, "course_name": course_name, "action": "add"}
         )
         
-        # Should only show up once
+        # Get the updated user
         assert response.status_code == 200
         data = response.json()
         saved_courses = data["saved_courses"]
-        assert saved_courses.count(course_name) == 1
+        
+        # Count how many times this term+course combination appears
+        count = 0
+        for course in saved_courses:
+            if course["term"] == term and course["course_name"] == course_name:
+                count += 1
+        
+        # Should only appear once
+        assert count == 1, f"Course {term} {course_name} appears {count} times, expected once"
         
     finally:
         if user_id:
@@ -272,6 +301,7 @@ def test_remove_course(client):
     """Test removing a course from a user's saved list"""
     username = "courseuser3"
     course_name = "PHYS 1A"
+    term = "24S"
     user_id = None
     
     try:
@@ -284,16 +314,21 @@ def test_remove_course(client):
         # Add a course to user's saved list
         client.post(
             f"/users/{user_id}/courses",
-            json={"course_name": course_name, "action": "add"}
+            json={"term": term, "course_name": course_name, "action": "add"}
         )
         
         response = client.get(f"/users/{user_id}/courses")
         courses = response.json()
-        assert course_name in courses
+        found = False
+        for course in courses:
+            if course["term"] == term and course["course_name"] == course_name:
+                found = True
+                break
+        assert found, f"Course {term} {course_name} not found after adding"
         
         response = client.post(
             f"/users/{user_id}/courses",
-            json={"course_name": course_name, "action": "remove"}
+            json={"term": term, "course_name": course_name, "action": "remove"}
         )
         
         # Check that the course was removed
@@ -310,6 +345,7 @@ def test_remove_nonexistent_course(client):
     """Test removing a course that's not in the user's list"""
     username = "courseuser4"
     course_name = "HIST 1A"
+    term = "25W"
     user_id = None
     
     try:
@@ -322,7 +358,7 @@ def test_remove_nonexistent_course(client):
         # Try to remove a course that's not in the list
         response = client.post(
             f"/users/{user_id}/courses",
-            json={"course_name": course_name, "action": "remove"}
+            json={"term": term, "course_name": course_name, "action": "remove"}
         )
         
         # This should succeed anyway
@@ -337,6 +373,7 @@ def test_invalid_course_action(client):
     """Test using an invalid action with the course update endpoint"""
     username = "courseuser5"
     course_name = "CHEM 14A"
+    term = "23S"
     user_id = None
     
     try:
@@ -349,7 +386,7 @@ def test_invalid_course_action(client):
         # Try a bad action
         response = client.post(
             f"/users/{user_id}/courses",
-            json={"course_name": course_name, "action": "not real action"}
+            json={"term": term, "course_name": course_name, "action": "not real action"}
         )
         
         # This should fail
@@ -407,7 +444,7 @@ def test_add_course_invalid_user_id(client):
     # Try to add a course with invalid user ID
     response = client.post(
         f"/users/{invalid_id}/courses",
-        json={"course_name": "CS 31", "action": "add"}
+        json={"term": "24F", "course_name": "CS 31", "action": "add"}
     )
     
     # Should fail with invalid ID format
