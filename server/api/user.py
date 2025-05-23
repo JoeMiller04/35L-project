@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from server.models.user import User, UserCreate, UserResponse, UserCourseUpdate
+from server.models.user import User, UserCreate, UserResponse, UserCourseUpdate, SavedCourse
 from server.db.mongodb import users_collection
 from fastapi.encoders import jsonable_encoder
 from passlib.context import CryptContext
@@ -138,19 +138,33 @@ async def update_user_courses(user_id: str, update: UserCourseUpdate):
         if "saved_courses" not in user:
             user["saved_courses"] = []
             
+        # Create a saved course object
+        saved_course = {"term": update.term, "course_name": update.course_name}
+            
         # Process the update
         if update.action == "add":
-            if update.course_name not in user["saved_courses"]:
+            # Check if this term and course combination is already saved
+            already_saved = False
+            for course in user["saved_courses"]:
+                if course.get("term") == update.term and course.get("course_name") == update.course_name:
+                    already_saved = True
+                    break
+            
+            # We don't return an error if the course is already saved
+            if not already_saved:
                 result = await users_collection.update_one(
                     {"_id": oid},
-                    {"$push": {"saved_courses": update.course_name}}
-                ) 
+                    {"$push": {"saved_courses": saved_course}}
+                )
+                
         elif update.action == "remove":
-            # Remove the course name
-            # Succeeds even if the course name is not in the list
+            # Remove the specific term and course combination
             result = await users_collection.update_one(
                 {"_id": oid},
-                {"$pull": {"saved_courses": update.course_name}}
+                {"$pull": {"saved_courses": {
+                    "term": update.term,
+                    "course_name": update.course_name
+                }}}
             )
         else:
             raise HTTPException(status_code=400, detail="Invalid action. Use 'add' or 'remove'")
@@ -170,11 +184,11 @@ async def update_user_courses(user_id: str, update: UserCourseUpdate):
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
 
-@router.get("/users/{user_id}/courses", response_model=List[str])
+@router.get("/users/{user_id}/courses", response_model=List[SavedCourse])
 async def get_user_courses(user_id: str):
     """
     Get all courses saved by a user.
-    Returns a list of strings.
+    Returns a list of SavedCourse objects containing term and course_name.
     """
     try:
         oid = ObjectId(user_id)

@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, GetJsonSchemaHandler, GetCoreSchemaHandle
 from pydantic.json_schema import JsonSchemaValue
 from pydantic_core import core_schema
 from bson import ObjectId
-from typing import Optional, Any, Annotated, List
+from typing import Optional, Any, Annotated, List, Tuple
 
 
 class PyObjectId(str):
@@ -29,6 +29,15 @@ class PyObjectId(str):
         return handler(core_schema.str_schema())
 
 
+class SavedCourse(BaseModel):
+    """Model for a saved course with term information"""
+    term: str
+    course_name: str
+    
+    def __str__(self):
+        return f"{self.term}: {self.course_name}"
+
+
 class User(BaseModel):
     """
     User model for MongoDB
@@ -36,7 +45,7 @@ class User(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id")
     username: str
     password_hash: str
-    saved_courses: List[str] = []  # List of course names saved by the user
+    saved_courses: List[SavedCourse] = []  # List of saved courses with term information
 
     # Updated configuration syntax for Pydantic v2
     model_config = ConfigDict(
@@ -48,7 +57,7 @@ class User(BaseModel):
 class UserCreate(BaseModel):
     username: str
     password: str
-    saved_courses: List[str] = []  # Optional during creation
+    saved_courses: List[SavedCourse] = []  # Optional during creation
 
 
 class UserResponse(BaseModel):
@@ -57,7 +66,7 @@ class UserResponse(BaseModel):
     """
     id: Optional[PyObjectId] = Field(alias="_id")
     username: str
-    saved_courses: List[str] = [] 
+    saved_courses: List[SavedCourse] = [] 
     
     model_config = ConfigDict(
         populate_by_name=True,
@@ -69,6 +78,7 @@ class UserCourseUpdate(BaseModel):
     """
     Model for adding or removing courses from a user's list
     """
-    course_name: str # For now, we're just doing coursenames, not the actual course IDs
+    term: str  # Term information (e.g., "22F", "23S")
+    course_name: str  # Course name (e.g., "COM SCI 35L")
     action: str  # "add" or "remove"
 

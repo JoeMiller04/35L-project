@@ -1,5 +1,5 @@
 """
-This is a script to process the UCLA grades data for the 2022 Fall through 2023 Spring semesters.
+This is a script to process the UCLA grades data for the 2023 Summer through 2024 Spring semesters.
 It includes functions to read the data, clean it, and save it to a MongoDB database.
 Run from inside the data/uclagrades directory.
 IF YOU RUN MULTIPLE TIMES, IT WILL CONTINUE TO APPEND TO THE DATABASE.
@@ -7,12 +7,11 @@ IF YOU RUN MULTIPLE TIMES, IT WILL CONTINUE TO APPEND TO THE DATABASE.
 
 import pandas as pd
 
-file  = "grades-22f-23s.csv"
+file  = "grades-23f-24s.csv"
 
-column_names = ['term', 'subject', 'catalog', 'section', 'grade',
+column_names = ['term', 'long subject', 'catalog', 'section', 'grade',
        'grade_count', 'enrolled_total', 'instructor', 'unused_INSTR_CD', 'title',
-       'unused_ENROL_TERM_SEQ_NBR', 'unused_INTL_CATL', 'unused_INTL_SECT', 'unused_CREATION_DATE',
-       'unused_ROWNO'] # column names for importing the data
+       'subject', 'unused_INTL_CATL', 'unused_INTL_SECT'] # column names for importing
 
 df = pd.read_csv(file, header=None, names=column_names)
 use_columns = ['term', 'subject', 'catalog', 'section', 'grade',
@@ -21,18 +20,19 @@ df = df[use_columns] # select the columns we wil actually use
 
 # Sanity Checks
 assert int(df.isna().sum().sum()) == 0 # We shouldn't have missing data for this file
-assert len(df) == 37002 # There should be 37002 points
+assert len(df) == 47743 # There should be 47743 points for 23F-24S
 
+df = df.drop(index=0) # drop the first row because it's just headers
+
+# Convert some columns to numeric
+df["grade_count"] = pd.to_numeric(df["grade_count"])
+df["enrolled_total"] = pd.to_numeric(df["enrolled_total"])
 
 # grp_cols = ["term", "subject", "catalog", "instructor", "title"]
 grp_cols = ["term", "subject", "catalog", "instructor", "title", "section"]
 """
-The same instance of class should have all these columns be the same
-I thought using the "section" column would be redundant, 
-but it's not and it changes the number of groups we have (by like 1000)
-TODO check what the differences are 
-I've noticed that there's only 17 mismatched columns for enrollment totals
-when I use section, otherwise there's 500~600 where it doesn't add up right
+Enrollment totals do not always match up to the sum of the grades.
+We could investigate this, but I don't think it's worth it for now.
 """
 
 # So we group by them by same instance of course
@@ -74,18 +74,23 @@ pivot.rename(columns=gradeMap, inplace=True)
 # I belive S/U are equivalent to P/NP but just for grad class, 
 # and the other grades can fall under "Other"
 # Then all the grades we have are A~F, P/NP, and other
+# Also for this dataset, NC (no credit) is combined with F
 pivot["P"] = pivot["P"] + pivot["S"]
 pivot["NP"] = pivot["NP"] + pivot["U"]
-pivot.drop(columns=["S", "U"], inplace=True)
-extra = ["DR", "I", "IP", "LI", "NR", "R"]
+pivot["F"] = pivot["F"] + pivot["NC"]
+pivot.drop(columns=["S", "U", "NC"], inplace=True)
+extra = ["DR", "I"]
 pivot["other"] = pivot[extra].sum(axis=1)
 pivot.drop(columns=extra, inplace=True)
 
 pivot["real"] = True # So we know this is real data
 
+# In 22F-23S, we only had 17 rows that didn't match up for enrollment totals
+# But for here, we have 1,000+ rows that don't match up.
+# So let's just keep them even if they don't match up.
 filtered = (
     pivot
-    .loc[~pivot["enrl_mismatch"] & pivot["real"]]   # keep only the good rows
+    .loc[pivot["real"]]   # keep only the good rows
     .drop(columns=["enrl_mismatch"])                # drop this column
     .reset_index(drop=True)
 )
@@ -99,7 +104,7 @@ filtered["grades"] = (
 tidy = filtered.drop(columns=remaining_grades)
 
 print("Exporting", len(tidy), "rows")
-# tidy.to_csv("grades_backup_22f-23s.csv", index=False)
+# tidy.to_csv("grades_backup_23f-24s.csv", index=False)
 
 def export_to_mongodb(data):
     """Export the processed data to MongoDB"""
@@ -209,7 +214,7 @@ def fix_trailing_spaces():
 
 # Call the export function
 if __name__ == "__main__":
-    print("Processing UCLA grades data from 2022 Fall to 2023 Spring...")
+    print("Processing UCLA grades data from 2023 Summer to 2024 Spring...")
     print("Exporting data to MongoDB...")
     count = export_to_mongodb(tidy)
     fix_trailing_spaces()
