@@ -46,6 +46,7 @@ class User(BaseModel):
     username: str
     password_hash: str
     saved_courses: List[SavedCourse] = []  # List of saved courses with term information
+    course_list: List[PyObjectId] = []  # List of course IDs (MongoDB ObjectIds as strings)
 
     # Updated configuration syntax for Pydantic v2
     model_config = ConfigDict(
@@ -58,6 +59,7 @@ class UserCreate(BaseModel):
     username: str
     password: str
     saved_courses: List[SavedCourse] = []  # Optional during creation
+    course_list: List[PyObjectId] = []  # Optional during creation
 
 
 class UserResponse(BaseModel):
@@ -67,6 +69,7 @@ class UserResponse(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id")
     username: str
     saved_courses: List[SavedCourse] = [] 
+    course_list: List[PyObjectId] = []
     
     model_config = ConfigDict(
         populate_by_name=True,
@@ -80,5 +83,13 @@ class UserCourseUpdate(BaseModel):
     """
     term: str  # Term information (e.g., "22F", "23S")
     course_name: str  # Course name (e.g., "COM SCI 35L")
+    action: str  # "add" or "remove"
+
+
+class CourseListUpdate(BaseModel):
+    """
+    Model for adding or removing course IDs from a user's course list
+    """
+    course_id: PyObjectId  # MongoDB ID of the course
     action: str  # "add" or "remove"
 
