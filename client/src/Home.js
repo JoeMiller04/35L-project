@@ -25,7 +25,6 @@ function Home() {
     useEffect(() => {
         const userID = localStorage.getItem('user_id');
         setId(userID);
-        alert(userID);
         setClasses([]);
         
       
