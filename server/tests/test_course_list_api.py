@@ -195,6 +195,9 @@ def test_invalid_course_list_action(client):
     assert response.status_code == 400
     assert "Invalid action" in response.json()["detail"]
 
+    client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
+
+
 
 def test_get_course_list_empty(client):
     user_id = create_user(client)
