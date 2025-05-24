@@ -1,10 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// Add a save button to save taken courses in database which will be used in isValid
-// users should default have empty taken courses
-
+// List of required or typical CSE courses
 const cseCourses = [
   "COM SCI 31", "COM SCI 32", "COM SCI 33", "COM SCI 35L", "COM SCI M51A", "ECE 3", "ECE 100", "ECE 102", "ECE 115C",
   "COM SCI 111", "COM SCI 118", "COM SCI 131", "COM SCI 180", "COM SCI M151B",
@@ -13,86 +11,89 @@ const cseCourses = [
 ];
 
 export default function PastCourses() {
-
+  // Track which courses have been checked (i.e., taken by the user)
+  const [takenCourses, setTakenCourses] = useState({});
   const navigate = useNavigate();
-  const [takenClasses, setTakenClasses] = useState([]);
- 
-  
+
+  // Not right
+   const userId = localStorage.getItem("user_id");
+
+  // Load saved courses from backend when the component first mounts
+  useEffect(() => {
+    const fetchTakenCourses = async () => {
+      try {
+        const response = await fetch(`/users/${userId}/courses`);
+        if (!response.ok) throw new Error("Failed to load courses");
+        const data = await response.json(); // List of strings like "COM SCI 32"
+
+
+        // Convert the list to an object for quick checkbox state lookup
+        const initial = {};
+        data.forEach((course) => {
+          initial[course] = true;
+        });
+        setTakenCourses(initial);
+      } catch (err) {
+        console.error("Error loading courses:", err);
+      }
+    };
+
+    if (userId) fetchTakenCourses();
+  }, [userId]);
+
+  // Toggle checkbox state and update the backend accordingly
+  const toggleCourse = async (course) => {
+    const isNowChecked = !takenCourses[course];
+
+    // Update UI state immediately
+    setTakenCourses((prev) => ({
+      ...prev,
+      [course]: isNowChecked,
+    }));
+
+
+    // Update backend with add/remove action
+    try {
+      const response = await fetch(`/users/${userId}/courses`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          course_name: course,
+          action: isNowChecked ? 'add' : 'remove'
+        })
+      });
+
+      if (!response.ok) throw new Error("Failed to update backend");
+    } catch (err) {
+      console.error("Error syncing course:", err);
+    }
+  };
 
   return (
-
-     <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
-    <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh' }}></div>
-    <div style={{ width: '80%' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/Home')} style={{marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
-                    <h1 style={{ textAlign: 'center', fontSize: '50px', marginRight:'360px' }}>Degree Information</h1>
-                </div>
-
-                <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'0px'}}/>
-              <div style={{ textAlign: 'center', fontSize: '20px', margin: '30px 0' }}>
-                   <p style={{ display: 'inline', margin: '0 20px' }}>Name: Kyle Reisinger</p>
-                   <p style={{ display: 'inline', margin: '0 50px' }}>Year: Sophomore</p>
-                   <p style={{ display: 'inline', margin: '0 50px' }}>Completed Units: 100</p>
-                   <p style={{display: 'inline', margin:'0 20px'}}>Major: Computer Science and Engineering</p>
-              </div>
-
-              <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'30px'}}/>
-              <p style={{ textAlign: 'center', fontSize: '35px', marginTop:'20px'}}> Course History</p>
-
-              
-              <div style={{display: 'flex',flexDirection: 'row',justifyContent: 'center',alignItems: 'flex-start',marginTop: '-50px',gap: '500px'}}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                      <p style={{ fontSize: '20px'}}>Past Courses</p>
-                           {/* Add past courses content here if needed */}
-                           <div style={{display: 'flex',flexDirection: 'row',justifyContent: 'center',alignItems: 'flex-start',marginTop: '-20px',gap: '250px'}}>
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-
-                            
-                                <p>Test</p>
-
-
-                          </div>
-
-
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-
-                            
-                            <p>Test</p>
-
-
-                          </div>
-
-                        </div>
-                      </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <p style={{ fontSize: '20px'}}>Future Courses</p>
-                      {/* Add future courses content here if needed */}
-                    </div>
-                    </div>
-
-
-
-
-
-           <div >
-     
-   
+    <div>
+    <div className="p-6 max-w-xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">CSE Course Checklist</h1>
+      <ul className="space-y-2">
+        {cseCourses.map((course) => (
+          <li key={course} className="flex items-center">
+            <input
+              type="checkbox"
+              id={course}
+              checked={takenCourses[course] || false} // Default to false if not present
+              onChange={() => toggleCourse(course)}
+              className="mr-3"
+            />
+            <label htmlFor={course} className="text-lg">{course}</label>
+          </li>
+        ))}
+      </ul>
+      <button onClick={() => navigate('/Home')}>Go to Home</button>
+      <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
+      <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
+      <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
+      </div>
 
     </div>
-
-
-
-
-    </div>
-
-     
-
-
-
-
-   
-    <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh' }}></div>
-    </div>
+  
   );
 }

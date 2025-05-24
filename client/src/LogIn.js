@@ -12,6 +12,7 @@ function LogIn() {
     const [password, setPassword] = useState('');
     const [noUserOrPassword, setNoUserOrPassword] = useState(false);
     const [incorrectInfo, setIncorrectInfo] = useState(false);
+    const [data, setData] = useState(null);
 
 
     //function that calls backend login function
@@ -27,6 +28,7 @@ function LogIn() {
             if (response.ok) {
                 const data = await response.json();
                 navigate('/Home'); // Redirect to the home page after successful login
+                localStorage.setItem('user_id', JSON.stringify(data));
             } else if (response.status === 401) {
                 setNoUserOrPassword(false);
                 setIncorrectInfo(true); // Handle incorrect username or password
