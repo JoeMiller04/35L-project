@@ -27,7 +27,28 @@ course_id = None
 
 def test_test():
     """Simple test to verify testing setup works"""
+
     assert True
+
+
+def test_setup(client):
+    """Ensure the test user does not already exist"""
+    
+    response = client.post(
+        "/users",
+        json=test_user_data
+    )
+    
+    if response.status_code == 400:
+        # User exists, delete it
+        response = client.post(
+            "/login",
+            params={"username": test_user_data["username"], "password": test_user_data["password"]}
+        )
+        assert response.status_code == 200
+        user_id = response.json()["_id"]
+        response = client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
+        assert response.status_code == 204
 
 
 def create_course(client):
@@ -53,6 +74,22 @@ def create_user(client):
         "/users",
         json=test_user_data
     )
+
+    data = response.json()
+    if response.status_code == 400:
+        response = client.post(
+            "/login",
+            params={"username": test_user_data["username"], "password": test_user_data["password"]}
+        )
+        assert response.status_code == 200
+        user_id = response.json()["_id"]
+        response = client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
+        assert response.status_code == 204
+
+        response = client.post(
+            "/users",
+            json=test_user_data
+        )
 
     data = response.json()
     assert "_id" in data
@@ -106,15 +143,20 @@ def test_add_duplicate_course_to_list(client):
     )
     
     # Get the updated user
-    assert response.status_code == 200
-    data = response.json()
-    course_list = data["course_list"]
+    assert response.status_code == 400 # Now should return error
     
     # Count occurrences of the course ID
-    count = course_list.count(course_id)
-    
+    response = client.get(
+        f"/users/{user_id}/course-list"
+    )
+    data = response.json()
+    assert response.status_code == 200
+    count = 0
+    for course in data:
+        if course["_id"] == course_id: count += 1
+   
     # Should only appear once
-    assert count == 1, f"Course {course_id} appears {course_id} times, expected once"
+    assert count == 1, f"Course {course_id} appears {count} times, expected once"
 
     # Clean up the test course and user
     client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})

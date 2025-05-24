@@ -252,6 +252,9 @@ async def update_user_course_list(user_id: str, update: CourseListUpdate):
                 
                 if result.modified_count == 0:
                     raise HTTPException(status_code=400, detail="Failed to add course to list")
+            else:
+                # Course already in list, returns error at frontend's request
+                raise HTTPException(status_code=400, detail="Course already in user's course list")
                 
         elif update.action == "remove":
             # Remove if present
