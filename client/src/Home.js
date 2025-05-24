@@ -23,12 +23,12 @@ function Home() {
 
     // update class list when user loads in
     useEffect(() => {
-        const userID = localStorage.getItem('user_id');
-        setId(userID);
-        alert(userID);
-        setClasses([]);
-        
-      
+        const userObj = JSON.parse(localStorage.getItem('user_id'));
+        if (userObj && userObj._id) {
+            setId(userObj._id);
+            setClasses([]);
+            runGetClasses(userObj._id);
+        }
     }, []);
 
     //fetch classes from backend
@@ -51,8 +51,10 @@ function Home() {
                 const error = await response.json();
                 throw new Error(error.detail || 'Failed to update course list');
             }
+            setClasses([]);
+            runGetClasses(userId);
             return await response.json();
-              alert("Class added");
+
         } catch (err) {
             alert(userId);
             alert('Error: ' + err.message);
@@ -61,6 +63,35 @@ function Home() {
 
     function addClass(id, courseId, action) {
         updateUserCourseList(id, courseId, action);
+    }
+
+    async function getClasses(userId) {
+        setClasses([]);
+        if (!userId) {
+            userId = JSON.parse(localStorage.getItem('user_id'));
+            userId = userId._id;
+            setId(userId);
+        }
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/users/${userId}/course-list`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Failed to fetch user course list');
+            }
+            const data = await response.json();
+            setClasses(data);
+        } catch (err) {
+            alert('Error fetching user course list: ' + err.message);
+        }
+    }
+
+    function runGetClasses(userId) {
+        getClasses(userId);
     }
 
     //Get grid column and row for each class
@@ -80,9 +111,9 @@ function Home() {
             t = t.toString().padStart(4, '0');
             let hour = parseInt(t.slice(0, 2), 10);
             let min = t.slice(2);
-            let ampm = hour <= 12 ? 'AM' : 'PM';
+            let ampm = hour < 12 ? 'AM' : 'PM';
             if (hour > 12) hour -= 12;
-            if (hour === 0) hour = 12;
+            if (hour === 0) hour = 12; 
             return `${hour}:${min} ${ampm}`;
         }
         if (Array.isArray(time) && time.length === 2) {
@@ -111,6 +142,8 @@ function Home() {
                 return 6;
             case 'Saturday':
                 return 7;
+            default:
+                return 1; 
         }
     }
 
@@ -169,18 +202,16 @@ function Home() {
 
     //get row from time
     function getTimeRow(time) {
+        if (typeof time === 'number') {
+            time = time.toString().padStart(4, '0');
+        }
+        if (typeof time !== 'string' || time.length !== 4) {
+            return 2; // default row
+        }
         const hour = parseInt(time.slice(0, 2), 10);
         const minute = parseInt(time.slice(2), 10);
-        let row = 0;
-        row = 2 + (hour - 8) * 4;
-        if (minute === 15) {
-            row += 1;
-        } else if (minute === 30) {
-            row += 2;
-        } else if (minute === 45) {
-            row += 3;
-        }
-
+        // 12 rows per hour, starting at 8am
+        let row = 2 + (hour - 8) * 12 + Math.floor(minute / 5);
         return row;
     }
 
@@ -242,72 +273,81 @@ function Home() {
                     <button onClick={() => navigate('/InfoPage')} style={{marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Future Requirements</button>
                 </div>
 
-                <div className='grid'>
-                    <div className='daysOfWeekTitle'>Sunday</div>
-                    <div className='daysOfWeekTitle'>Monday</div>
-                    <div className='daysOfWeekTitle'>Tuesday</div>
-                    <div className='daysOfWeekTitle'>Wednesday</div>
-                    <div className='daysOfWeekTitle'>Thursday</div>
-                    <div className='daysOfWeekTitle'>Friday</div>
-                    <div className='daysOfWeekTitle'>Saturday</div>
-
-                    {/* Render the grid lines */}
-                    {Array.from({ length: 40 }).map((_, rowIndex) => (
-                        Array.from({ length: 7 }).map((_, colIndex) => (
-                            <div
-                                key={`${rowIndex}-${colIndex}`}
-                                style={{
-                                    borderTop: rowIndex % 4 === 0 ? '1px solid black' : 'none',
-                                    borderLeft: '1px solid black',
-                                    borderRight: colIndex === 6 ? '1px solid black' : 'none',
-                                    borderBottom: rowIndex === 39 ? '1px solid black' : 'none',
-                                    height: '15px',
-                                }}
-                            ></div>
-                        ))
-                    ))}
-
-                    {/*time labels*/}
-                    <h1 style={{position:'absolute', top:'10px', left:'-62px', fontSize:'20px'}}>8 am</h1>
-                    <h1 style={{position:'absolute', top:'70px', left:'-62px', fontSize:'20px'}}>9 am</h1>
-                    <h1 style={{position:'absolute', top:'130px', left:'-75px', fontSize:'20px'}}>10 am</h1>
-                    <h1 style={{position:'absolute', top:'190px', left:'-75px', fontSize:'20px'}}>11 am</h1>
-                    <h1 style={{position:'absolute', top:'250px', left:'-75px', fontSize:'20px'}}>12 pm</h1>
-                    <h1 style={{position:'absolute', top:'310px', left:'-64px', fontSize:'20px'}}>1 pm</h1>
-                    <h1 style={{position:'absolute', top:'370px', left:'-64px', fontSize:'20px'}}>2 pm</h1>
-                    <h1 style={{position:'absolute', top:'430px', left:'-64px', fontSize:'20px'}}>3 pm</h1>
-                    <h1 style={{position:'absolute', top:'490px', left:'-64px', fontSize:'20px'}}>4 pm</h1>
-                    <h1 style={{position:'absolute', top:'550px', left:'-64px', fontSize:'20px'}}>5 pm</h1>
-                    <h1 style={{position:'absolute', top:'610px', left:'-64px', fontSize:'20px'}}>6 pm</h1>
-
-                    {/* Render the class blocks */}
-                    {classes.map((cls, index) => {
-                        const position = calcGridPosition(cls);
-                        return (
-                            <div
-                                key={index}
-                                style={{
-                                    position: 'absolute', 
-                                    top: `${40 + (position.gridRow - 2) * 15}px`, 
-                                    left: `${(position.gridColumn - 1) * (100 / 7)}%`, 
-                                    height: `${(position.gridRowEnd.split(' ')[1] || 1) * 15}px`,
-                                    width: `${100 / 7}%`, 
-                                    border: '1px solid red',
-                                    backgroundColor: colors[index], 
-                                    display: 'flex', 
-                                    justifyContent: 'center', 
-                                    alignItems:'center', 
-                                    textAlign: 'center'
-                                    
-                                }}
-                            >
-                                {cls.name}
-                                <br />
-                                {cls.location}
-                            </div>
-                        );
-                    })}
+                <div style={{ position: 'relative', width: '80%', minHeight: `${144 * 5}px`, margin: '0 auto' }}>
+  {/* Grid lines */}
+  <div style={{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: `${144 * 5}px`,
+    zIndex: 0,
+    display: 'grid',
+    gridTemplateRows: `repeat(144, 5px)`,
+    gridTemplateColumns: `repeat(7, 1fr)`,
+    pointerEvents: 'none'
+  }}>
+    {Array.from({ length: 144 * 7 }).map((_, i) => {
+      const rowIndex = Math.floor(i / 7);
+      const colIndex = i % 7;
+      return (
+        <div
+          key={`${rowIndex}-${colIndex}`}
+          style={{
+            borderTop: rowIndex % 12 === 0 ? '1px solid black' : 'none',
+            borderLeft: '1px solid black',
+            borderRight: colIndex === 6 ? '1px solid black' : 'none',
+            borderBottom: rowIndex === 143 ? '1px solid black' : 'none',
+            height: '5px',
+            width: '100%',
+            boxSizing: 'border-box',
+          }}
+        ></div>
+      );
+    })}
+  </div>
+  {/* Class blocks (absolutely positioned, zIndex: 1) */}
+  {/* Class blocks */}
+{classes.map((cls, classIdx) =>
+    cls.times
+        ? Object.entries(cls.times).map(([day, timeArr], timeIdx) => {
+            if (!Array.isArray(timeArr) || timeArr.length !== 2) return null;
+            const position = calcGridPosition({
+                ...cls,
+                day,
+                start: timeArr[0],
+                end: timeArr[1],
+            });
+            return (
+                <div
+                    key={`${classIdx}-${day}-${timeIdx}`}
+                    style={{
+                        position: 'absolute',
+                        zIndex: 1,
+                        top: `${(position.gridRow - 2) * 5}px`, // 5px per row, minus header rows
+                        left: `${(position.gridColumn - 1) * (100 / 7)}%`,
+                        height: `${(position.gridRowEnd.split(' ')[1] || 1) * 5}px`,
+                        width: `${100 / 7}%`,
+                        backgroundColor: colors[classIdx % colors.length],
+                        border: '1px solid #333',
+                        borderRadius: '4px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <div style={{ fontWeight: 'bold' }}>{cls.name || `${cls.subject} ${cls.catalog}`}</div>
+                    <div>{cls.location}</div>
+                    <div>{day} {makeTimeNice(timeArr)}</div>
                 </div>
+            );
+        })
+        : null
+)}
+</div>
 
                 {/*validate schedule button*/}
                 <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', marginTop: '30px', gap: '20px' , marginLeft:'300px'}}>
@@ -370,31 +410,36 @@ function Home() {
             <span style={{ textAlign: 'left' }}>{item.subject} {item.catalog}</span>
             <span style={{ textAlign: 'right', fontWeight: 'normal', fontSize: '16px', color: 'black' }}>{item.term}</span>
           </div>
-          <div style={{fontSize:'15px'}}>{capitalizeWords(item.instructor.toLowerCase())}</div>
-          
-          {/*this is to map the time object to text*/}
+          <div style={{fontSize:'15px'}}>{capitalizeWords(item.instructor?.toLowerCase() || '')}</div>
+          {/* Render times */}
           <div>
             {item.times && typeof item.times === 'object' ? (
               <div>
-                {Object.entries(item.times).map(([day, time]) => (
-                    
-                  <div key={day} style={{fontSize:'15px'}}>
-                    <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {makeTimeNice(time)} 
-                  </div>
-                   
-                ))}
+                {Object.entries(item.times).map(([day, time]) => {
+                  let timeText = '';
+                  if (Array.isArray(time) && time.length === 2) {
+                    timeText = makeTimeNice(time);
+                  } else if (typeof time === 'string') {
+                    timeText = makeTimeNice(time);
+                  } else {
+                    timeText = String(time);
+                  }
+                  return (
+                    <div key={day} style={{fontSize:'15px'}}>
+                      <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {timeText}
+                    </div>
+                  );
+                })}
               </div>
             ) : (
-              <div>{item.times}</div>
+              <div>{String(item.times)}</div>
             )}
           </div>
-
-
-
-          
-          <button style={{}} onClick={()=>(addClass(id._id, item._id))}>Add to Plan</button>
-
-
+          <button style={{ marginTop: '10px' }} onClick={() => {
+            addClass(id._id, item._id, "add");
+            setDataFromQuery(prev => prev.filter(i => i._id !== item._id));
+            runGetClasses(id._id);
+          }}>Add to Plan</button>
         </div>
       ))}
     </div>
@@ -402,27 +447,39 @@ function Home() {
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <div style={{ border: '1px solid #aaa', borderRadius: '8px', padding: '16px', background: '#f9f9f9', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
         {Object.entries(dataFromQuery).map(([key, value]) => (
-
-            
-
-
-
-
           <div key={key} style={{ marginBottom: '8px' }}>
             <span style={{ fontWeight: 'bold', color: '#333' }}>{key}: </span>
             <span style={{ color: '#555' }}>{String(value)}</span>
           </div>
-
-
-
-
-
         ))}
       </div>
     </div>
   ) : (
-    <span>{dataFromQuery}</span>
+    <span>{String(dataFromQuery)}</span>
   )}
+</div>
+           
+            
+               
+            </div>
+
+            
+            <div style={{ position: 'fixed', right: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
+
+
+
+
+
+
+            <div style={{
+  position: 'absolute',
+  top: 120,
+  left: 220,
+  fontSize: '20px',
+ 
+  zIndex: 9999 // optional: ensures it's on top
+}}>
+  8
 </div>
 
 
@@ -433,15 +490,12 @@ function Home() {
 
 
 
-           
-            
-               
-            </div>
 
-            
-            <div style={{ position: 'fixed', right: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
 
-       
+
+
+
+
         </div>
     );
 }
