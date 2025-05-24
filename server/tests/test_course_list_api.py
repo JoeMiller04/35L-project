@@ -255,4 +255,113 @@ def test_get_course_list_empty(client):
 
     client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
 
-# TODO A couple more test cases
+
+def test_add_nonexistent_course_to_list(client):
+    """Test adding a course that doesn't exist"""
+    # Generate a random course ID that shouldn't exist
+    nonexistent_course_id = str(ObjectId())
+    
+    user_id = create_user(client)
+
+    # Try to add a non-existent course
+    response = client.post(
+        f"/users/{user_id}/course-list",
+        json={"course_id": nonexistent_course_id, "action": "add"}
+    )
+    
+    # Should fail with course not found
+    assert response.status_code == 404
+    assert "not found" in response.json()["detail"]
+
+
+def test_add_invalid_course_id_format(client):
+    """Test adding a course with invalid ID format"""
+    # Try to add with invalid course ID format
+    invalid_id = "not-an-objectid"
+    user_id = create_user(client)
+    response = client.post(
+        f"/users/{user_id}/course-list",
+        json={"course_id": invalid_id, "action": "add"}
+    )
+    
+    # Should fail with unprocessable content
+    assert response.status_code == 422
+
+
+def test_get_course_list_nonexistent_user(client):
+    """Test getting course list for a user that doesn't exist"""
+    # Generate a random user ID that shouldn't exist
+    nonexistent_user_id = str(ObjectId())
+    
+    # Try to get course list for non-existent user
+    response = client.get(f"/users/{nonexistent_user_id}/course-list")
+    
+    # Should fail with user not found
+    assert response.status_code == 404
+    assert "not found" in response.json()["detail"]
+
+
+def test_add_course_invalid_user_id(client):
+    """Test adding a course with an invalid user ID format"""
+    invalid_id = "not-an-objectid"
+    course_id = create_course(client)
+    
+    # Try to add a course with invalid user ID
+    response = client.post(
+        f"/users/{invalid_id}/course-list",
+        json={"course_id": course_id, "action": "add"}
+    )
+    
+    # Should fail with invalid ID format
+    assert response.status_code == 400
+    assert "Invalid user ID format" in response.json()["detail"]
+
+
+def test_multiple_courses_in_list(client):
+    """Test adding multiple courses to a user's course list"""
+    user_id = create_user(client)
+    # Create three test courses
+    course_ids = []
+    
+    # Create test courses
+    for i in range(3):
+        course_data = {
+            **test_course_data,
+            "title": f"Multi-Course Test {i}",
+            "catalog": f"{101 + i}"
+        }
+        response = client.post(
+            "/courses",
+            json=course_data,
+            headers={"x-api-key": ADMIN_KEY}
+        )
+        course_ids.append(response.json()["_id"])
+    
+    # Add all courses to the list
+    for course_id in course_ids:
+        client.post(
+            f"/users/{user_id}/course-list",
+            json={"course_id": course_id, "action": "add"}
+        )
+    
+    # Get the course list
+    response = client.get(f"/users/{user_id}/course-list")
+    courses = response.json()
+    
+    # Verify all courses are there
+    found_ids = [course["_id"] for course in courses]
+    for course_id in course_ids:
+        assert course_id in found_ids, f"Course {course_id} not found in list"
+    
+    # Verify course details are returned
+    for course in courses:
+        assert "subject" in course
+        assert "catalog" in course
+        assert "title" in course
+        assert "term" in course
+    
+    # Clean up the test courses
+    for course_id in course_ids:
+        client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
+    # Clean up the test user
+    client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
