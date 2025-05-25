@@ -15,6 +15,7 @@ async_db = async_client[DATABASE_NAME]
 users_collection = async_db.get_collection("users")
 course_collection = async_db.get_collection("courses")
 valid_course_collection = async_db.get_collection("valid_courses")
+ratings_collection = async_db.get_collection("course_ratings")
 
 def get_collection(collection_name):
     return db[collection_name]
