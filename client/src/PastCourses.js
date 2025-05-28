@@ -14,31 +14,30 @@ export default function PastCourses() {
   // Track which courses have been checked (i.e., taken by the user)
   const [takenCourses, setTakenCourses] = useState({});
   const navigate = useNavigate();
-
-  // Not right
-   const userId = localStorage.getItem("user_id");
+  const userObj = JSON.parse(localStorage.getItem("user_id"));
+  const userId = userObj._id;
 
   // Load saved courses from backend when the component first mounts
   useEffect(() => {
-    const fetchTakenCourses = async () => {
+    const loadPastCourses = async () => {
       try {
-        const response = await fetch(`/users/${userId}/courses`);
-        if (!response.ok) throw new Error("Failed to load courses");
-        const data = await response.json(); // List of strings like "COM SCI 32"
+        const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`);
+        const data = await response.json(); // expects [{ term: "PAST", course_name: "..." }, ...]
+        
+        const pastOnly = data.filter((entry) => entry.term === "PAST");
 
-
-        // Convert the list to an object for quick checkbox state lookup
         const initial = {};
-        data.forEach((course) => {
-          initial[course] = true;
+        pastOnly.forEach(({ course_name }) => {
+          initial[course_name] = true;
         });
+
         setTakenCourses(initial);
       } catch (err) {
-        console.error("Error loading courses:", err);
+        console.error("Error loading past courses:", err);
       }
     };
 
-    if (userId) fetchTakenCourses();
+    loadPastCourses();
   }, [userId]);
 
   // Toggle checkbox state and update the backend accordingly
@@ -54,10 +53,11 @@ export default function PastCourses() {
 
     // Update backend with add/remove action
     try {
-      const response = await fetch(`/users/${userId}/courses`, {
+      const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          term: "PAST",
           course_name: course,
           action: isNowChecked ? 'add' : 'remove'
         })
