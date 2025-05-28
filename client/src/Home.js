@@ -273,21 +273,22 @@ function Home() {
                     <button onClick={() => navigate('/InfoPage')} style={{marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Future Requirements</button>
                 </div>
 
-                <div style={{ position: 'relative', width: '80%', minHeight: `${144 * 5}px`, margin: '0 auto' }}>
+                <div style={{ position: 'relative', width: '80%', minHeight: `${144 * 5}px`, margin: '0 auto', marginTop: '40px' }}>
   {/* Grid lines */}
   <div style={{
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
-    height: `${144 * 5}px`,
+    height: `${120 * 5}px`,
     zIndex: 0,
     display: 'grid',
-    gridTemplateRows: `repeat(144, 5px)`,
+    gridTemplateRows: `repeat(120, 5px)`,
     gridTemplateColumns: `repeat(7, 1fr)`,
-    pointerEvents: 'none'
+    pointerEvents: 'none', 
+    backgroundColor:'white'
   }}>
-    {Array.from({ length: 144 * 7 }).map((_, i) => {
+    {Array.from({ length: 120 * 7 }).map((_, i) => {
       const rowIndex = Math.floor(i / 7);
       const colIndex = i % 7;
       return (
@@ -297,7 +298,7 @@ function Home() {
             borderTop: rowIndex % 12 === 0 ? '1px solid black' : 'none',
             borderLeft: '1px solid black',
             borderRight: colIndex === 6 ? '1px solid black' : 'none',
-            borderBottom: rowIndex === 143 ? '1px solid black' : 'none',
+            borderBottom: rowIndex === 119 ? '1px solid black' : 'none',
             height: '5px',
             width: '100%',
             boxSizing: 'border-box',
@@ -339,9 +340,9 @@ function Home() {
                         overflow: 'hidden',
                     }}
                 >
-                    <div style={{ fontWeight: 'bold' }}>{cls.name || `${cls.subject} ${cls.catalog}`}</div>
-                    <div>{cls.location}</div>
-                    <div>{day} {makeTimeNice(timeArr)}</div>
+                    <div style={{ fontWeight: 'bold', fontSize:'15px'}}>{cls.name || `${cls.subject} ${cls.catalog}`}</div>
+                    <div style={{fontSize:'12px'}}>{capitalizeWords(cls.instructor.toLowerCase())}</div>
+                    
                 </div>
             );
         })
@@ -349,14 +350,11 @@ function Home() {
 )}
 </div>
 
-                {/*validate schedule button*/}
-                <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', marginTop: '30px', gap: '20px' , marginLeft:'300px'}}>
-                    <button style={{ width: '170px', height: '40px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer', marginLeft:'75px' }}>Validate Schedule</button>
-                </div>
+               
 
                 
                 {/*horizontal line*/}
-                <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'20px'}}/>
+                <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'-50px'}}/>
 
            
 
@@ -471,21 +469,26 @@ function Home() {
 
 
 
-            <div style={{
-  position: 'absolute',
-  top: 120,
-  left: 220,
-  fontSize: '20px',
- 
-  zIndex: 9999 // optional: ensures it's on top
-}}>
-  8
-</div>
+            <div style={{ position: 'absolute', top: 160, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 8 am</div>
+            <div style={{ position: 'absolute', top: 217, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 9 am</div>
+            <div style={{ position: 'absolute', top: 276, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 10 am</div>  
+            <div style={{ position: 'absolute', top: 337, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 11 am</div>
+            <div style={{ position: 'absolute', top: 397, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 12 pm</div>
+            <div style={{ position: 'absolute', top: 457, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}>  1 pm</div>
+            <div style={{ position: 'absolute', top: 517, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 2 pm</div>
+            <div style={{ position: 'absolute', top: 577, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 3 pm</div>
+            <div style={{ position: 'absolute', top: 637, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 4 pm</div>
+            <div style={{ position: 'absolute', top: 697, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 5 pm</div>
+            <div style={{ position: 'absolute', top: 757, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 6 pm</div>
 
 
-
-
-
+             <div style={{ position: 'absolute', top: 140, left: 310, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Sunday</div>
+            <div style={{ position: 'absolute', top: 140, left: 445, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}>  Monday</div>
+            <div style={{ position: 'absolute', top: 140, left: 585, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Tuesday</div>
+            <div style={{ position: 'absolute', top: 140, left: 710, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Wednesday</div>
+            <div style={{ position: 'absolute', top: 140, left: 855, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Thursday</div>
+            <div style={{ position: 'absolute', top: 140, left: 1010, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Friday</div>
+            <div style={{ position: 'absolute', top: 140, left: 1140, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Satuday</div>
 
 
 
