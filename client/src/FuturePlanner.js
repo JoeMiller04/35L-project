@@ -25,62 +25,45 @@ export default function FuturePlanner() {
   const [selectedTerm, setSelectedTerm] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
   const navigate = useNavigate();
-
-  // Dont think this works
-  //const userId = 681e758d4b121097b1e43aef;
-  const userId = localStorage.getItem("user_id");
-
-      // POST to backend to update user’s course list
-    const updateCourseInDB = async (courseName, action) => {
-    try {
-      const response = await fetch(`/users/${userId}/courses`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          course_name: courseName,
-          action: action,
-        }),
-      });
-      return await response.json();
-    } catch (err) {
-      console.error("Error updating course:", err);
-    }
-  };
+  const userObj = JSON.parse(localStorage.getItem("user_id"));
+  const userId = userObj._id;
+  //const userId = "68361c156a49e4907460b4a8";
 
   // GET saved courses from the backend
   useEffect(() => {
-  const loadSaved = async () => {
-    const fetchSavedCourses = async () => {
-      try {
-        const response = await fetch(`/users/${userId}/courses`);
-        if (!response.ok) throw new Error("Failed to fetch saved courses");
-        const data = await response.json();
-        return data;
-      } catch (err) {
-        console.error("Error fetching saved courses:", err);
-        return [];
-      }
-    };
+  const loadSavedPlan = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Failed to fetch user course list');
+            }
+      const data = await response.json(); // Expects: [{ term: "25F", course_name: "COM SCI 32" }, ...]
 
-    if (!userId) return;
-    const savedCourses = await fetchSavedCourses();
+      // Group courses by term
+      const grouped = {};
+      data.forEach(({ term, course_name }) => {
+        if (!grouped[term]) grouped[term] = [];
+        grouped[term].push(course_name);
+      });
 
-    // Doesnt save term at the moment
-    const grouped = {};
-    savedCourses.forEach((course) => {
-      if (!grouped["UNSPECIFIED"]) grouped["UNSPECIFIED"] = [];
-      grouped["UNSPECIFIED"].push(course);
-    });
+      const structuredPlan = Object.entries(grouped).map(([term, classes]) => ({
+        term,
+        classes,
+      }));
 
-    const newPlan = Object.entries(grouped).map(([term, classes]) => ({
-      term,
-      classes,
-    }));
-
-    setPlan(newPlan);
+      setPlan(structuredPlan);
+    } catch (err) {
+      console.error("Error loading saved plan:", err);
+    }
   };
 
-  loadSaved();
+  if (userId) loadSavedPlan();
 }, [userId]);
 
   // Add selected course to selected term in plan
@@ -100,30 +83,48 @@ export default function FuturePlanner() {
       }
     });
 
-    updateCourseInDB(selectedCourse, "add");
-    setSelectedCourse('');
-  };
+    fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      term: selectedTerm,
+      course_name: selectedCourse,
+      action: "add",
+    }),
+  });
+
+  setSelectedCourse('');
+};
 
   // Remove course from a specific term
-  const removeCourse = (term, courseToRemove) => {
-    setPlan((prevPlan) =>
-      prevPlan
-        .map((entry) =>
-          entry.term === term
-            ? { ...entry, classes: entry.classes.filter((c) => c !== courseToRemove) }
-            : entry
-        )
-        .filter((entry) => entry.classes.length > 0)
-    );
+const removeCourse = (termToRemove, courseToRemove) => {
+  // Update local state
+  setPlan((prevPlan) =>
+    prevPlan
+      .map((entry) =>
+        entry.term === termToRemove
+          ? { ...entry, classes: entry.classes.filter((c) => c !== courseToRemove) }
+          : entry
+      )
+      .filter((entry) => entry.classes.length > 0)
+  );
 
-    updateCourseInDB(courseToRemove, "remove");
-  };
+  // Remove from backend
+  fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      term: termToRemove,
+      course_name: courseToRemove,
+      action: "remove",
+    }),
+  });
+};
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Future Course Planner</h1>
-
-      {/* Dropdowns to select term and course */}
+      {/* Dropdowns to select term and course */} 
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <select
           value={selectedTerm}
@@ -159,8 +160,8 @@ export default function FuturePlanner() {
         </button>
       </div>
 
-      {/* Display user's plan */}
-      {plan.length > 0 ? (
+      {/* Display user's plan */}  
+     {plan.length > 0 ? (
         <div className="space-y-4">
           {plan
             .sort((a, b) => termToSortable(a.term) - termToSortable(b.term))
@@ -187,6 +188,16 @@ export default function FuturePlanner() {
         <p className="text-gray-500">No courses planned yet.</p>
       )}
 
+    {/* Validate Button */} 
+      <div className="mt-6 text-center">
+        <button
+          onClick={() => console.log("Validate button clicked")}
+          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md shadow"
+        >
+          Validate Plan
+        </button>
+      </div>
+
     <button onClick={() => navigate('/Home')}>Go to Home</button>
     <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
     <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
@@ -194,4 +205,4 @@ export default function FuturePlanner() {
     <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
     </div>
   );
-}
+} 
