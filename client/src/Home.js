@@ -259,7 +259,7 @@ function Home() {
     }
 
     // Capitalize the first letter
-    function capitalizeWords(str) {
+     function capitalizeWords(str) {
         return str.replace(/\b\w/g, c => c.toUpperCase());
     }
     
@@ -268,9 +268,9 @@ function Home() {
         <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
         <div style={{ width: '80%', marginLeft: '10%', marginRight: '10%', zIndex: 2 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/PastCourses')} style={{marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Degree Information</button>
+                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Degree Information</button>
                     <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Schedule Planner Thing</h1>
-                    <button onClick={() => navigate('/InfoPage')} style={{marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Future Requirements</button>
+                    <button onClick={() => navigate('/InfoPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>View Classes</button>
                 </div>
 
                 <div style={{ position: 'relative', width: '80%', minHeight: `${144 * 5}px`, margin: '0 auto', marginTop: '40px' }}>
@@ -363,7 +363,7 @@ function Home() {
                     
                     {/*dept dropdown*/}
                     <h1 style={{fontSize:'25px'}}>Search for Class:</h1>
-                    <select value={dropdown} onChange={handleChange} style={{ width: '250px', height: '30px', border:'2px solid black' }}>
+                    <select value={dropdown} onChange={handleChange} style={{ cursor:'pointer', width: '250px', height: '30px', border:'2px solid black' }}>
                         {options.map((opt) => (
                             <option key={opt.value} value={opt.value}>
                                 {opt.label}
@@ -372,7 +372,7 @@ function Home() {
                     </select>
                     
                     {/*class dropdown*/}
-                    <select value={dropdownClass} onChange={handleClassChange} style={{ width: '140px', height: '30px', border:'2px solid black' }}>
+                    <select value={dropdownClass} onChange={handleClassChange} style={{ cursor:'pointer', width: '140px', height: '30px', border:'2px solid black' }}>
                         {(classOptionsMap[dropdown]||classOptions).map((opt) => (
                             <option key={opt.value} value={opt.value}>
                                 {opt.label}
@@ -381,7 +381,7 @@ function Home() {
                     </select>
                     
                     {/*quarter dropdown*/}
-                    <select value={quarter} onChange={handleQuarterChange} style={{ width: '120px', height: '30px', border:'2px solid black' }}>
+                    <select value={quarter} onChange={handleQuarterChange} style={{ cursor:'pointer', width: '120px', height: '30px', border:'2px solid black' }}>
                         {quarterOptions.map((opt) => (
                             <option key={opt.value} value={opt.value}>
                                 {opt.label}
@@ -488,7 +488,7 @@ function Home() {
             <div style={{ position: 'absolute', top: 140, left: 710, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Wednesday</div>
             <div style={{ position: 'absolute', top: 140, left: 855, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Thursday</div>
             <div style={{ position: 'absolute', top: 140, left: 1010, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Friday</div>
-            <div style={{ position: 'absolute', top: 140, left: 1140, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Satuday</div>
+            <div style={{ position: 'absolute', top: 140, left: 1140, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Saturday</div>
 
 
 

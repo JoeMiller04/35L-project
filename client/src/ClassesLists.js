@@ -12,6 +12,7 @@ export const COMSCIClassOptions = [
     { value: '131', label: '131' },
     { value: '180', label: '180' },
     { value: 'M151B', label: 'M151B' }
+   
 
     
   ];
