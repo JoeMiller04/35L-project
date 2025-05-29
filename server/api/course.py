@@ -242,3 +242,25 @@ async def get_catalogs_by_subject(subject: str):
             detail=f"Error retrieving catalogs for subject {subject}: {str(e)}"
         )
 
+
+@router.get("/subjects", response_model=List[str])
+async def get_all_subjects():
+    """
+    Get all unique course subjects.
+    
+    Returns:
+    - List of unique course subjects
+    """
+    try:
+        subjects = await course_collection.distinct("subject")
+        
+        # Sort subjects alphabetically
+        subjects.sort()
+        
+        return subjects
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Error retrieving subjects: {str(e)}"
+        )
