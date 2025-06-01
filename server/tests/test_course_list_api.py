@@ -365,3 +365,275 @@ def test_multiple_courses_in_list(client):
         client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
     # Clean up the test user
     client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
+
+
+def test_add_courses_with_missing_times(client):
+    """Test adding courses with missing time data"""
+    user_id = create_user(client)
+    
+    # Create a course with no time data
+    course_no_times = {
+        **test_course_data,
+        "title": "Course with No Times",
+        "catalog": "NoTime1"
+    }
+    response = client.post(
+        "/courses",
+        json=course_no_times,
+        headers={"x-api-key": ADMIN_KEY}
+    )
+    course1_id = response.json()["_id"]
+    
+    # Create another course with no time data
+    course_no_times2 = {
+        **test_course_data,
+        "title": "Another Course with No Times",
+        "catalog": "NoTime2",
+        "times": {}  # Explicitly empty times
+    }
+    response = client.post(
+        "/courses",
+        json=course_no_times2,
+        headers={"x-api-key": ADMIN_KEY}
+    )
+    course2_id = response.json()["_id"]
+    
+    # Add both courses to user's list
+    response1 = client.post(
+        f"/users/{user_id}/course-list",
+        json={"course_id": course1_id, "action": "add"}
+    )
+    response2 = client.post(
+        f"/users/{user_id}/course-list",
+        json={"course_id": course2_id, "action": "add"}
+    )
+    
+    # Both should succeed since missing times shouldn't conflict
+    assert response1.status_code == 200
+    assert response2.status_code == 200
+    
+    # Get the list and verify both courses are there
+    response = client.get(f"/users/{user_id}/course-list")
+    courses = response.json()
+    course_ids = [course["_id"] for course in courses]
+    
+    assert course1_id in course_ids
+    assert course2_id in course_ids
+    
+    # Clean up
+    client.delete(f"/courses/{course1_id}", headers={"x-api-key": ADMIN_KEY})
+    client.delete(f"/courses/{course2_id}", headers={"x-api-key": ADMIN_KEY})
+    client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
+
+
+def test_add_courses_with_nonconflicting_times(client):
+    """Test adding courses with non-conflicting time schedules"""
+    user_id = create_user(client)
+    
+    # Create a course with morning time
+    morning_course = {
+        **test_course_data,
+        "title": "Morning Class",
+        "catalog": "AM101",
+        "times": {
+            "M": ["0800", "0950"],
+            "W": ["0800", "0950"]
+        }
+    }
+    response = client.post(
+        "/courses",
+        json=morning_course,
+        headers={"x-api-key": ADMIN_KEY}
+    )
+    assert response.status_code == 200
+    morning_id = response.json()["_id"]
+    
+    # Create a course with afternoon time
+    afternoon_course = {
+        **test_course_data,
+        "title": "Afternoon Class",
+        "catalog": "PM101",
+        "times": {
+            "M": ["1400", "1550"],
+            "W": ["1400", "1550"]
+        }
+    }
+    response = client.post(
+        "/courses",
+        json=afternoon_course,
+        headers={"x-api-key": ADMIN_KEY}
+    )
+    afternoon_id = response.json()["_id"]
+    
+    # Create a course on different days
+    different_days_course = {
+        **test_course_data,
+        "title": "Tuesday Thursday Class",
+        "catalog": "TR101",
+        "times": {
+            "T": ["0900", "1150"],
+            "R": ["0900", "1150"]
+        }
+    }
+    response = client.post(
+        "/courses",
+        json=different_days_course,
+        headers={"x-api-key": ADMIN_KEY}
+    )
+    different_days_id = response.json()["_id"]
+    
+    # Add all courses
+    for course_id in [morning_id, afternoon_id, different_days_id]:
+        response = client.post(
+            f"/users/{user_id}/course-list",
+            json={"course_id": course_id, "action": "add"}
+        )
+        assert response.status_code == 200, f"Failed to add course {course_id}"
+    
+    # Get the list and verify all courses are there
+    response = client.get(f"/users/{user_id}/course-list")
+    courses = response.json()
+    course_ids = [course["_id"] for course in courses]
+    
+    assert morning_id in course_ids
+    assert afternoon_id in course_ids
+    assert different_days_id in course_ids
+    assert len(course_ids) == 3
+    
+    # Clean up
+    for course_id in [morning_id, afternoon_id, different_days_id]:
+        client.delete(f"/courses/{course_id}", headers={"x-api-key": ADMIN_KEY})
+    client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
+
+
+def test_add_courses_with_conflicting_times(client):
+    """Test adding courses with conflicting time schedules"""
+    user_id = create_user(client)
+    
+    # Create a course with specific time
+    first_course = {
+        **test_course_data,
+        "title": "First Class",
+        "catalog": "101",
+        "times": {
+            "M": ["1000", "1150"],
+            "W": ["1000", "1150"]
+        }
+    }
+    response = client.post(
+        "/courses",
+        json=first_course,
+        headers={"x-api-key": ADMIN_KEY}
+    )
+    first_id = response.json()["_id"]
+    
+    # Create a course with overlapping time
+    conflicting_course = {
+        **test_course_data,
+        "title": "Conflicting Class",
+        "catalog": "102",
+        "times": {
+            "M": ["1100", "1250"],  # Overlaps with first course on Monday
+            "W": ["1400", "1550"]   # No conflict on Wednesday
+        }
+    }
+    response = client.post(
+        "/courses",
+        json=conflicting_course,
+        headers={"x-api-key": ADMIN_KEY}
+    )
+    conflicting_id = response.json()["_id"]
+    
+    # Add the first course
+    response = client.post(
+        f"/users/{user_id}/course-list",
+        json={"course_id": first_id, "action": "add"}
+    )
+    assert response.status_code == 200
+    
+    # Try to add the conflicting course
+    response = client.post(
+        f"/users/{user_id}/course-list",
+        json={"course_id": conflicting_id, "action": "add"}
+    )
+    
+    # Should be rejected due to time conflict
+    assert response.status_code == 400
+    assert "Time conflict" in response.json()["detail"]
+    
+    # Get the list and verify only the first course is there
+    response = client.get(f"/users/{user_id}/course-list")
+    courses = response.json()
+    course_ids = [course["_id"] for course in courses]
+    
+    assert first_id in course_ids
+    assert conflicting_id not in course_ids
+    assert len(course_ids) == 1
+    
+    # Clean up
+    client.delete(f"/courses/{first_id}", headers={"x-api-key": ADMIN_KEY})
+    client.delete(f"/courses/{conflicting_id}", headers={"x-api-key": ADMIN_KEY})
+    client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})
+
+
+def test_add_mixed_time_and_no_time_courses(client):
+    """Test adding a mix of courses with and without time data"""
+    user_id = create_user(client)
+    
+    # Create a course with time data
+    time_course = {
+        **test_course_data,
+        "title": "Course with Times",
+        "catalog": "WithTime",
+        "times": {
+            "M": ["1000", "1150"],
+            "W": ["1000", "1150"]
+        }
+    }
+    response = client.post(
+        "/courses",
+        json=time_course,
+        headers={"x-api-key": ADMIN_KEY}
+    )
+    time_course_id = response.json()["_id"]
+    
+    # Create a course with no time data
+    no_time_course = {
+        **test_course_data,
+        "title": "Course with No Times",
+        "catalog": "NoTime"
+    }
+    response = client.post(
+        "/courses",
+        json=no_time_course,
+        headers={"x-api-key": ADMIN_KEY}
+    )
+    no_time_course_id = response.json()["_id"]
+    
+    # Add both courses
+    response1 = client.post(
+        f"/users/{user_id}/course-list",
+        json={"course_id": time_course_id, "action": "add"}
+    )
+    response2 = client.post(
+        f"/users/{user_id}/course-list",
+        json={"course_id": no_time_course_id, "action": "add"}
+    )
+    
+    # Both should succeed
+    assert response1.status_code == 200
+    assert response2.status_code == 200
+    
+    # Get the list and verify both courses are there
+    response = client.get(f"/users/{user_id}/course-list")
+    courses = response.json()
+    course_ids = [course["_id"] for course in courses]
+    
+    assert time_course_id in course_ids
+    assert no_time_course_id in course_ids
+    assert len(course_ids) == 2
+    
+    # Clean up
+    client.delete(f"/courses/{time_course_id}", headers={"x-api-key": ADMIN_KEY})
+    client.delete(f"/courses/{no_time_course_id}", headers={"x-api-key": ADMIN_KEY})
+    client.delete(f"/users/{user_id}", headers={"x-api-key": ADMIN_KEY})

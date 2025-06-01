@@ -215,6 +215,7 @@ async def update_user_course_list(user_id: str, update: CourseListUpdate):
     """
     Add or remove a course ID from a user's course list.
     This is a simple bookmarking system that stores MongoDB course IDs.
+    When adding a course, checks for time conflicts with existing courses.
     """
     try:
         oid = ObjectId(user_id)
@@ -245,13 +246,38 @@ async def update_user_course_list(user_id: str, update: CourseListUpdate):
         if update.action == "add":
             # Add only if not already in the list
             if course_id_str not in user_course_list:
-                result = await users_collection.update_one(
-                    {"_id": oid},
-                    {"$push": {"course_list": course_id_str}}
-                )
-                
-                if result.modified_count == 0:
-                    raise HTTPException(status_code=400, detail="Failed to add course to list")
+                # Check for time conflicts with existing courses
+                conflict_found = False
+                for existing_course_id in user_course_list:
+                    existing_course_oid = ObjectId(existing_course_id)
+                    existing_course = await course_collection.find_one({"_id": existing_course_oid})
+                    
+                    if existing_course and existing_course.get("term") == course.get("term"):
+                        times1 = existing_course.get("times", {})
+                        times2 = course.get("times", {})
+                        
+                        # Only check for conflicts if both courses have time information
+                        if times1 and times2:  # Skip if either is empty
+                            for day in set(times1.keys()) & set(times2.keys()):
+                                # Make sure time ranges exist for this day
+                                if day in times1 and day in times2 and isinstance(times1[day], (list, tuple)) and isinstance(times2[day], (list, tuple)):
+                                    time_range1 = times1[day]
+                                    time_range2 = times2[day]
+                                    
+                                    # Check for overlap
+                                    if time_range1[0] <= time_range2[1] and time_range2[0] <= time_range1[1]:
+                                        conflict_found = True
+                               
+                if not conflict_found:
+                    result = await users_collection.update_one(
+                        {"_id": oid},
+                        {"$push": {"course_list": course_id_str}}
+                    )
+                    if result.modified_count == 0:
+                        raise HTTPException(status_code=400, detail="Failed to add course to list")
+                else:
+                    # Conflict found, returns error at frontend's request
+                    raise HTTPException(status_code=400, detail="Time conflict with existing courses")
             else:
                 # Course already in list, returns error at frontend's request
                 raise HTTPException(status_code=400, detail="Course already in user's course list")

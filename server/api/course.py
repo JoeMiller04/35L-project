@@ -175,3 +175,92 @@ async def query_courses(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error querying courses: {str(e)}")
 
+
+@router.get("/courses/catalogs/{subject}", response_model=List[str])
+async def get_catalogs_by_subject(subject: str):
+    """
+    Get all unique catalog numbers for a specific subject.
+    If subject is not found, returns an empty list.
+    subject is case-insensitive.
+    Parameters:
+    - subject: Course subject (e.g., "COM SCI")
+    
+    Returns:
+    - List of unique catalog numbers for the given subject, kind of sorted
+    """
+    try:
+        subject = subject.upper()
+        catalogs = await course_collection.distinct(
+            "catalog", 
+            {"subject": subject}
+        )
+        
+        # I try to sort the catalog numbers in a relatively natural way
+        def catalog_sort_key(catalog):
+            """
+            Custom sort key function that handles catalog numbers like:
+            - Pure numbers: "180", "101"
+            - Numbers with suffix: "35L", "97A"
+            - Prefixed letters: "M51", "CS32"
+            """
+            numeric_part = ''
+            prefix = ''
+            suffix = ''
+            
+            if catalog and catalog[0].isalpha():
+                i = 0
+                while i < len(catalog) and catalog[i].isalpha():
+                    prefix += catalog[i]
+                    i += 1
+                catalog = catalog[i:]
+            
+            # Extract the numeric part
+            i = 0
+            while i < len(catalog) and catalog[i].isdigit():
+                numeric_part += catalog[i]
+                i += 1
+            
+            # Remaining characters are the suffix
+            suffix = catalog[i:] if i < len(catalog) else ''
+            
+            # Convert numeric part to int for proper numeric sorting
+            # If no numeric part, use 0
+            numeric_value = int(numeric_part) if numeric_part else 0
+            
+            # Return a tuple for sorting: (numeric_value, prefix, suffix)
+            # This ensures sorting first by number, then by prefix, then by suffix
+            return (numeric_value, prefix, suffix)
+        
+        # Sort using the custom key function
+        catalogs.sort(key=catalog_sort_key)
+        
+        return catalogs
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Error retrieving catalogs for subject {subject}: {str(e)}"
+        )
+
+
+@router.get("/subjects", response_model=List[str])
+async def get_all_subjects():
+    """
+    Get all unique course subjects.
+    
+    Returns:
+    - List of unique course subjects
+    """
+    try:
+        subjects = await course_collection.distinct("subject")
+        
+        # Sort subjects alphabetically
+        subjects.sort()
+        
+        return subjects
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Error retrieving subjects: {str(e)}"
+        )
