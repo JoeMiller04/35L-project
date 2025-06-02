@@ -73,6 +73,8 @@ def upload_classes():
         [
             [classes["PHYSICS 1A"], classes["PHYSICS 1B"], classes["MATH 32A"], classes["MATH 32B"]]
         ])
+    classes["PHYSICS 4AL"] = make_prereq(2)
+    classes["PHYSICS 4BL"] = make_prereq(2)
 
     #Not required but other lower division classes
     classes["LIFESCI 30A"] = make_prereq(4)
