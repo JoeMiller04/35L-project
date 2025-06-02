@@ -269,40 +269,39 @@ const removeCourse = (termToRemove, courseToRemove) => {
   return (
     <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
         <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
-        <div style={{ width: '80%', marginLeft: '10%', zIndex: 2 }}>
-            {/* Header in its own block */}
-            <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'100px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
-                    <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Future Planner</h1>
-                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'100px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Past Courses</button>
-                </div>
-                {/* <hr> in a block container, not inside a flex row */}
-                <hr style={{ margin: '20px 0', borderColor: '#ccc', width: '100%', marginLeft: 0, marginRight: 0, borderWeight:'4px', marginTop:'0px' }} />
-            </div>
-     
-     
-     
-      {/* Dropdowns to select term and course */} 
-      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <div style={{ width: '80%', marginLeft: '10%', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    {/* Header */}
+    <div style={{ width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
+            <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>Future Plan</h1>
+            <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Past Courses</button>
+        </div>
+        <hr style={{ margin: '20px 0', borderColor: '#ccc', width: '100%' }} />
+    </div>
+
+    {/* Dropdowns and Add Course button */}
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {/*degree dropdown*/} 
+      <div>
         <select
           value={selectedDegree}
           onChange={(e) => setSelectedDegree(e.target.value)}
           className="border p-2"
         >
-          <option value="">Select Degree</option> {/* Default option */}
+          <option value="">Select Degree</option> 
           <option value="CS">Computer Science (CS)</option>
           <option value="CSE">Computer Science and Engineering (CSE)</option>
         </select>
 
 
 {/* Dropdowns to select term and course, displayed only if degree is selected */}
-        {selectedDegree && (
+        {true && (
           <>
         <select
           value={selectedTerm}
           onChange={(e) => setSelectedTerm(e.target.value)}
-          className="border p-2"
+         
         >
           <option value="">Select Term</option>
           {availableTerms.map((term) => (
@@ -315,7 +314,7 @@ const removeCourse = (termToRemove, courseToRemove) => {
         <select
           value={selectedCourse}
           onChange={(e) => setSelectedCourse(e.target.value)}
-          className="border p-2 flex-1"
+         
         >
           <option value="">Select Course</option>
           {availableCourses.map((course) => (
@@ -327,44 +326,59 @@ const removeCourse = (termToRemove, courseToRemove) => {
 
         <button
           onClick={addCourseToQuarter}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+         
         >
           Add Course
         </button>
         </>
         )}
       </div>
+    </div>
 
-      {/* Display user's plan */}  
+    {/* Display user's plan */}  
      {plan.length > 0 ? (
-        <div className="space-y-4">
-          {plan
-            .sort((a, b) => termToSortable(a.term) - termToSortable(b.term))
-            .map(({ term, classes }) => (
-              <div key={term} className="border p-4 rounded shadow">
-                <h2 className="font-semibold text-xl mb-2">{term}</h2>
-                <ul className="list-disc list-inside space-y-1">
-                  {classes.map((c) => (
-                    <li key={c} className="flex justify-between items-center">
-                      <span>{c}</span>
-                      <button
-                        onClick={() => removeCourse(term, c)}
-                        className="text-red-500 text-sm"
-                      >
-                        Remove
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-        </div>
-      ) : (
-        <p className="text-gray-500">No courses planned yet.</p>
-      )}
+  <div
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      width: '100%',
+      marginTop: '24px',
+      marginLeft:'5%'
+    }}
+  >
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '24px',
+        maxWidth: '1200px',
+        width: '100%',
+      }}
+    >
+      {plan
+        .sort((a, b) => termToSortable(a.term) - termToSortable(b.term))
+        .map(({ term, classes }) => (
+          <div key={term} className="border p-4 rounded shadow">
+            <h2 >{term}</h2>
+            <ul style={{marginTop:'-10px', listStyleType: 'none', paddingLeft: '0px'}}>
+              {classes.map((c) => (
+                <li key={c} >
+                  <button onClick={() => removeCourse(term, c)} style={{border:'none', cursor:'pointer', color:'red'}}>X   </button>
+                  <span>{c}</span>
+                  
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+    </div>
+  </div>
+) : (
+  <p className="text-gray-500" style={{ textAlign: 'center' }}>No courses planned yet.</p>
+)}
 
     {/* Validate Button */} 
-      <div className="mt-6 text-center">
+      <div className="mt-6 text-center" style={{ width: '100%' }}>
         <button
           onClick={() => console.log("Validate button clicked")}
           className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md shadow"
@@ -372,8 +386,6 @@ const removeCourse = (termToRemove, courseToRemove) => {
           Validate Plan
         </button>
       </div>
-
-
     </div>
         <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
       
