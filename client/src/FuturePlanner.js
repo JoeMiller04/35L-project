@@ -122,8 +122,22 @@ const removeCourse = (termToRemove, courseToRemove) => {
 };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Future Course Planner</h1>
+    <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
+        <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
+        <div style={{ width: '80%', marginLeft: '10%', marginRight: '10%', zIndex: 2 }}>
+
+
+          {/*upper text*/}
+       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Degree Information</button>
+                    <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Future Planner</h1>
+                    <button onClick={() => navigate('/InfoPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>View Classes</button>
+        </div>
+     
+     
+     
+     
+     
       {/* Dropdowns to select term and course */} 
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <select
@@ -203,6 +217,9 @@ const removeCourse = (termToRemove, courseToRemove) => {
     <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
     <button onClick={() => navigate('/PastCourses')}>Go to Home4</button>
     <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
+    </div>
+        <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
+      
     </div>
   );
 } 

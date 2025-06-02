@@ -2,11 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import './App.css';
 import { useState, useEffect } from 'react';
 
+//this page should be mostly done. It is the home page
+
 
 function Home() {
     const navigate = useNavigate();
     const [classes, setClasses] = useState([]);
-    const colors = ['#FFD1DC', '#FFABAB', '#FFC3A0', '#FF677D', '#D4A5A5', '#392F5A', '#31A2AC', '#61C0BF', '#6B4226', '#D9BF77'];
+    const colors = ['#FFD1DC', '#FFABAB', '#FFC3A0', '#FF677D', '#D4A5A5', '#392F5A', '#31A2AC', '#61C0BF', '#6B4226', '#D9BF77']; //someone change these to something better
     const [index, setIndex] = useState(-1);
     const [dropdown, setDropdown] = useState('- Select Dept -');
     const [dropdownClass, setDropdownClass] = useState('- Select a Class -');
@@ -306,26 +308,57 @@ function Home() {
         <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
         <div style={{ width: '80%', marginLeft: '10%', marginRight: '10%', zIndex: 2 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Degree Information</button>
-                    <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Schedule Planner Thing</h1>
-                    <button onClick={() => navigate('/InfoPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>View Classes</button>
+                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Degree Information</button>
+                    <button onClick={() => navigate('/SearchPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'0px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Joe's Page</button>
+                    <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>Schedule Planner Thing</h1>
+                    <button onClick={() => navigate('/InfoPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'0px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}> Classes</button>
+                    <button onClick={() => navigate('/FuturePlanner')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Future Plan</button>
                 </div>
 
                 <div style={{ position: 'relative', width: '80%', minHeight: `${144 * 5}px`, margin: '0 auto', marginTop: '40px' }}>
-  {/* Grid lines */}
-  <div style={{
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: `${120 * 5}px`,
-    zIndex: 0,
-    display: 'grid',
-    gridTemplateRows: `repeat(120, 5px)`,
-    gridTemplateColumns: `repeat(7, 1fr)`,
-    pointerEvents: 'none', 
-    backgroundColor:'white'
-  }}>
+                  {/* time labels*/}
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: '-80px', 
+                    width: '70px',
+                    height: `${60 * 11}px`,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    zIndex: 10,
+                    pointerEvents: 'none',
+                    marginTop: '-30px',
+                  }}>
+                    {['8 am', '9 am', '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm', '6 pm'].map((label, idx) => (
+                      <div key={label} style={{ height: '60px', fontSize: '20px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: '10px' }}>
+                        {label}
+                      </div>
+                    ))}
+                  </div>
+                  {/* day labels*/}
+                  <div style={{
+                    position: 'absolute',
+                    top: '-40px',
+                    left: 0,
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    zIndex: 10,
+                    pointerEvents: 'none',
+                  }}>
+                    {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, idx) => (
+                      <div key={day} style={{ width: '100%', textAlign: 'center', fontSize: '20px', fontWeight: 'bold' }}>
+                        {day}
+                      </div>
+                    ))}
+                  </div>
+  {/* grid lines */}
+                <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: `${120 * 5}px`, zIndex: 0,
+                     display: 'grid', gridTemplateRows: `repeat(120, 5px)`, gridTemplateColumns: `repeat(7, 1fr)`,
+                  pointerEvents: 'none',  backgroundColor:'white'
+                    }}>
     {Array.from({ length: 120 * 7 }).map((_, i) => {
       const rowIndex = Math.floor(i / 7);
       const colIndex = i % 7;
@@ -392,7 +425,7 @@ function Home() {
 
                 
                 {/*horizontal line*/}
-                <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'-50px'}}/>
+                <hr style={{color:'black', backgroundColor:'black', height:'2px', border:'none', marginTop:'-50px'}}/>
 
            
 
@@ -433,7 +466,7 @@ function Home() {
 
                 
                 {/*horizontal line*/}
-                 <hr style={{color:'black', backgroundColor:'black', height:'4px', border:'none', marginTop:'30px'}}/>
+                 <hr style={{color:'black', backgroundColor:'black', height:'2px', border:'none', marginTop:'30px'}}/>
                             
 
                 {/*everything below this is for rendering class search results*/}
@@ -506,29 +539,6 @@ function Home() {
 
 
 
-
-
-
-            <div style={{ position: 'absolute', top: 160, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 8 am</div>
-            <div style={{ position: 'absolute', top: 217, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 9 am</div>
-            <div style={{ position: 'absolute', top: 276, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 10 am</div>  
-            <div style={{ position: 'absolute', top: 337, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 11 am</div>
-            <div style={{ position: 'absolute', top: 397, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 12 pm</div>
-            <div style={{ position: 'absolute', top: 457, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}>  1 pm</div>
-            <div style={{ position: 'absolute', top: 517, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 2 pm</div>
-            <div style={{ position: 'absolute', top: 577, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 3 pm</div>
-            <div style={{ position: 'absolute', top: 637, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 4 pm</div>
-            <div style={{ position: 'absolute', top: 697, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 5 pm</div>
-            <div style={{ position: 'absolute', top: 757, right: 1270, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> 6 pm</div>
-
-
-             <div style={{ position: 'absolute', top: 140, left: 310, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Sunday</div>
-            <div style={{ position: 'absolute', top: 140, left: 445, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}>  Monday</div>
-            <div style={{ position: 'absolute', top: 140, left: 585, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Tuesday</div>
-            <div style={{ position: 'absolute', top: 140, left: 710, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Wednesday</div>
-            <div style={{ position: 'absolute', top: 140, left: 855, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Thursday</div>
-            <div style={{ position: 'absolute', top: 140, left: 1010, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Friday</div>
-            <div style={{ position: 'absolute', top: 140, left: 1140, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Saturday</div>
 
 
             {/*error popup*/}

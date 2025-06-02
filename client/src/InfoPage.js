@@ -8,6 +8,8 @@ function InfoPage() {
     const navigate = useNavigate();
     const [classes, setClasses] = useState([]);
     const [id, setId] = useState(null);
+    const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 
     useEffect(() => {
             const userObj = JSON.parse(localStorage.getItem('user_id'));
@@ -120,7 +122,7 @@ function InfoPage() {
                                   <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px'}}>Go to Home</button>
                                   <h1 style={{fontSize:'50px'}}>Current Class Information</h1>
            
-                                     <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px'}}>Go to Home</button>
+                                     <button style={{  marginRight:'50px',  fontSize: '16px', marginTop:'10px', borderWidth:'0px', width:'90px'}}></button>
                              </div>
 
 
@@ -138,7 +140,9 @@ function InfoPage() {
           <div>
             {item.times && typeof item.times === 'object' ? (
               <div>
-                {Object.entries(item.times).map(([day, time]) => {
+                {Object.entries(item.times)
+                  .sort(([a], [b]) => dayOrder.indexOf(a) - dayOrder.indexOf(b))
+                  .map(([day, time]) =>{
                   let timeText = '';
                   if (Array.isArray(time) && time.length === 2) {
                     timeText = makeTimeNice(time);
@@ -181,36 +185,7 @@ function InfoPage() {
     <span>{String(classes)}</span>
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
             <div style={{ position: 'fixed', right: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
             </div>
