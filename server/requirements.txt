@@ -10,3 +10,5 @@ httpx
 bcrypt
 python-multipart
 pandas
+bs4
+requests
