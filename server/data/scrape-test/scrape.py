@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException, TimeoutException
 import time
 import json
 import re
@@ -19,6 +20,8 @@ url = (
 )
 
 opts = Options()
+# Should work headless or not, but headless is faster
+# # If you want to see the browser, comment out the next line
 # opts.add_argument("--headless")
 opts.add_argument("--window-size=1920,1080")
 opts.add_argument("--disable-gpu")
@@ -29,18 +32,20 @@ opts.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap
 
 driver = webdriver.Chrome(options=opts)
 
-try:
-    print(f"Navigating to {url}")
-    driver.get(url)
-    
-    # Wait for page to load
-    time.sleep(10)
-    
+def getHost():
     # The page usees something called a shadow DOM apparently
     host = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "ucla-sa-soc-app"))
     )
-    
+    return host
+
+wait = WebDriverWait(driver, 15)
+def shadow_root():
+    host = wait.until(EC.presence_of_element_located(
+        (By.CSS_SELECTOR, "ucla-sa-soc-app")))
+    return host.shadow_root        
+
+def clickExpandAll(host):
     # Find and click expand all button within shadow DOM
     # Use JavaScript to access the shadow root and find the button
     js_click_expand = """
@@ -57,12 +62,57 @@ try:
     expand_clicked = driver.execute_script(js_click_expand, host)
     if expand_clicked:
         print("Clicked Expand All!")
+        time.sleep(10)  # Wait for the page to expand
     else:
         print("Could not find Expand All button")
-    
-    # Wait for the page to expand
-    time.sleep(3)
-    
+
+
+def go_next_page() -> bool:
+    """
+    Click the numbered paginator button for (current_page + 1).
+    Returns True if we really advanced, False when already on last page.
+    """
+    # Get the current page number from the paginator
+    cur_page = driver.execute_script(
+        'return parseInt(document.querySelector("ucla-sa-soc-app")'
+        '.shadowRoot.querySelector(".jPag-current").textContent, 10);')
+
+    # Find the paginator button for the next page
+    clicked = driver.execute_script(
+        '''
+        const host = document.querySelector('ucla-sa-soc-app');
+        const root = host.shadowRoot;
+        const target = [...root.querySelectorAll('.jPag-pages button')]
+                       .find(b => parseInt(b.textContent.trim(), 10) === arguments[0]);
+        if (!target) return false;        // already on last page
+        target.scrollIntoView({block:'center'});
+        target.click();
+        return true;
+        ''',
+        cur_page + 1
+    )
+    if not clicked:
+        return False # No next page button found, already on last page                     
+
+    # Wait for the page to advance
+    def page_has_advanced(_):
+        try:
+            host = driver.find_element(By.CSS_SELECTOR, 'ucla-sa-soc-app')
+            new_pg = int(driver.execute_script(
+                'return arguments[0].shadowRoot.querySelector(".jPag-current").textContent;',
+                host))
+            return new_pg == cur_page + 1
+        except StaleElementReferenceException:
+            return False
+
+    try:
+        wait.until(page_has_advanced)
+        return True
+    except TimeoutException:
+        return False
+
+
+def extractPageInfo(filename="courses_by_id.json"):
     # Script to extract courses from current page
     js_extract_course_data = """
     const host = arguments[0];
@@ -159,11 +209,53 @@ try:
     print(f"Extracted data for {len(extracted_courses)} courses")
     
     # Save the extracted data to a JSON file
-    with open("courses_by_id.json", "w", encoding="utf-8") as f:
+    with open(filename, "w", encoding="utf-8") as f:
         json.dump(extracted_courses, f, indent=2)
     
-    print(f"Saved {len(extracted_courses)} courses to courses_by_id.json")
+    print(f"Saved {len(extracted_courses)} courses to {filename}")
     
+    return extracted_courses
+
+
+try:
+    """
+    Main script to scrape course data from UCLA's Schedule of Classes
+    This should be improved a bit to be more general, but works for COM SCI 25S
+    """
+    print(f"Navigating to {url}")
+    driver.get(url)
+    
+    # Wait for page to load
+    time.sleep(10)
+    
+    host = getHost()
+    
+    clickExpandAll(host)
+    
+    # Extract first page
+    page1_courses = extractPageInfo("page1_courses.json")
+    print("Trying to click next arrow...")
+    
+    # Scroll down to make sure pagination is visible
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(1)
+    driver.save_screenshot("bottom_of_page.png")
+
+    print(go_next_page())
+
+    clickExpandAll(host)
+    page2_courses = extractPageInfo("page2_courses.json")
+    
+    print(go_next_page())
+
+    clickExpandAll(host)
+    page3_courses = extractPageInfo("page3_courses.json")
+    
+    # Save a screenshot of the final state
+
+    print(go_next_page())
+    driver.save_screenshot("final_state.png")
+
 except Exception as e:
     print(f"Error: {e}")
     print(traceback.format_exc())  # For debugging
