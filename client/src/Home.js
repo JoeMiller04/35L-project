@@ -167,11 +167,19 @@ function Home() {
         } else if (temp === "ECENGR") {
             temp = "EC ENGR";
         }
-        const params = new URLSearchParams({
-            term: quarter,
-            subject: temp,
-            catalog: dropdownClass
-        });
+        let params = new URLSearchParams();
+        if (quarter === "idk") {
+            params = new URLSearchParams({
+                subject: temp,
+                catalog: dropdownClass
+            });
+        } else {
+            params = new URLSearchParams({
+                term: quarter,
+                subject: temp,
+                catalog: dropdownClass
+            });
+        }
        
         try {
             const response = await fetch(`http://127.0.0.1:8000/courses?${params.toString()}`, {
@@ -183,6 +191,10 @@ function Home() {
             if (response.ok) {
                 const data = await response.json()
                 setDataFromQuery(data);
+                if (data.length === 0) {
+                    setError("No classes found for the selected criteria.");
+                    setPopup(true);
+                }
               
             } else if (response.status === 400) {
                 alert("NOOO")
@@ -229,6 +241,7 @@ function Home() {
   
 
   const quarterOptions = [
+    { value:'idk', label: 'Any Term'},
     { value: '25S', label: 'Spring 2025' }
    
   ];
@@ -280,6 +293,7 @@ function Home() {
     async function getClassesBySubject(subject) {
         if (subject === '- Select Dept -') {
             setClassesPerSubject({'- Select Dept -': ['- Select a Class -']});
+            setDropdownClass('- Select a Class -');
             return [];
         }
         try {
@@ -294,11 +308,12 @@ function Home() {
                 throw new Error('Failed to fetch catalogs');
             }
             const catalogs = await response.json();
-            // Do something with the catalogs, e.g., set state
             setClassesPerSubject(prev => ({ ...prev, [subject]: catalogs }));
+            setDropdownClass((catalogs && catalogs.length > 0) ? catalogs[0] : '- Select a Class -');
             return catalogs;
         } catch (error) {
             alert('Error fetching catalogs: ' + error.message);
+            setDropdownClass('- Select a Class -');
             return [];
         }
     }

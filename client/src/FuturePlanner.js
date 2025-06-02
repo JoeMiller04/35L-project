@@ -269,17 +269,17 @@ const removeCourse = (termToRemove, courseToRemove) => {
   return (
     <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
         <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
-        <div style={{ width: '80%', marginLeft: '10%', marginRight: '10%', zIndex: 2 }}>
-
-
-          {/*upper text*/}
-       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Degree Information</button>
+        <div style={{ width: '80%', marginLeft: '10%', zIndex: 2 }}>
+            {/* Header in its own block */}
+            <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'100px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
                     <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Future Planner</h1>
-                    <button onClick={() => navigate('/InfoPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>View Classes</button>
-        </div>
-     
-     
+                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'100px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Past Courses</button>
+                </div>
+                {/* <hr> in a block container, not inside a flex row */}
+                <hr style={{ margin: '20px 0', borderColor: '#ccc', width: '100%', marginLeft: 0, marginRight: 0, borderWeight:'4px', marginTop:'0px' }} />
+            </div>
      
      
      
@@ -373,14 +373,10 @@ const removeCourse = (termToRemove, courseToRemove) => {
         </button>
       </div>
 
-    <button onClick={() => navigate('/Home')}>Go to Home</button>
-    <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
-    <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
-    <button onClick={() => navigate('/PastCourses')}>Go to Home4</button>
-    <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
+
     </div>
         <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
       
     </div>
   );
-} 
+}
