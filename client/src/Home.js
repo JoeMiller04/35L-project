@@ -1,18 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 import { useState, useEffect } from 'react';
-import {COMSCIClassOptions, MATHClassOptions, ECENGRClassOptions, PHYSICSClassOptions} from './ClassesLists'
+
 
 function Home() {
     const navigate = useNavigate();
     const [classes, setClasses] = useState([]);
     const colors = ['#FFD1DC', '#FFABAB', '#FFC3A0', '#FF677D', '#D4A5A5', '#392F5A', '#31A2AC', '#61C0BF', '#6B4226', '#D9BF77'];
     const [index, setIndex] = useState(-1);
-    const [dropdown, setDropdown] = useState("");
-    const [dropdownClass, setDropdownClass] = useState("");
+    const [dropdown, setDropdown] = useState('- Select Dept -');
+    const [dropdownClass, setDropdownClass] = useState('- Select a Class -');
     const [quarter, setQuarter] = useState("25S");
     const [dataFromQuery, setDataFromQuery] = useState([]);
     const [id, setId] = useState(null);
+    const [subjects, setSubjects] = useState([]);
+    const [classesPerSubject, setClassesPerSubject] = useState({});
+    const [error, setError] = useState(null);
+    const [popup, setPopup] = useState(false);
+    const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     // Run changeColor every time a new class is rendered
     useEffect(() => {
@@ -29,6 +34,8 @@ function Home() {
             setClasses([]);
             runGetClasses(userObj._id);
         }
+        getSubjects();
+        setClassesPerSubject({'- Select Dept -': ['- Select a Class -']});
     }, []);
 
     //fetch classes from backend
@@ -56,8 +63,8 @@ function Home() {
             return await response.json();
 
         } catch (err) {
-            alert(userId);
-            alert('Error: ' + err.message);
+            setError(err.message);
+            setPopup(true);
         }
     }
 
@@ -101,7 +108,7 @@ function Home() {
         return {
             gridColumn: getDayColumn(clas.day),
             gridRow: startRow,
-            gridRowEnd: `span ${endRow - startRow}`, // Span rows based on duration
+            gridRowEnd: `span ${endRow - startRow}`, 
         };
     }
 
@@ -147,18 +154,7 @@ function Home() {
         }
     }
 
-    const classOptionsMap = {
-         COMSCI: COMSCIClassOptions,
-         MATH: MATHClassOptions, 
-         ECENGR: ECENGRClassOptions, 
-         PHYSICS: PHYSICSClassOptions
-
-    };
-
-    const classOptions = [
-         { value: '', label: '— Select Dept —' }
-    ]
-
+  
 
     //query class function
     async function classQuery() {
@@ -191,11 +187,13 @@ function Home() {
                 
                 
             } else {
+                
                 alert(response.status);
+                
                 
             }
         } catch (error) {
-            alert('Error:' + error.message);
+            alert("It is bad if we are here");
         }
         }
     
@@ -224,14 +222,7 @@ function Home() {
         }
     }
 
-    const options = [
-    { value: '', label: '— Select a Department —' },
-    { value: 'COMSCI', label: 'Computer Science (COM SCI)' },
-    {value: 'ECENGR', label:'Electrical Engineering (EC ENGR)'}
-    , {value:'PHYSICS', label:'Physics (PHYSICS)'}, 
-    {value:'MATH', label:'Mathematics (MATH)'}
-    
-  ];
+  
 
   
 
@@ -243,6 +234,7 @@ function Home() {
     //dropdown change function
     function handleChange(drop) {
         setDropdown(drop.target.value);
+        getClassesBySubject(drop.target.value);
     }
 
     function handleQuarterChange(drop) {
@@ -261,6 +253,52 @@ function Home() {
     // Capitalize the first letter
      function capitalizeWords(str) {
         return str.replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    async function getSubjects() {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/subjects', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch subjects');
+            }
+            const thing = await response.json();
+            // Insert a custom first element, e.g., '— Select Dept —'
+            setSubjects(['- Select Dept -', ...thing]);
+        } catch (error) {
+            alert('Error fetching subjects: ' + error.message);
+            return [];
+        }
+    }
+
+    async function getClassesBySubject(subject) {
+        if (subject === '- Select Dept -') {
+            setClassesPerSubject({'- Select Dept -': ['- Select a Class -']});
+            return [];
+        }
+        try {
+        
+            const response = await fetch(`http://127.0.0.1:8000/courses/catalogs/${encodeURIComponent(subject)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch catalogs');
+            }
+            const catalogs = await response.json();
+            // Do something with the catalogs, e.g., set state
+            setClassesPerSubject(prev => ({ ...prev, [subject]: catalogs }));
+            return catalogs;
+        } catch (error) {
+            alert('Error fetching catalogs: ' + error.message);
+            return [];
+        }
     }
     
     return (
@@ -364,20 +402,20 @@ function Home() {
                     {/*dept dropdown*/}
                     <h1 style={{fontSize:'25px'}}>Search for Class:</h1>
                     <select value={dropdown} onChange={handleChange} style={{ cursor:'pointer', width: '250px', height: '30px', border:'2px solid black' }}>
-                        {options.map((opt) => (
-                            <option key={opt.value} value={opt.value}>
-                                {opt.label}
+                        {subjects.map((subject, idx) => (
+                            <option key={idx} value={subject}>
+                                {subject}
                             </option>
                         ))}
                     </select>
                     
                     {/*class dropdown*/}
                     <select value={dropdownClass} onChange={handleClassChange} style={{ cursor:'pointer', width: '140px', height: '30px', border:'2px solid black' }}>
-                        {(classOptionsMap[dropdown]||classOptions).map((opt) => (
-                            <option key={opt.value} value={opt.value}>
-                                {opt.label}
-                            </option>
-                        ))}
+                        {(classesPerSubject[dropdown] || []).map((catalog) => (
+                        <option key={catalog} value={catalog}>
+                                         {catalog}
+                        </option>
+                                 ))}
                     </select>
                     
                     {/*quarter dropdown*/}
@@ -413,21 +451,23 @@ function Home() {
           <div>
             {item.times && typeof item.times === 'object' ? (
               <div>
-                {Object.entries(item.times).map(([day, time]) => {
-                  let timeText = '';
-                  if (Array.isArray(time) && time.length === 2) {
-                    timeText = makeTimeNice(time);
-                  } else if (typeof time === 'string') {
-                    timeText = makeTimeNice(time);
-                  } else {
-                    timeText = String(time);
-                  }
-                  return (
-                    <div key={day} style={{fontSize:'15px'}}>
-                      <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {timeText}
-                    </div>
-                  );
-                })}
+                {Object.entries(item.times)
+                  .sort(([a], [b]) => dayOrder.indexOf(a) - dayOrder.indexOf(b))
+                  .map(([day, time]) => {
+                    let timeText = '';
+                    if (Array.isArray(time) && time.length === 2) {
+                      timeText = makeTimeNice(time);
+                    } else if (typeof time === 'string') {
+                      timeText = makeTimeNice(time);
+                    } else {
+                      timeText = String(time);
+                    }
+                    return (
+                      <div key={day} style={{fontSize:'15px'}}>
+                        <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {timeText}
+                      </div>
+                    );
+                  })}
               </div>
             ) : (
               <div>{String(item.times)}</div>
@@ -491,8 +531,22 @@ function Home() {
             <div style={{ position: 'absolute', top: 140, left: 1140, fontSize: '20px', zIndex: 9999, fontWeight:'bold'}}> Saturday</div>
 
 
-
-
+            {/*error popup*/}
+            {popup && (<>
+            <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 999 }}>
+                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', zIndex: 1000, minWidth: '300px' }}>
+                    <button onClick={() => setPopup(false)}
+                        style={{ position: 'absolute', top: 10, right: 10, background: 'none', border: 'none', fontSize: '24px', color: '#888', cursor: 'pointer', fontWeight: 'bold' }}
+                        aria-label="Close error popup"
+                    >
+                        ×
+                    </button>
+                    <h2 style={{ marginTop: '10px' }}>Error</h2>
+                    <p>{error}</p>
+                </div>
+                </div>
+                </>
+            )}
 
 
 
