@@ -15,7 +15,14 @@ async_db = async_client[DATABASE_NAME]
 users_collection = async_db.get_collection("users")
 course_collection = async_db.get_collection("courses")
 valid_course_collection = async_db.get_collection("valid_courses")
+<<<<<<< HEAD
 ratings_collection = async_db.get_collection("course_ratings")
+=======
+pre_reqs = async_db.get_collection("pre-reqs")
+previous_courses = async_db.get_collection("Previous courses")
+future_courses = async_db.get_collection("Future courses")
+sample = async_db.get_collection("sample")
+>>>>>>> 728c21a (Creation of a basic rendtion of the isValid function. Yet to implement additional checks on electives and some other requirements. Additional changes on pre-reqs.py and a the creation of a sample for testing purposes.)
 
 def get_collection(collection_name):
     return db[collection_name]
