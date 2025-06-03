@@ -40,7 +40,7 @@ def sample():
 
         {"Course": "COM SCI 131", "Quarter": "23W"},
         {"Course": "COM SCI M151B", "Quarter": "23W"},
-        {"Course": "MATH 170A", "Quarter": "23W"},
+        {"Course": "C&E ", "Quarter": "23W"},
         {"Course": "GE", "Quarter": "23W"},
 
         {"Course": "COM SCI 181", "Quarter": "23S"},
@@ -71,6 +71,7 @@ def upload_to_mongodb(course_list):
     client = MongoClient(MONGO_URI)
     db = client[DATABASE_NAME]
     collection = db["sample"]
+    collection.delete_many({})
     result = collection.insert_many(course_list)
     print(f"Inserted {len(result.inserted_ids)} documents.")
 

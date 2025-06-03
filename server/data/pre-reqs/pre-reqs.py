@@ -6,7 +6,32 @@ import os
 
 Prerequisite = namedtuple("Prerequisite", ["units", "elective_eligible", "requisites", "aliases"])
 
-def make_prereq(units, elective_eligible=False, requisites=None, aliases=None, ):
+Reverse_aliases = namedtuple("Alternate_name", "Main_name")
+
+def make_alias(alias_name):
+    return alias_name
+
+def reverse_aliases():
+    aliases_key = {}
+    aliases_key["EC ENGR M16"] = make_alias("COM SCI M51A")
+    aliases_key["C&EE 110"] = make_alias("MATH 170A")
+    aliases_key["EC ENGR 131A"] = make_alias("MATH 170A")
+    aliases_key["STATS 100A"] = make_alias("MATH 170A")
+    aliases_key["EC ENGR 132B"] = make_alias("COM SCI 118")
+    aliases_key["EC ENGR M117"] = make_alias("COM SCI M138")
+    aliases_key["EC ENGR M116L"] = make_alias("COM SCI M152A")
+
+    aliases_list = []
+    for alias, original_course in aliases_key.items():
+        aliases_list.append({
+            "alias_key": alias,
+            "original_course": original_course
+        })
+    return aliases_list
+    return aliases_key
+
+
+def make_prereq(units, elective_eligible=False, requisites=None, aliases=None):
     if requisites is None:
         requisites = []
     if aliases is None:
@@ -256,7 +281,6 @@ def upload_classes():
             [classes["COM SCI CM186"]]
         ])
     classes["COM SCI 188"] = make_prereq(4)
-    
 
     return classes
 
@@ -283,6 +307,7 @@ def export_to_mongodb(classes):
     client = MongoClient(MONGO_URI)
     db = client[DATABASE_NAME]
     collection = db["pre-reqs"]
+    aliases_collection = db["Aliases"]
 
     reverse_map = {id(v): k for k, v in classes.items()}
 
@@ -291,13 +316,19 @@ def export_to_mongodb(classes):
         serialized = serialize_prereq(prereq, reverse_map)
         serialized["course_name"] = course_name
         serialized_docs.append(serialized)
-
-    # Optional: clear previous data before inserting new
+        
     collection.delete_many({})
 
     result = collection.insert_many(serialized_docs)
-    print(f"Inserted {len(result.inserted_ids)} documents.")
 
+
+    aliases = reverse_aliases()
+
+    aliases_collection.delete_many({})
+    new_result = aliases_collection.insert_many(aliases)
+
+    print(f"Inserted {len(result.inserted_ids)+len(new_result.inserted_ids)} documents.")
+    
     client.close()
     
     '''
