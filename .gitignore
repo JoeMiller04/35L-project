@@ -8,3 +8,4 @@ server/.env
 server/data/Dars/a.json
 server/data/Dars/courses_simple.json
 server/data/Dars/extracted_courses.csv
+/server/uploads

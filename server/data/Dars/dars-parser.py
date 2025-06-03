@@ -212,11 +212,11 @@ def _split_subject_catalog(code_raw: str) -> tuple[str, str]:
 
 """
     Parse DARS HTML and return a dictionary with:
-      - "requirements": a list of requirement objects (only those with >0‐unit courses).
+      - "requirements": a list of requirement objects (only those with >0-unit courses).
       - "missing_requirements": a list of {code, title, status} for requirements not OK.
     Each requirement object includes:
       - code, title, status
-      - sub: list of sub‐requirements containing ≥1 >0‐unit course
+      - sub: list of sub-requirements containing ≥1 >0-unit course
       - courses are deduped globally by (subject, catalog)
 """
 def parse_dars(html_text: str) -> dict:
