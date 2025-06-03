@@ -15,7 +15,7 @@ import traceback
 opts = Options()
 # Should work headless or not, but headless is faster
 # # If you want to see the browser, comment out the next line
-# opts.add_argument("--headless")
+opts.add_argument("--headless")
 opts.add_argument("--window-size=1920,1080")
 opts.add_argument("--disable-gpu")
 opts.add_argument("--no-sandbox")
@@ -216,10 +216,10 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     """
     
     # Execute script with host element as argument, passing the subject code and full subject name
-    extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject)
-    # with open('extract_data.js') as f:
-    #     script = f.read()
-    # extracted_courses = driver.execute_script(script, getHost(), subject_code, subject)
+    # extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject)
+    with open('extract_data.js') as f:
+        script = f.read()
+    extracted_courses = driver.execute_script(script, getHost(), subject_code, subject)
     print(f"Extracted data for {len(extracted_courses)} courses")
     
     # Save the extracted data to a JSON file (for backup)
@@ -247,10 +247,10 @@ try:
     that as we upload to MongoDB.
     """
     # PARAMETERS
-    # TERMS = ["24S", "25W", "25S", "25F"]
-    # SUBJECTS = ["COM SCI", "PHYSICS", "MATH", "EC ENGR"]
-    TERMS = ["25S"]
-    SUBJECTS = ["COM SCI", "PHYSICS"]
+    TERMS = ["24S", "25W", "25S", "25F"]
+    # SUBJECTS NEED TO BE HARDCODED IN EXTRACT_DATA.JS
+    # SO YOU ONLY CAN RUN ONE AT A TIME FOR NOW (sob)
+    SUBJECTS = ["PHYSICS"]
 
     # Track total courses added across all pages
     total_added = 0
@@ -274,7 +274,7 @@ try:
             "&catlg=&cls_no=&undefined=Go&btnIsInIndex=btn_inIndex"
             )
 
-            print(f"Navigating to {url}")
+            # print(f"Navigating to {url}")
             driver.get(url)
             
             print("Heads up that course counts are probably off by a factor of 2")
