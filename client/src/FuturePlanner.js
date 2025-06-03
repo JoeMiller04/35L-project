@@ -2,42 +2,34 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 
-// Add a save planner button which passes the plan to isValid and returns if the plan is valid, if so save users plan in database
 
-// Options for dropdowns
-const availableTerms = ["25W", "25S", "25F", "26W", "26S", "26F", "27W", "27S", "27F", "28W", "28S", "28F"];
 
-  // Helper to sort terms: e.g., 25W -> 251, 25S -> 252
+const availableTerms = ["25F", "25W", "25S", "25SS", "26F", "26W", "26FS", "26SS", "27F", "27W", "27S", "27SS", "28F", "28W", "28S", "28SS"];
+
+  
   const termToSortable = (term) => {
   if (term === "PAST")
   {
     return 10000;
   }
-  const year = parseInt(term.slice(0, 2)); // "25W" → 25
-  const quarterCode = { W: 1, S: 2, F: 3 }[term[2]]; // "W" → 1, "S" → 2, "F" → 3
+  const year = parseInt(term.slice(0, 2)); 
+  const quarterCode = { W: 2, S: 3, F: 1, SS:4 }[term[2]]; 
   return year * 10 + quarterCode;
 };
 
 export default function FuturePlanner() {
-  const [plan, setPlan] = useState([]); // Main state: [{ term: "25F", classes: ["COM SCI 32"] }]
+  const [plan, setPlan] = useState([]); 
   const [selectedTerm, setSelectedTerm] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
   const [selectedDegree, setSelectedDegree] = useState('');
+  const [validationMessage, setValidationMessage] = useState('');
   const navigate = useNavigate();
   const userObj = JSON.parse(localStorage.getItem("user_id"));
   const userId = userObj._id;
-  //const userId = "68361c156a49e4907460b4a8";
 
 
   const availableCourses = selectedDegree === 'CS' 
     ? [
-    "COM SCI 1",
-    "COM SCI 30",
-    "COM SCI 31",
-    "COM SCI 32",
-    "COM SCI 33",
-    "COM SCI 35L",
-    "COM SCI M51A",
     "MATH 31A",
     "MATH 31B",
     "MATH 32A",
@@ -47,6 +39,8 @@ export default function FuturePlanner() {
     "MATH 61",
     "MATH 170A",
     "MATH 170E",
+    "C&EE 110",
+    "STATS 100A",
     "PHYSICS 1A",
     "PHYSICS 1B",
     "PHYSICS 1C",
@@ -54,52 +48,6 @@ export default function FuturePlanner() {
     "PHYSICS 4BL",
     "LIFESCI 30A",
     "LIFESCI 30B",
-    "COM SCI 111",
-    "COM SCI 112",
-    "COM SCI 117",
-    "COM SCI 118",
-    "COM SCI M119",
-    "COM SCI C121",
-    "COM SCI C122",
-    "COM SCI C124",
-    "COM SCI 131",
-    "COM SCI 130",
-    "COM SCI 132",
-    "COM SCI M151B",
-    "COM SCI 133",
-    "COM SCI 134",
-    "COM SCI 136",
-    "COM SCI C137A",
-    "COM SCI C137B",
-    "COM SCI M138",
-    "COM SCI 143",
-    "COM SCI 144",
-    "COM SCI 145",
-    "COM SCI M146",
-    "COM SCI M148",
-    "COM SCI M152A",
-    "COM SCI 152B",
-    "COM SCI 180",
-    "COM SCI 161",
-    "COM SCI 162",
-    "COM SCI 163",
-    "COM SCI 168",
-    "COM SCI 170A",
-    "COM SCI M171L",
-    "COM SCI 172",
-    "COM SCI 174A",
-    "COM SCI 174B",
-    "COM SCI C174C",
-    "COM SCI 181",
-    "COM SCI M182",
-    "COM SCI 183",
-    "COM SCI M184",
-    "COM SCI CM186",
-    "COM SCI CM187",
-    "COM SCI 188"
-]
-    : selectedDegree === 'CSE'
-      ? [
     "COM SCI 1",
     "COM SCI 30",
     "COM SCI 31",
@@ -107,23 +55,6 @@ export default function FuturePlanner() {
     "COM SCI 33",
     "COM SCI 35L",
     "COM SCI M51A",
-    "ECE 3",
-    "MATH 31A",
-    "MATH 31B",
-    "MATH 32A",
-    "MATH 32B",
-    "MATH 33A",
-    "MATH 33B",
-    "MATH 61",
-    "MATH 170A",
-    "MATH 170E",
-    "PHYSICS 1A",
-    "PHYSICS 1B",
-    "PHYSICS 1C",
-    "PHYSICS 4AL",
-    "PHYSICS 4BL",
-    "LIFESCI 30A",
-    "LIFESCI 30B",
     "COM SCI 111",
     "COM SCI 112",
     "COM SCI 117",
@@ -167,9 +98,102 @@ export default function FuturePlanner() {
     "COM SCI CM186",
     "COM SCI CM187",
     "COM SCI 188",
-    "ECE 100", 
-    "ECE 102", 
-    "ECE 115C"
+    "EC ENGR M16",
+    "EC ENGR 131A",
+    "EC ENGR 132B",
+    "EC ENGR M117",
+    "EC ENGR M116L",
+    "GE",
+    "SCI-TECH",
+    "TECH BREADTH",
+    "ENG COMP",
+    "ETHICS",
+    "COM SCI ELECTIVE" 
+]
+    : selectedDegree === 'CSE'
+      ? [
+    "MATH 31A",
+    "MATH 31B",
+    "MATH 32A",
+    "MATH 32B",
+    "MATH 33A",
+    "MATH 33B",
+    "MATH 61",
+    "MATH 170A",
+    "MATH 170E",
+    "C&EE 110",
+    "STATS 100A",
+    "PHYSICS 1A",
+    "PHYSICS 1B",
+    "PHYSICS 1C",
+    "PHYSICS 4AL",
+    "PHYSICS 4BL",
+    "LIFESCI 30A",
+    "LIFESCI 30B",
+    "COM SCI 1",
+    "COM SCI 30",
+    "COM SCI 31",
+    "COM SCI 32",
+    "COM SCI 33",
+    "COM SCI 35L",
+    "COM SCI M51A",
+    "COM SCI 111",
+    "COM SCI 112",
+    "COM SCI 117",
+    "COM SCI 118",
+    "COM SCI M119",
+    "COM SCI C121",
+    "COM SCI C122",
+    "COM SCI C124",
+    "COM SCI 131",
+    "COM SCI 130",
+    "COM SCI 132",
+    "COM SCI M151B",
+    "COM SCI 133",
+    "COM SCI 134",
+    "COM SCI 136",
+    "COM SCI C137A",
+    "COM SCI C137B",
+    "COM SCI M138",
+    "COM SCI 143",
+    "COM SCI 144",
+    "COM SCI 145",
+    "COM SCI M146",
+    "COM SCI M148",
+    "COM SCI M152A",
+    "COM SCI 152B",
+    "COM SCI 180",
+    "COM SCI 161",
+    "COM SCI 162",
+    "COM SCI 163",
+    "COM SCI 168",
+    "COM SCI 170A",
+    "COM SCI M171L",
+    "COM SCI 172",
+    "COM SCI 174A",
+    "COM SCI 174B",
+    "COM SCI C174C",
+    "COM SCI 181",
+    "COM SCI M182",
+    "COM SCI 183",
+    "COM SCI M184",
+    "COM SCI CM186",
+    "COM SCI CM187",
+    "COM SCI 188",
+    "EC ENGR 3",
+    "EC ENGR M16",
+    "EC ENGR 100",
+    "EC ENGR 102",
+    "EC ENGR 115C",
+    "EC ENGR 131A",
+    "EC ENGR 132B",
+    "EC ENGR M117",
+    "EC ENGR M116L",
+    "GE",
+    "TECH BREADTH",
+    "ENG COMP",
+    "ETHICS",
+    "COM SCI ELECTIVE" 
 ]
       : [];
 
@@ -210,6 +234,32 @@ export default function FuturePlanner() {
 
   if (userId) loadSavedPlan();
 }, [userId]);
+
+   const handleValidation = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Failed to fetch user course list');
+            }
+      const data = await response.json(); 
+      //const result = isValid(data); // Call isValid function with the current plan
+      const result = true;
+
+      if (result === true) {
+        setValidationMessage("Your plan is valid!");
+      } else {
+        setValidationMessage(result); // Assuming result is an error message from isValid
+      }
+    } catch (error) {
+      setValidationMessage("An error occurred while validating the plan: " + error.message);
+    }
+  };
 
   // Add selected course to selected term in plan
   const addCourseToQuarter = () => {
@@ -269,40 +319,41 @@ const removeCourse = (termToRemove, courseToRemove) => {
   return (
     <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
         <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
-        <div style={{ width: '80%', marginLeft: '10%', zIndex: 2 }}>
-            {/* Header in its own block */}
-            <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'100px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
-                    <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Future Planner</h1>
-                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'100px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Past Courses</button>
-                </div>
-                {/* <hr> in a block container, not inside a flex row */}
-                <hr style={{ margin: '20px 0', borderColor: '#ccc', width: '100%', marginLeft: 0, marginRight: 0, borderWeight:'4px', marginTop:'0px' }} />
-            </div>
-     
-     
-     
-      {/* Dropdowns to select term and course */} 
-      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <div style={{ width: '80%', marginLeft: '10%', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    {/* Header */}
+    <div style={{ width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
+            <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>Future Plan</h1>
+            <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Past Courses</button>
+        </div>
+                <hr style={{color:'black', backgroundColor:'black', height:'2px', border:'none', marginTop:'0px'}}/>
+    </div>
+
+    {/* Dropdowns and Add Course button */}
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px', marginBottom: '10px' }}>
+        {/*degree dropdown*/} 
+      <div>
         <select
           value={selectedDegree}
           onChange={(e) => setSelectedDegree(e.target.value)}
           className="border p-2"
+          style={{ cursor:'pointer', width: '200px', height: '30px', border:'2px solid black', marginRight:'20px' }}
         >
-          <option value="">Select Degree</option> {/* Default option */}
-          <option value="CS">Computer Science (CS)</option>
-          <option value="CSE">Computer Science and Engineering (CSE)</option>
+          <option value="">Select Degree</option> 
+          <option value="CS">(CS) Computer Science</option>
+          <option value="CSE">(CSE) Computer Science and Engineering </option>
         </select>
 
 
 {/* Dropdowns to select term and course, displayed only if degree is selected */}
-        {selectedDegree && (
+        {true && (
           <>
         <select
           value={selectedTerm}
           onChange={(e) => setSelectedTerm(e.target.value)}
-          className="border p-2"
+          style={{ cursor:'pointer', width: '100px', height: '30px', border:'2px solid black', marginRight:'20px' }}
+         
         >
           <option value="">Select Term</option>
           {availableTerms.map((term) => (
@@ -315,7 +366,8 @@ const removeCourse = (termToRemove, courseToRemove) => {
         <select
           value={selectedCourse}
           onChange={(e) => setSelectedCourse(e.target.value)}
-          className="border p-2 flex-1"
+          style={{ cursor:'pointer', width: '150px', height: '30px', border:'2px solid black', marginRight:'20px' }}
+         
         >
           <option value="">Select Course</option>
           {availableCourses.map((course) => (
@@ -327,53 +379,96 @@ const removeCourse = (termToRemove, courseToRemove) => {
 
         <button
           onClick={addCourseToQuarter}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          style={{ width: '100px', height: '30px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer', marginLeft:'40px' }}
+         
         >
           Add Course
         </button>
+
+          <button onClick={handleValidation} style={{ width: '100px', height: '30px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer', marginLeft:'40px' }}>
+
+            Validate Plan
+
+          </button>
+
         </>
         )}
       </div>
+    </div>
 
-      {/* Display user's plan */}  
+
+<hr style={{border: 'none', borderTop: '2px solid black', marginTop: '0px', width: '100%', marginTop:'20px'}} />
+
+
+
+
+
+
+    {/* display things */}  
      {plan.length > 0 ? (
-        <div className="space-y-4">
-          {plan
-            .sort((a, b) => termToSortable(a.term) - termToSortable(b.term))
-            .map(({ term, classes }) => (
-              <div key={term} className="border p-4 rounded shadow">
-                <h2 className="font-semibold text-xl mb-2">{term}</h2>
-                <ul className="list-disc list-inside space-y-1">
-                  {classes.map((c) => (
-                    <li key={c} className="flex justify-between items-center">
-                      <span>{c}</span>
-                      <button
-                        onClick={() => removeCourse(term, c)}
-                        className="text-red-500 text-sm"
-                      >
-                        Remove
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-        </div>
-      ) : (
-        <p className="text-gray-500">No courses planned yet.</p>
-      )}
+  <div style={{ display: 'flex', width: '100%', marginTop: '24px' }}>
+    {/* everything but past */}
+    <div style={{ width: '85%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', textAlign: 'left', marginLeft:'50px', marginRight:'-30px' }}>
+      {plan
+        .filter(({ term }) => term !== 'PAST')
+        .sort((a, b) => termToSortable(a.term) - termToSortable(b.term))
+        .map(({ term, classes }) => (
+          <div key={term}>
+            <h2>{term}</h2>
+            <ul style={{ marginTop: '-20px', listStyleType: 'none', paddingLeft: '0px' }}>
+              {classes.map((c) => (
+                <li key={c}>
+                  <button onClick={() => removeCourse(term, c)} style={{ border: 'none', cursor: 'pointer', color: 'red' }}>X</button>
+                  <span>{c}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+    </div>
+    {/*for past terms */}
+    <div style={{ width: '25%', minWidth: '200px', display: 'grid', gridTemplateColumns: '1fr', gap: '24px', textAlign: 'left', marginLeft: '24px' }}>
+      {plan
+        .filter(({ term }) => term === 'PAST')
+        .map(({ term, classes }) => (
+          <div key={term}>
+            <h2>{term}</h2>
+            <ul style={{ marginTop: '-20px', listStyleType: 'none', paddingLeft: '0px' }}>
+              {classes.map((c) => (
+                <li key={c}>
+                  <span>{c}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+    </div>
+  </div>
+) : (
+  <p className="text-gray-500" style={{ textAlign: 'center' }}>No courses planned yet.</p>
+)}
 
-    {/* Validate Button */} 
-      <div className="mt-6 text-center">
-        <button
-          onClick={() => console.log("Validate button clicked")}
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md shadow"
-        >
-          Validate Plan
-        </button>
-      </div>
+    
+     
 
+      {/* validation message */}
+         {validationMessage && (<>
+            <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 999 }}>
+                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', zIndex: 1000, minWidth: '300px' }}>
+                    <button onClick={() => setValidationMessage('')}
+                        style={{ position: 'absolute', top: 10, right: 10, background: 'none', border: 'none', fontSize: '24px', color: '#888', cursor: 'pointer', fontWeight: 'bold' }}
+                        aria-label="Close error popup"
+                    >
+                        ×
+                    </button>
+                   
+                    <p>{validationMessage}</p>
+                </div>
+                </div>
+                </>
+            )}
 
+ 
     </div>
         <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
       
