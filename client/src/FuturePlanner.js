@@ -2,24 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 
-// Add a save planner button which passes the plan to isValid and returns if the plan is valid, if so save users plan in database
 
-// Options for dropdowns
-const availableTerms = ["25W", "25S", "25F", "26W", "26S", "26F", "27W", "27S", "27F", "28W", "28S", "28F"];
 
-  // Helper to sort terms: e.g., 25W -> 251, 25S -> 252
+const availableTerms = ["25F", "25W", "25S", "25SS", "26F", "26W", "26FS", "26SS", "27F", "27W", "27S", "27SS", "28F", "28W", "28S", "28SS"];
+
+  
   const termToSortable = (term) => {
   if (term === "PAST")
   {
     return 10000;
   }
-  const year = parseInt(term.slice(0, 2)); // "25W" → 25
-  const quarterCode = { W: 1, S: 2, F: 3 }[term[2]]; // "W" → 1, "S" → 2, "F" → 3
+  const year = parseInt(term.slice(0, 2)); 
+  const quarterCode = { W: 2, S: 3, F: 1, SS:4 }[term[2]]; 
   return year * 10 + quarterCode;
 };
 
 export default function FuturePlanner() {
-  const [plan, setPlan] = useState([]); // Main state: [{ term: "25F", classes: ["COM SCI 32"] }]
+  const [plan, setPlan] = useState([]); 
   const [selectedTerm, setSelectedTerm] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
   const [selectedDegree, setSelectedDegree] = useState('');
@@ -27,7 +26,6 @@ export default function FuturePlanner() {
   const navigate = useNavigate();
   const userObj = JSON.parse(localStorage.getItem("user_id"));
   const userId = userObj._id;
-  //const userId = "68361c156a49e4907460b4a8";
 
 
   const availableCourses = selectedDegree === 'CS' 
@@ -406,37 +404,39 @@ const removeCourse = (termToRemove, courseToRemove) => {
 
 
 
-    {/* Display user's plan */}  
+    {/* display things */}  
      {plan.length > 0 ? (
-  <div
-    style={{
-      display: 'flex',
-      justifyContent: 'center',
-      width: '100%',
-      marginTop: '24px',
-      marginLeft:'5%'
-    }}
-  >
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '24px',
-        maxWidth: '1200px',
-        width: '100%',
-      }}
-    >
+  <div style={{ display: 'flex', width: '100%', marginTop: '24px' }}>
+    {/* everything but past */}
+    <div style={{ width: '85%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', textAlign: 'left', marginLeft:'50px', marginRight:'-30px' }}>
       {plan
+        .filter(({ term }) => term !== 'PAST')
         .sort((a, b) => termToSortable(a.term) - termToSortable(b.term))
         .map(({ term, classes }) => (
-          <div key={term} >
-            <h2 >{term}</h2>
-            <ul style={{marginTop:'-10px', listStyleType: 'none', paddingLeft: '0px'}}>
+          <div key={term}>
+            <h2>{term}</h2>
+            <ul style={{ marginTop: '-20px', listStyleType: 'none', paddingLeft: '0px' }}>
               {classes.map((c) => (
-                <li key={c} >
-                  <button onClick={() => removeCourse(term, c)} style={{border:'none', cursor:'pointer', color:'red'}}>X   </button>
+                <li key={c}>
+                  <button onClick={() => removeCourse(term, c)} style={{ border: 'none', cursor: 'pointer', color: 'red' }}>X</button>
                   <span>{c}</span>
-                  
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+    </div>
+    {/*for past terms */}
+    <div style={{ width: '25%', minWidth: '200px', display: 'grid', gridTemplateColumns: '1fr', gap: '24px', textAlign: 'left', marginLeft: '24px' }}>
+      {plan
+        .filter(({ term }) => term === 'PAST')
+        .map(({ term, classes }) => (
+          <div key={term}>
+            <h2>{term}</h2>
+            <ul style={{ marginTop: '-20px', listStyleType: 'none', paddingLeft: '0px' }}>
+              {classes.map((c) => (
+                <li key={c}>
+                  <span>{c}</span>
                 </li>
               ))}
             </ul>
