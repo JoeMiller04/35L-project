@@ -4,7 +4,7 @@ import './App.css';
 
 
 
-const availableTerms = ["25F", "25W", "25S", "25SS", "26F", "26W", "26FS", "26SS", "27F", "27W", "27S", "27SS", "28F", "28W", "28S", "28SS"];
+const availableTerms = ["25W", "25S", "25SS","25F",   "26W", "26FS", "26SS","26F", "27W", "27S", "27SS", "27F",  "28W", "28S", "28SS","28F"];
 
   
   const termToSortable = (term) => {
@@ -13,7 +13,7 @@ const availableTerms = ["25F", "25W", "25S", "25SS", "26F", "26W", "26FS", "26SS
     return 10000;
   }
   const year = parseInt(term.slice(0, 2)); 
-  const quarterCode = { W: 2, S: 3, F: 1, SS:4 }[term[2]]; 
+  const quarterCode = { W: 1, S: 2, F: 4, SS:3 }[term[2]]; 
   return year * 10 + quarterCode;
 };
 
@@ -26,6 +26,8 @@ export default function FuturePlanner() {
   const navigate = useNavigate();
   const userObj = JSON.parse(localStorage.getItem("user_id"));
   const userId = userObj._id;
+  const [major, setMajor] = useState('');
+  const [popup, setPopup] = useState(false);
 
 
   const availableCourses = selectedDegree === 'CS' 
@@ -197,6 +199,15 @@ export default function FuturePlanner() {
 ]
       : [];
 
+      function updateMajor(maj) {
+    localStorage.setItem('major', JSON.stringify({major: maj}));
+    setMajor(maj);
+  }
+
+  function toggleMajor() {
+    setPopup(!popup);
+  }
+
 
   // GET saved courses from the backend
   useEffect(() => {
@@ -230,6 +241,15 @@ export default function FuturePlanner() {
     } catch (err) {
       console.error("Error loading saved plan:", err);
     }
+    
+    const majorObj = JSON.parse(localStorage.getItem('major'));
+if (majorObj && majorObj.major) {
+    setSelectedDegree(majorObj.major);
+    setMajor(majorObj.major);
+} else {
+    
+    setMajor('');
+}
   };
 
   if (userId) loadSavedPlan();
@@ -324,8 +344,10 @@ const removeCourse = (termToRemove, courseToRemove) => {
     <div style={{ width: '100%' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
-            <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>Future Plan</h1>
+            <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold', marginLeft:'150px' }}>Future Plan</h1>
+            <button onClick={()=>toggleMajor()} style={{cursor:'pointer', backgroundColor:'white', marginRight:'-100px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}> Change Major</button>
             <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Past Courses</button>
+
         </div>
                 <hr style={{color:'black', backgroundColor:'black', height:'2px', border:'none', marginTop:'0px'}}/>
     </div>
@@ -334,16 +356,7 @@ const removeCourse = (termToRemove, courseToRemove) => {
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px', marginBottom: '10px' }}>
         {/*degree dropdown*/} 
       <div>
-        <select
-          value={selectedDegree}
-          onChange={(e) => setSelectedDegree(e.target.value)}
-          className="border p-2"
-          style={{ cursor:'pointer', width: '200px', height: '30px', border:'2px solid black', marginRight:'20px' }}
-        >
-          <option value="">Select Degree</option> 
-          <option value="CS">(CS) Computer Science</option>
-          <option value="CSE">(CSE) Computer Science and Engineering </option>
-        </select>
+        
 
 
 {/* Dropdowns to select term and course, displayed only if degree is selected */}
@@ -408,23 +421,28 @@ const removeCourse = (termToRemove, courseToRemove) => {
      {plan.length > 0 ? (
   <div style={{ display: 'flex', width: '100%', marginTop: '24px' }}>
     {/* everything but past */}
-    <div style={{ width: '85%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', textAlign: 'left', marginLeft:'50px', marginRight:'-30px' }}>
-      {plan
-        .filter(({ term }) => term !== 'PAST')
-        .sort((a, b) => termToSortable(a.term) - termToSortable(b.term))
-        .map(({ term, classes }) => (
+    <div style={{ width: '85%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', textAlign: 'left', marginLeft:'50px', marginRight:'-30px' }}>
+      {availableTerms.map((term) => {
+        const planEntry = plan.find((entry) => entry.term === term);
+        const classes = planEntry ? planEntry.classes : [];
+        return (
           <div key={term}>
             <h2>{term}</h2>
             <ul style={{ marginTop: '-20px', listStyleType: 'none', paddingLeft: '0px' }}>
-              {classes.map((c) => (
-                <li key={c}>
-                  <button onClick={() => removeCourse(term, c)} style={{ border: 'none', cursor: 'pointer', color: 'red' }}>X</button>
-                  <span>{c}</span>
-                </li>
-              ))}
+              {classes.length > 0 ? (
+                classes.map((c) => (
+                  <li key={c}>
+                    <button onClick={() => removeCourse(term, c)} style={{ border: 'none', cursor: 'pointer', color: 'red' }}>X</button>
+                    <span>{c}</span>
+                  </li>
+                ))
+              ) : (
+                <li style={{ color: '#aaa' }}>(No courses)</li>
+              )}
             </ul>
           </div>
-        ))}
+        );
+      })}
     </div>
     {/*for past terms */}
     <div style={{ width: '25%', minWidth: '200px', display: 'grid', gridTemplateColumns: '1fr', gap: '24px', textAlign: 'left', marginLeft: '24px' }}>
@@ -468,9 +486,32 @@ const removeCourse = (termToRemove, courseToRemove) => {
                 </>
             )}
 
+              {popup && (<>
+            <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 999 }}>
+                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', zIndex: 1000, minWidth: '300px' }}>
+                    <button onClick={() => toggleMajor()}
+                        style={{ position: 'absolute', top: 10, right: 10, background: 'none', border: 'none', fontSize: '24px', color: '#888', cursor: 'pointer', fontWeight: 'bold' }}
+                        aria-label="Close error popup"
+                    >
+                        ×
+                    </button>
+                    <h2 style={{ marginTop: '10px' }}>Select Your Major</h2>
+                    <select value={selectedDegree} style={{marginLeft:'0px'}} onChange={(e) => { setSelectedDegree(e.target.value); updateMajor(e.target.value); }}>
+                       <option value="">Select Degree</option> {/* Default option */}
+                    <option value="CS">Computer Science (CS)</option>
+                     <option value="CSE">Computer Science and Engineering (CSE)</option>
+                 </select>
+
+
+                    
+                </div>
+                </div>
+                </>
+            )}
+
  
     </div>
-        <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
+            <div style={{ position: 'fixed', right: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
       
     </div>
   );
