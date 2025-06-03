@@ -19,6 +19,7 @@ export default function PastCourses() {
   const userId = userObj._id;
   const [popup, setPopup] = useState(false);
   const [major, setMajor] = useState('');
+  const [filePopup, setFilePopup] = useState(false);
 
 
   const availableCourses = selectedDegree === 'CS'
@@ -260,6 +261,10 @@ export default function PastCourses() {
     setTakenCourses({}); 
   }
 
+  function toggleFilePopup() {
+    setFilePopup(!filePopup);
+  }
+
   return (
     <div>
       <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
@@ -267,10 +272,11 @@ export default function PastCourses() {
         <div style={{ width: '80%', marginLeft: '10%', zIndex: 2 }}>
     
          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '15px', marginTop:'10px' }}>Home</button>
-                    <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold', marginLeft:'100px' }}>Past Course Checklist</h1>
+                    <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'40px', padding: '10px 20px', fontSize: '15px', marginTop:'10px' }}>Home</button>
+                    <button onClick={() => toggleFilePopup()} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'-70px', padding: '10px 20px', fontSize: '15px', marginTop:'10px' }}>Upload</button>
+                    <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold', marginLeft:'60px' }}>Past Course Checklist</h1>
                     <button onClick={()=>toggleMajor()} style={{cursor:'pointer', backgroundColor:'white', marginRight:'-70px', padding: '10px 20px', fontSize: '15px', marginTop:'10px' }}> Change Major</button>
-                                   <button onClick={() => navigate('/FuturePlanner')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '15px', marginTop:'10px' }}>Future Plan</button>
+                                   <button onClick={() => navigate('/FuturePlanner')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'40px', padding: '10px 20px', fontSize: '15px', marginTop:'10px' }}>Future Plan</button>
 
                 </div>
                 <hr/>
@@ -353,6 +359,26 @@ export default function PastCourses() {
                     <option value="CS">Computer Science (CS)</option>
                      <option value="CSE">Computer Science and Engineering (CSE)</option>
                  </select>
+
+
+                    
+                </div>
+                </div>
+                </>
+            )}
+
+            
+        {filePopup && (<>
+            <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 999 }}>
+                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', zIndex: 1000, minWidth: '300px' }}>
+                    <button onClick={() => toggleFilePopup()}
+                        style={{ position: 'absolute', top: 10, right: 10, background: 'none', border: 'none', fontSize: '24px', color: '#888', cursor: 'pointer', fontWeight: 'bold' }}
+                        aria-label="Close error popup"
+                    >
+                        ×
+                    </button>
+                    <h2 style={{ marginTop: '10px' }}>Upload a DARS File</h2>
+                    
 
 
                     

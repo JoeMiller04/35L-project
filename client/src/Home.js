@@ -323,7 +323,7 @@ function Home() {
         <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
         <div style={{ width: '80%', marginLeft: '10%', marginRight: '10%', zIndex: 2 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Degree Information</button>
+                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Past Courses</button>
                     <button onClick={() => navigate('/SearchPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'0px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Joe's Page</button>
                     <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>Schedule Planner Thing</h1>
                     <button onClick={() => navigate('/InfoPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'0px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}> Classes</button>
