@@ -3,6 +3,17 @@ import json
 import re
 from bs4 import BeautifulSoup
 import pandas as pd
+from pymongo import MongoClient
+import os
+from bson.objectid import ObjectId
+
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
+
+client = MongoClient(MONGO_URI)
+db = client[DATABASE_NAME]
+collection = db["users"]
+
 
 #This function Given a list of class names (e.g. ["Status_OK", ...]), returs "OK", "IP", "NO", or "NONE".
 def _status(class_list):
@@ -177,62 +188,130 @@ def parse_dars(html_text: str) -> dict:
         "missing_requirements": missing_requirements
     }
 
+def upload_courses_to_api(simplified_courses, user_id):
+    user_object_id = ObjectId(user_id)
+    
+    courses_to_add = []
+    for course in simplified_courses:
+        course_subject = course['subject']
+        course_catalog = course['catalog']
+        # For now we process honors courses as regular courses
+        if course_catalog.endswith("H"):
+            course_name = course_catalog[:-1].strip()
+        
+        # If course catalog starts with "T"
+        # These are AP classes
+        # TODO process these as their equivalent courses
+        if course_catalog.startswith("T"):
+            continue
+        course_name = f"{course_subject} {course_catalog}"
+        # term = course['term']
+        # For frontend purposes, this needs to be "PAST"
+        term = "PAST"
+        
+        course_entry = {
+            "term": term,
+            "course_name": course_name,
+        }
+        courses_to_add.append(course_entry)
+            
+    result = collection.update_one(
+        {"_id": user_object_id},
+        {"$addToSet": {"saved_courses": {"$each": courses_to_add}}}
+    )
+
+    print(f"Uploaded {len(courses_to_add)} courses for user {user_id}. Modified count: {result.modified_count}")
+    return True
+            
+                
+       
+
 def main():
-    # Ensure exactly one argument: path to DARS HTML
-    if len(sys.argv) != 2:
-        print("Usage: python3 dars_parser.py <path_to_dars_html_file>")
-        sys.exit(1)
-
-    html_path = sys.argv[1]
     try:
-        with open(html_path, "r", encoding="utf-8", errors="ignore") as f:
-            html_text = f.read()
-    except FileNotFoundError:
-        print(f"Error: File not found: {html_path}")
+        # Ensure exactly two arguments: path to DARS HTML and user_id (not optional)
+        if len(sys.argv) != 3:
+            print(f"Usage: python3 dars_parser.py <path_to_dars_html_file> <user_id>")
+            print(f"Received: {sys.argv}")
+            sys.exit(1)
+
+        html_path = sys.argv[1]
+        user_id = sys.argv[2]
+        
+        print(f"Processing file: {html_path} for user: {user_id}")
+        
+        try:
+            with open(html_path, "r", encoding="utf-8", errors="ignore") as f:
+                html_text = f.read()
+        except FileNotFoundError:
+            print(f"Error: File not found: {html_path}")
+            sys.exit(1)
+        except Exception as e:
+            print(f"Error opening file {html_path}: {str(e)}")
+            sys.exit(1)
+
+        # Add the project root to the path to ensure imports work
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
+        if project_root not in sys.path:
+            sys.path.insert(0, project_root)
+        
+        output = parse_dars(html_text)
+        
+        all_courses = []
+
+        # Loop through all requirements and sub-requirements to find courses
+        for requirement in output.get('requirements', []):
+            for subreq in requirement.get('sub', []):
+                for course in subreq.get('courses', []):
+                    # Check if course status is "OK" or "IP"
+                    if course.get('status') in ['OK', 'IP']:
+                        course_info = {
+                            'term': course.get('term'),
+                            'subject': course.get('subject'),
+                            'catalog': course.get('catalog'),
+                            'units': course.get('units'),
+                            'grade': course.get('grade'),
+                            'status': course.get('status')
+                        }
+                        all_courses.append(course_info)
+
+        df_courses = pd.DataFrame(all_courses)
+
+        # Remove duplicate courses (some might appear in multiple requirements)
+        df_courses = df_courses.drop_duplicates(subset=['term', 'subject', 'catalog'])
+
+        # Sort by term for debugging purposes
+        df_courses = df_courses.sort_values(['term', 'subject', 'catalog'], ascending=[False, True, True])
+
+        # Create simplified course list
+        simplified_courses = df_courses[['term', 'subject', 'catalog']].to_dict(orient='records')
+
+        # Create directory if it doesn't exist
+        os.makedirs(os.path.dirname('server/data/Dars/courses_simple.json'), exist_ok=True)
+        
+        # Save simplified courses to JSON
+        output_path = os.path.join(project_root, 'server', 'data', 'Dars', f'courses_simple_{user_id}.json')
+        with open(output_path, 'w') as f:
+            json.dump(simplified_courses, f, indent=2)
+        
+        print(f"Saved {len(simplified_courses)} courses to {output_path}")
+        
+        # If user_id is provided, upload to API
+        if user_id:
+            print(f"Uploading courses for user {user_id}...")
+            upload_courses_to_api(simplified_courses, user_id)
+            print("Upload complete")
+        
+        # Return the parsed data as JSON
+        print(json.dumps({"courses": simplified_courses}))
+
+        return 0
+        
+    except Exception as e:
+        import traceback
+        print(f"Error in main: {str(e)}")
+        print(traceback.format_exc())
         sys.exit(1)
-
-    output = parse_dars(html_text)
-    print(json.dumps(output, indent=2))
-
-    all_courses = []
-
-    # Loop through all requirements and sub-requirements to find courses
-    for requirement in output.get('requirements', []):
-        for subreq in requirement.get('sub', []):
-            for course in subreq.get('courses', []):
-                # Check if course status is "OK" or "IP"
-                if course.get('status') in ['OK', 'IP']:
-                    # Extract relevant information
-                    course_info = {
-                        'term': course.get('term'),
-                        'subject': course.get('subject'),
-                        'catalog': course.get('catalog'),
-                        'units': course.get('units'),
-                        'grade': course.get('grade'),
-                        'status': course.get('status')
-                    }
-                    all_courses.append(course_info)
-
-    df_courses = pd.DataFrame(all_courses)
-
-    # Remove duplicate courses (some might appear in multiple requirements)
-    df_courses = df_courses.drop_duplicates(subset=['term', 'subject', 'catalog'])
-
-    # Sort by term for debugging purposes
-    df_courses = df_courses.sort_values(['term', 'subject', 'catalog'], ascending=[False, True, True])
-
-    # Print, for debugging
-    #print(f"Found {len(df_courses)} unique courses")
-    #print(df_courses)
-
-    # Create a simplified JSON with just term, subject, and catalog
-    simplified_courses = df_courses[['term', 'subject', 'catalog']].to_dict(orient='records')
-
-    # Save simplified courses to JSON
-    with open('courses_simple.json', 'w') as f:
-        json.dump(simplified_courses, f, indent=2)
-
-    #print(f"Saved {len(simplified_courses)} courses to courses_simple.json")
 
 if __name__ == "__main__":
     main()
+    

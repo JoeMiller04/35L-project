@@ -36,7 +36,7 @@ export default function PastCourses() {
       formData.append('file', selectedFile);
       try {
           setUploadStatus('Uploading...');
-          const response = await fetch('http://localhost:8000/upload', {
+          const response = await fetch(`http://127.0.0.1:8000/users/${userId}/upload`, {
               method: 'POST',
               body: formData,
           });
