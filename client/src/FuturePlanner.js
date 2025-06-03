@@ -329,21 +329,22 @@ const removeCourse = (termToRemove, courseToRemove) => {
             <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>Future Plan</h1>
             <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Past Courses</button>
         </div>
-        <hr style={{ margin: '20px 0', borderColor: '#ccc', width: '100%' }} />
+                <hr style={{color:'black', backgroundColor:'black', height:'2px', border:'none', marginTop:'0px'}}/>
     </div>
 
     {/* Dropdowns and Add Course button */}
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px', marginBottom: '10px' }}>
         {/*degree dropdown*/} 
       <div>
         <select
           value={selectedDegree}
           onChange={(e) => setSelectedDegree(e.target.value)}
           className="border p-2"
+          style={{ cursor:'pointer', width: '200px', height: '30px', border:'2px solid black', marginRight:'20px' }}
         >
           <option value="">Select Degree</option> 
-          <option value="CS">Computer Science (CS)</option>
-          <option value="CSE">Computer Science and Engineering (CSE)</option>
+          <option value="CS">(CS) Computer Science</option>
+          <option value="CSE">(CSE) Computer Science and Engineering </option>
         </select>
 
 
@@ -353,6 +354,7 @@ const removeCourse = (termToRemove, courseToRemove) => {
         <select
           value={selectedTerm}
           onChange={(e) => setSelectedTerm(e.target.value)}
+          style={{ cursor:'pointer', width: '100px', height: '30px', border:'2px solid black', marginRight:'20px' }}
          
         >
           <option value="">Select Term</option>
@@ -366,6 +368,7 @@ const removeCourse = (termToRemove, courseToRemove) => {
         <select
           value={selectedCourse}
           onChange={(e) => setSelectedCourse(e.target.value)}
+          style={{ cursor:'pointer', width: '150px', height: '30px', border:'2px solid black', marginRight:'20px' }}
          
         >
           <option value="">Select Course</option>
@@ -378,14 +381,30 @@ const removeCourse = (termToRemove, courseToRemove) => {
 
         <button
           onClick={addCourseToQuarter}
+          style={{ width: '100px', height: '30px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer', marginLeft:'40px' }}
          
         >
           Add Course
         </button>
+
+          <button onClick={handleValidation} style={{ width: '100px', height: '30px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer', marginLeft:'40px' }}>
+
+            Validate Plan
+
+          </button>
+
         </>
         )}
       </div>
     </div>
+
+
+<hr style={{border: 'none', borderTop: '2px solid black', marginTop: '0px', width: '100%', marginTop:'20px'}} />
+
+
+
+
+
 
     {/* Display user's plan */}  
      {plan.length > 0 ? (
@@ -429,32 +448,27 @@ const removeCourse = (termToRemove, courseToRemove) => {
   <p className="text-gray-500" style={{ textAlign: 'center' }}>No courses planned yet.</p>
 )}
 
-    {/* Validate Button */} 
-      <div className="mt-6 text-center" style={{ width: '100%' }}>
-        <button
-          //onClick={() => console.log("Validate button clicked")}
-          onClick={handleValidation}
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md shadow"
-        >
-          Validate Plan
-          {/*Get plan with API, use data as argument for isValid. Output message */}
-        </button>
-      </div>
+    
+     
 
-      {/* Validation Message */}
-      {validationMessage && (
-        <div className="mt-4 p-2 text-center">
-          <p className={`text-lg ${validationMessage.includes('not valid') ? 'text-red-500' : 'text-green-500'}`}>
-            {validationMessage}
-          </p>
-        </div>
-      )}
+      {/* validation message */}
+         {validationMessage && (<>
+            <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 999 }}>
+                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', zIndex: 1000, minWidth: '300px' }}>
+                    <button onClick={() => setValidationMessage('')}
+                        style={{ position: 'absolute', top: 10, right: 10, background: 'none', border: 'none', fontSize: '24px', color: '#888', cursor: 'pointer', fontWeight: 'bold' }}
+                        aria-label="Close error popup"
+                    >
+                        ×
+                    </button>
+                   
+                    <p>{validationMessage}</p>
+                </div>
+                </div>
+                </>
+            )}
 
-    <button onClick={() => navigate('/Home')}>Go to Home</button>
-    <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
-    <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
-    <button onClick={() => navigate('/PastCourses')}>Go to Home4</button>
-    <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
+ 
     </div>
         <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
       
