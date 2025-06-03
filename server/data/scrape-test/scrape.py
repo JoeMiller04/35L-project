@@ -9,20 +9,13 @@ import json
 import re
 import traceback
 
-TERM = "25S"
-SUBJECT = "COM SCI"
 
-url = (
-    "https://sa.ucla.edu/ro/public/soc/Results"
-    f"?SubjectAreaName=Computer+Science+(COM+SCI)"
-    f"&t={TERM}&sBy=subject&subj={SUBJECT.replace(' ', '+')}"
-    "&catlg=&cls_no=&undefined=Go&btnIsInIndex=btn_inIndex"
-)
+
 
 opts = Options()
 # Should work headless or not, but headless is faster
 # # If you want to see the browser, comment out the next line
-# opts.add_argument("--headless")
+opts.add_argument("--headless")
 opts.add_argument("--window-size=1920,1080")
 opts.add_argument("--disable-gpu")
 opts.add_argument("--no-sandbox")
@@ -31,6 +24,7 @@ opts.add_argument("--disable-extensions")
 opts.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36")
 
 driver = webdriver.Chrome(options=opts)
+wait = WebDriverWait(driver, 15)
 
 def getHost():
     # The page usees something called a shadow DOM apparently
@@ -39,7 +33,6 @@ def getHost():
     )
     return host
 
-wait = WebDriverWait(driver, 15)
 def shadow_root():
     host = wait.until(EC.presence_of_element_located(
         (By.CSS_SELECTOR, "ucla-sa-soc-app")))
@@ -112,10 +105,27 @@ def go_next_page() -> bool:
         return False
 
 
-def extractPageInfo(filename="courses_by_id.json"):
+def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="COM SCI"):
+    """
+    Extract course data from current page
+    
+    Parameters:
+    - filename: where to save this page's data
+    - all_courses: list to append this page's courses to (for combined output)
+    - subject: the subject being scraped (e.g., "COM SCI", "PHYSICS")
+    
+    Returns:
+    - List of extracted courses from this page
+    """
+    # Convert subject to the format used in container IDs (no spaces, uppercase)
+    # I can't guarantee that this works for all subjects, but it usually does
+    subject_code = subject.replace(" ", "").upper()
+    
     # Script to extract courses from current page
     js_extract_course_data = """
     const host = arguments[0];
+    const subjectCode = arguments[1];
+    const subjectFull = arguments[2];
     const shadowRoot = host.shadowRoot;
     const containers = Array.from(shadowRoot.querySelectorAll('[id$="-container"]'));
     
@@ -126,17 +136,18 @@ def extractPageInfo(filename="courses_by_id.json"):
         try {
             const containerId = container.id || '';
             
-            // Only process course containers
-            if (!containerId.includes('COMSCI')) continue;
+            // Only process containers for the specified subject
+            if (!containerId.includes(subjectCode)) continue;
             
             const courseData = {
                 container_id: containerId
             };
             
             // Extract subject and catalog
+            // THIS IS THE PART THAT NEEDS ADJUSTMENT FOR OTHER SUBJECTS
             const catalogMatch = containerId.match(/COMSCI(\d+[A-Za-z]*)/);
             if (catalogMatch) {
-                courseData.subject = "COM SCI";
+                courseData.subject = subjectFull;
                 courseData.catalog = catalogMatch[1];
                 
                 // Clean catalog (remove leading zeros)
@@ -144,7 +155,7 @@ def extractPageInfo(filename="courses_by_id.json"):
                 courseData.catalog_cleaned = cleanedCatalog;
                 
                 // Course code for finding related elements
-                const courseCode = 'COMSCI' + catalogMatch[1];
+                const courseCode = subjectCode + catalogMatch[1];
                 
                 // Find title
                 const titleElements = shadowRoot.querySelectorAll(`[id*="${courseCode}"][id*="title"]`);
@@ -204,15 +215,26 @@ def extractPageInfo(filename="courses_by_id.json"):
     return courses;
     """
     
-    # Execute script with host element as argument
-    extracted_courses = driver.execute_script(js_extract_course_data, host)
+    # Execute script with host element as argument, passing the subject code and full subject name
+    # extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject)
+    with open('extract_data.js') as f:
+        script = f.read()
+    extracted_courses = driver.execute_script(script, getHost(), subject_code, subject)
     print(f"Extracted data for {len(extracted_courses)} courses")
     
-    # Save the extracted data to a JSON file
+    # Save the extracted data to a JSON file (for backup)
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(extracted_courses, f, indent=2)
     
     print(f"Saved {len(extracted_courses)} courses to {filename}")
+    
+    if len(extracted_courses) == 0:
+        print(f"WARNING: No courses found on this page for subject {subject}!")
+        driver.save_screenshot(f"no_courses_found_{subject.replace(' ', '_')}.png")
+    
+    # If all_courses list is provided, append these courses to it
+    if all_courses is not None:
+        all_courses.extend(extracted_courses)
     
     return extracted_courses
 
@@ -220,46 +242,80 @@ def extractPageInfo(filename="courses_by_id.json"):
 try:
     """
     Main script to scrape course data from UCLA's Schedule of Classes
-    This should be improved a bit to be more general, but works for COM SCI 25S
+    save to individual JSON files and a combined file.
+    For some reason, every course gets duplicated, but we can process
+    that as we upload to MongoDB.
     """
-    print(f"Navigating to {url}")
-    driver.get(url)
-    
-    # Wait for page to load
-    time.sleep(10)
-    
-    host = getHost()
-    
-    clickExpandAll(host)
-    
-    # Extract first page
-    page1_courses = extractPageInfo("page1_courses.json")
-    print("Trying to click next arrow...")
-    
-    # Scroll down to make sure pagination is visible
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    time.sleep(1)
-    driver.save_screenshot("bottom_of_page.png")
+    # PARAMETERS
+    TERMS = ["24S", "25W", "25S", "25F"]
+    # SUBJECTS NEED TO BE HARDCODED IN EXTRACT_DATA.JS
+    # SO YOU ONLY CAN RUN ONE AT A TIME FOR NOW (sob)
+    SUBJECTS = ["PHYSICS"]
 
-    print(go_next_page())
+    # Track total courses added across all pages
+    total_added = 0
+    total_skipped = 0
+    total_pages = 0
 
-    clickExpandAll(host)
-    page2_courses = extractPageInfo("page2_courses.json")
+    all_courses = []
+
+    # Output file for combined data
+    combined_output_file = f"all_courses.json"
+    for TERM in TERMS:
+        for SUBJECT in SUBJECTS:
+
+            page_num = 1
+            total_pages += 1
+            # List to collect all courses across all pages
+
+            url = (
+            "https://sa.ucla.edu/ro/public/soc/Results"
+            f"?t={TERM}&sBy=subject&subj={SUBJECT.replace(' ', '+')}"
+            "&catlg=&cls_no=&undefined=Go&btnIsInIndex=btn_inIndex"
+            )
+
+            # print(f"Navigating to {url}")
+            driver.get(url)
+            
+            print("Heads up that course counts are probably off by a factor of 2")
+            # Wait for page to load
+            time.sleep(10)
+            host = getHost()
+            
+            repeat = True
+            while repeat:
+                print(f"Processing courses for {TERM} - {SUBJECT} (Page {page_num})")
+                clickExpandAll(host)
+                
+                # Pass the all_courses list to append this page's courses
+                courses = extractPageInfo(f"courses_term_{TERM}_subject_{SUBJECT.replace(' ', '_')}_page_{page_num}.json", all_courses, subject=SUBJECT)
+                total_added += len(courses)
+                
+                # Try to go to the next page
+                repeat = go_next_page()
+                if repeat:
+                    page_num += 1
+                    # Wait for the new page to load
+                    time.sleep(5)
     
-    print(go_next_page())
-
-    clickExpandAll(host)
-    page3_courses = extractPageInfo("page3_courses.json")
+    # Save combined courses to a single file
+    print(f"\nSaving {len(all_courses)} total courses to {combined_output_file}")
+    with open(combined_output_file, "w", encoding="utf-8") as f:
+        json.dump(all_courses, f, indent=2)
     
-    # Save a screenshot of the final state
-
-    print(go_next_page())
-    driver.save_screenshot("final_state.png")
+    print(f"\nScraping completed: processed {total_pages} pages with {total_added} total courses")
 
 except Exception as e:
     print(f"Error: {e}")
     print(traceback.format_exc())  # For debugging
     driver.save_screenshot("error_screenshot.png")
+    
+    # Try to save any collected courses even if there was an error
+    if 'all_courses' in locals() and all_courses:
+        emergency_file = f"emergency_save_{TERM}_{SUBJECT.replace(' ', '_')}.json"
+        print(f"Saving {len(all_courses)} courses collected so far to {emergency_file}")
+        with open(emergency_file, "w", encoding="utf-8") as f:
+            json.dump(all_courses, f, indent=2)
     
 finally:
     driver.quit()
