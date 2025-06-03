@@ -24,6 +24,7 @@ export default function PastCourses() {
   const handleFileChange = (e) => {
       setSelectedFile(e.target.files[0]);
       setUploadStatus('');
+     
   };
       
          

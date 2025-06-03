@@ -48,14 +48,7 @@ function SearchPage() {
                     <h1 style={{ textAlign: 'center', fontSize: '50px' }}>Past Classes</h1>
                     <button onClick={() => navigate('/InfoPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'0px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>View Classes</button>
                 </div>
-            {/* File upload UI */}
-            <div style={{ marginTop: '40px', textAlign: 'center' }}>
-                <input type="file" onChange={handleFileChange} />
-                <button onClick={handleUpload} style={{ marginLeft: '10px', padding: '8px 16px', fontSize: '16px', cursor: 'pointer' }}>Upload</button>
-                {uploadStatus && <div style={{ marginTop: '10px', color: uploadStatus.includes('successful') ? 'green' : 'red' }}>{uploadStatus}</div>}
-            </div>
-             </div>
-            
+          </div>
             
             <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
         </div>
