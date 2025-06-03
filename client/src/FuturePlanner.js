@@ -358,7 +358,7 @@ const removeCourse = (termToRemove, courseToRemove) => {
       {plan
         .sort((a, b) => termToSortable(a.term) - termToSortable(b.term))
         .map(({ term, classes }) => (
-          <div key={term} className="border p-4 rounded shadow">
+          <div key={term} >
             <h2 >{term}</h2>
             <ul style={{marginTop:'-10px', listStyleType: 'none', paddingLeft: '0px'}}>
               {classes.map((c) => (
