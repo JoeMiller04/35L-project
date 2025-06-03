@@ -17,6 +17,13 @@ course_collection = async_db.get_collection("courses")
 valid_course_collection = async_db.get_collection("valid_courses")
 ratings_collection = async_db.get_collection("course_ratings")
 
+pre_reqs = async_db.get_collection("pre-reqs")
+previous_courses = async_db.get_collection("Previous courses")
+future_courses = async_db.get_collection("Future courses")
+sample = async_db.get_collection("sample")
+aliases = async_db.get_collection("Aliases")
+
+
 def get_collection(collection_name):
     return db[collection_name]
 
