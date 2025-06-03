@@ -2,6 +2,7 @@ import sys
 import json
 import re
 from bs4 import BeautifulSoup
+import pandas as pd
 
 #This function Given a list of class names (e.g. ["Status_OK", ...]), returs "OK", "IP", "NO", or "NONE".
 def _status(class_list):
@@ -26,23 +27,187 @@ def _reformat_term(term_raw: str) -> str:
         "FA": "F",  # Fall
         "WI": "W",  # Winter
         "SP": "S",  # Spring
-        "SU": "U",  # Summer
+        "SU": "1",  # Summer
     }
     return f"{year_raw}{season_map.get(season_raw, season_raw)}"
+
+# List of UCLA subject codes
+UCLA_SUBJECTS = [
+  "A&O SCI", "AERO ST", "AF AMER", "AM IND", "AN N EA", "ANTHRO", "APP CHM", "ARABIC",
+  "ARCH&UD", "ARCHEOL", "ARMENIA", "ART", "ART HIS", "ART&ARC", "ARTS ED", "ASIA AM",
+  "ASIAN", "ASL", "ASTR", "BIOENGR", "BIOINFO", "BIOL CH", "BIOMATH", "BIOSTAT",
+  "BMD RES", "C&EE", "C&EE ST", "C&S BIO", "CCAS", "CESC", "CH ENGR", "CHEM", "CHIN",
+  "CLASSIC",
+  "CLUSTER",
+  "COM HLT",
+  "COM LIT",
+  "COM SCI",
+  "COMM",
+  "COMPTNG",
+  "CS",
+  "DANCE",
+  "DESMA",
+  "DGT HUM",
+  "DIS STD",
+  "DS BMED",
+  "DUTCH",
+  "EA STDS",
+  "EC ENGR",
+  "ECON",
+  "EDUC",
+  "EE BIOL",
+  "ELTS",
+  "ENGCOMP",
+  "ENGL",
+  "ENGR",
+  "ENV HLT",
+  "ENVIRON",
+  "EPIDEM",
+  "EPS SCI",
+  "ESL",
+  "ETHNMUS",
+  "FIAT LX",
+  "FILIPNO",
+  "FILM TV",
+  "FOOD ST",
+  "FRNCH",
+  "GENDER",
+  "GEOG",
+  "GERMAN",
+  "GJ STDS",
+  "GLB HLT",
+  "GLBL ST",
+  "GRAD PD",
+  "GREEK",
+  "GRNTLGY",
+  "HEBREW",
+  "HIN-URD",
+  "HIST",
+  "HLT ADM",
+  "HLT POL",
+  "HNRS",
+  "HUM GEN",
+  "I A STD",
+  "I E STD",
+  "I M STD",
+  "IL AMER",
+  "INDO",
+  "INF STD",
+  "INTL DV",
+  "IRANIAN",
+  "ISLM ST",
+  "ITALIAN",
+  "JAPAN",
+  "JEWISH",
+  "KOREA",
+  "LATIN",
+  "LAW",
+  "LBR STD",
+  "LGBTQS",
+  "LIFESCI",
+  "LING",
+  "M E STD",
+  "M PHARM",
+  "MAT SCI",
+  "MATH",
+  "MC&IP",
+  "MCD BIO",
+  "MECH&AE",
+  "MED",
+  "MED HIS",
+  "MGMT",
+  "MGMTEX",
+  "MGMTFE",
+  "MGMTFT",
+  "MGMTGEX",
+  "MGMTMFE",
+  "MGMTMSA",
+  "MGMTPHD",
+  "MIL SCI",
+  "MIMG",
+  "MOL BIO",
+  "MOL TOX",
+  "MSC IND",
+  "MUSC",
+  "MUSCLG",
+  "NAV SCI",
+  "NEURBIO",
+  "NEURLGY",
+  "NEURO",
+  "NEUROSC",
+  "NR EAST",
+  "NURSING",
+  "OBGYN",
+  "ORL BIO",
+  "PATH",
+  "PBMED",
+  "PEDS",
+  "PHILOS",
+  "PHYSCI",
+  "PHYSICS",
+  "POL SCI",
+  "PORTGSE",
+  "PSYCH",
+  "PSYCTRY",
+  "PUB AFF",
+  "PUB HLT",
+  "PUB PLC",
+  "QNT SCI",
+  "RELIGN",
+  "RES PRC",
+  "ROMANIA",
+  "RUSSN",
+  "S ASIAN",
+  "SCAND",
+  "SCI EDU",
+  "SEASIAN",
+  "SEMITIC",
+  "SLAVC",
+  "SOC GEN",
+  "SOC SC",
+  "SOC WLF",
+  "SOCIOL",
+  "SPAN",
+  "SRB CRO",
+  "STATS",
+  "SURGERY",
+  "SWAHILI",
+  "THAI",
+  "THEATER",
+  "TURKIC",
+  "UG-LAW",
+  "UKRN",
+  "UNIV ST",
+  "URBN PL",
+  "VIETMSE",
+  "WL ARTS",
+  "YIDDSH"
+]
 
 #split a course code into (subject, catalog) by finding the boundary where digits begin
 #If no digit‐prefix is found, fall back to splitting on the last space.
 def _split_subject_catalog(code_raw: str) -> tuple[str, str]:
-    s = code_raw.strip()
-    m = re.match(r"^(.+?)\s*([0-9].*)$", s)
+    code = code_raw.strip()
+    
+    # First try to match against known subjects
+    for subject in sorted(UCLA_SUBJECTS, key=len, reverse=True):  # Try longest subjects first
+        if code.upper().startswith(subject.upper()):
+            # Found a matching subject, extract catalog
+            catalog = code[len(subject):].strip()
+            return subject, catalog
+    
+    # Fallback to original algorithm if no subject match found
+    m = re.match(r"^(.+?)\s*([0-9].*)$", code)
     if m:
         subject = m.group(1).strip()
         catalog = m.group(2).strip()
         return subject, catalog
-    parts = s.rsplit(" ", 1)
+    
+    parts = code.rsplit(" ", 1)
     if len(parts) == 2:
         return parts[0].strip(), parts[1].strip()
-    return "", s
+    
+    return "", code
 
 
 """
@@ -178,6 +343,46 @@ def main():
 
     output = parse_dars(html_text)
     print(json.dumps(output, indent=2))
+
+    all_courses = []
+
+    # Loop through all requirements and sub-requirements to find courses
+    for requirement in output.get('requirements', []):
+        for subreq in requirement.get('sub', []):
+            for course in subreq.get('courses', []):
+                # Check if course status is "OK" or "IP"
+                if course.get('status') in ['OK', 'IP']:
+                    # Extract relevant information
+                    course_info = {
+                        'term': course.get('term'),
+                        'subject': course.get('subject'),
+                        'catalog': course.get('catalog'),
+                        'units': course.get('units'),
+                        'grade': course.get('grade'),
+                        'status': course.get('status')
+                    }
+                    all_courses.append(course_info)
+
+    df_courses = pd.DataFrame(all_courses)
+
+    # Remove duplicate courses (some might appear in multiple requirements)
+    df_courses = df_courses.drop_duplicates(subset=['term', 'subject', 'catalog'])
+
+    # Sort by term for debugging purposes
+    df_courses = df_courses.sort_values(['term', 'subject', 'catalog'], ascending=[False, True, True])
+
+    # Print, for debugging
+    print(f"Found {len(df_courses)} unique courses")
+    print(df_courses)
+
+    # Create a simplified JSON with just term, subject, and catalog
+    simplified_courses = df_courses[['term', 'subject', 'catalog']].to_dict(orient='records')
+
+    # Save simplified courses to JSON
+    with open('courses_simple.json', 'w') as f:
+        json.dump(simplified_courses, f, indent=2)
+
+    print(f"Saved {len(simplified_courses)} courses to courses_simple.json")
 
 if __name__ == "__main__":
     main()

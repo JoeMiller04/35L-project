@@ -5,3 +5,6 @@
 server/.env
 /server/data/scrape-test
 /server/data/scrape-test
+server/data/Dars/a.json
+server/data/Dars/courses_simple.json
+server/data/Dars/extracted_courses.csv
