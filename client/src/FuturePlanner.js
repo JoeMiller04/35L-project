@@ -23,6 +23,7 @@ export default function FuturePlanner() {
   const [selectedTerm, setSelectedTerm] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
   const [selectedDegree, setSelectedDegree] = useState('');
+  const [validationMessage, setValidationMessage] = useState('');
   const navigate = useNavigate();
   const userObj = JSON.parse(localStorage.getItem("user_id"));
   const userId = userObj._id;
@@ -31,13 +32,6 @@ export default function FuturePlanner() {
 
   const availableCourses = selectedDegree === 'CS' 
     ? [
-    "COM SCI 1",
-    "COM SCI 30",
-    "COM SCI 31",
-    "COM SCI 32",
-    "COM SCI 33",
-    "COM SCI 35L",
-    "COM SCI M51A",
     "MATH 31A",
     "MATH 31B",
     "MATH 32A",
@@ -47,6 +41,8 @@ export default function FuturePlanner() {
     "MATH 61",
     "MATH 170A",
     "MATH 170E",
+    "C&EE 110",
+    "STATS 100A",
     "PHYSICS 1A",
     "PHYSICS 1B",
     "PHYSICS 1C",
@@ -54,52 +50,6 @@ export default function FuturePlanner() {
     "PHYSICS 4BL",
     "LIFESCI 30A",
     "LIFESCI 30B",
-    "COM SCI 111",
-    "COM SCI 112",
-    "COM SCI 117",
-    "COM SCI 118",
-    "COM SCI M119",
-    "COM SCI C121",
-    "COM SCI C122",
-    "COM SCI C124",
-    "COM SCI 131",
-    "COM SCI 130",
-    "COM SCI 132",
-    "COM SCI M151B",
-    "COM SCI 133",
-    "COM SCI 134",
-    "COM SCI 136",
-    "COM SCI C137A",
-    "COM SCI C137B",
-    "COM SCI M138",
-    "COM SCI 143",
-    "COM SCI 144",
-    "COM SCI 145",
-    "COM SCI M146",
-    "COM SCI M148",
-    "COM SCI M152A",
-    "COM SCI 152B",
-    "COM SCI 180",
-    "COM SCI 161",
-    "COM SCI 162",
-    "COM SCI 163",
-    "COM SCI 168",
-    "COM SCI 170A",
-    "COM SCI M171L",
-    "COM SCI 172",
-    "COM SCI 174A",
-    "COM SCI 174B",
-    "COM SCI C174C",
-    "COM SCI 181",
-    "COM SCI M182",
-    "COM SCI 183",
-    "COM SCI M184",
-    "COM SCI CM186",
-    "COM SCI CM187",
-    "COM SCI 188"
-]
-    : selectedDegree === 'CSE'
-      ? [
     "COM SCI 1",
     "COM SCI 30",
     "COM SCI 31",
@@ -107,23 +57,6 @@ export default function FuturePlanner() {
     "COM SCI 33",
     "COM SCI 35L",
     "COM SCI M51A",
-    "ECE 3",
-    "MATH 31A",
-    "MATH 31B",
-    "MATH 32A",
-    "MATH 32B",
-    "MATH 33A",
-    "MATH 33B",
-    "MATH 61",
-    "MATH 170A",
-    "MATH 170E",
-    "PHYSICS 1A",
-    "PHYSICS 1B",
-    "PHYSICS 1C",
-    "PHYSICS 4AL",
-    "PHYSICS 4BL",
-    "LIFESCI 30A",
-    "LIFESCI 30B",
     "COM SCI 111",
     "COM SCI 112",
     "COM SCI 117",
@@ -167,9 +100,102 @@ export default function FuturePlanner() {
     "COM SCI CM186",
     "COM SCI CM187",
     "COM SCI 188",
-    "ECE 100", 
-    "ECE 102", 
-    "ECE 115C"
+    "EC ENGR M16",
+    "EC ENGR 131A",
+    "EC ENGR 132B",
+    "EC ENGR M117",
+    "EC ENGR M116L",
+    "GE",
+    "SCI-TECH",
+    "TECH BREADTH",
+    "ENG COMP",
+    "ETHICS",
+    "COM SCI ELECTIVE" 
+]
+    : selectedDegree === 'CSE'
+      ? [
+    "MATH 31A",
+    "MATH 31B",
+    "MATH 32A",
+    "MATH 32B",
+    "MATH 33A",
+    "MATH 33B",
+    "MATH 61",
+    "MATH 170A",
+    "MATH 170E",
+    "C&EE 110",
+    "STATS 100A",
+    "PHYSICS 1A",
+    "PHYSICS 1B",
+    "PHYSICS 1C",
+    "PHYSICS 4AL",
+    "PHYSICS 4BL",
+    "LIFESCI 30A",
+    "LIFESCI 30B",
+    "COM SCI 1",
+    "COM SCI 30",
+    "COM SCI 31",
+    "COM SCI 32",
+    "COM SCI 33",
+    "COM SCI 35L",
+    "COM SCI M51A",
+    "COM SCI 111",
+    "COM SCI 112",
+    "COM SCI 117",
+    "COM SCI 118",
+    "COM SCI M119",
+    "COM SCI C121",
+    "COM SCI C122",
+    "COM SCI C124",
+    "COM SCI 131",
+    "COM SCI 130",
+    "COM SCI 132",
+    "COM SCI M151B",
+    "COM SCI 133",
+    "COM SCI 134",
+    "COM SCI 136",
+    "COM SCI C137A",
+    "COM SCI C137B",
+    "COM SCI M138",
+    "COM SCI 143",
+    "COM SCI 144",
+    "COM SCI 145",
+    "COM SCI M146",
+    "COM SCI M148",
+    "COM SCI M152A",
+    "COM SCI 152B",
+    "COM SCI 180",
+    "COM SCI 161",
+    "COM SCI 162",
+    "COM SCI 163",
+    "COM SCI 168",
+    "COM SCI 170A",
+    "COM SCI M171L",
+    "COM SCI 172",
+    "COM SCI 174A",
+    "COM SCI 174B",
+    "COM SCI C174C",
+    "COM SCI 181",
+    "COM SCI M182",
+    "COM SCI 183",
+    "COM SCI M184",
+    "COM SCI CM186",
+    "COM SCI CM187",
+    "COM SCI 188",
+    "EC ENGR 3",
+    "EC ENGR M16",
+    "EC ENGR 100",
+    "EC ENGR 102",
+    "EC ENGR 115C",
+    "EC ENGR 131A",
+    "EC ENGR 132B",
+    "EC ENGR M117",
+    "EC ENGR M116L",
+    "GE",
+    "TECH BREADTH",
+    "ENG COMP",
+    "ETHICS",
+    "COM SCI ELECTIVE" 
 ]
       : [];
 
@@ -210,6 +236,32 @@ export default function FuturePlanner() {
 
   if (userId) loadSavedPlan();
 }, [userId]);
+
+   const handleValidation = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Failed to fetch user course list');
+            }
+      const data = await response.json(); 
+      //const result = isValid(data); // Call isValid function with the current plan
+      const result = true;
+
+      if (result === true) {
+        setValidationMessage("Your plan is valid!");
+      } else {
+        setValidationMessage(result); // Assuming result is an error message from isValid
+      }
+    } catch (error) {
+      setValidationMessage("An error occurred while validating the plan: " + error.message);
+    }
+  };
 
   // Add selected course to selected term in plan
   const addCourseToQuarter = () => {
@@ -380,12 +432,29 @@ const removeCourse = (termToRemove, courseToRemove) => {
     {/* Validate Button */} 
       <div className="mt-6 text-center" style={{ width: '100%' }}>
         <button
-          onClick={() => console.log("Validate button clicked")}
+          //onClick={() => console.log("Validate button clicked")}
+          onClick={handleValidation}
           className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md shadow"
         >
           Validate Plan
+          {/*Get plan with API, use data as argument for isValid. Output message */}
         </button>
       </div>
+
+      {/* Validation Message */}
+      {validationMessage && (
+        <div className="mt-4 p-2 text-center">
+          <p className={`text-lg ${validationMessage.includes('not valid') ? 'text-red-500' : 'text-green-500'}`}>
+            {validationMessage}
+          </p>
+        </div>
+      )}
+
+    <button onClick={() => navigate('/Home')}>Go to Home</button>
+    <button onClick={() => navigate('/SearchPage')}>Go to Home2</button>
+    <button onClick={() => navigate('/InfoPage')}>Go to Home3</button>
+    <button onClick={() => navigate('/PastCourses')}>Go to Home4</button>
+    <button onClick={() => navigate('/FuturePlanner')}>Go to Home5</button>
     </div>
         <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
       
