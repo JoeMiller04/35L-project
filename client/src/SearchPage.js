@@ -10,7 +10,7 @@ function SearchPage() {
     const [id, setId] = useState(null);
     const passedObject = location.state?.classInfo;
     const data = JSON.stringify(passedObject ? passedObject.grades : [], null, 2);
-    const [gradesObj, setGradesObj] = useState(passedObject ? passedObject.grades : {});
+    const [gradesObj, setGradesObj] = useState([]);
     const [histogramData, setHistogramData] = useState(Object.entries(gradesObj).map(([name, value]) => ({
         name,
         value
@@ -18,35 +18,55 @@ function SearchPage() {
 
     const [possibleClasses, setPossibleClasses] = useState([]);
 
-    const [term, setTerm] = useState(passedObject.term);
-    const [instructor, setInstructor] = useState(passedObject.instructor);
+    const [term, setTerm] = useState('');
+    const [instructor, setInstructor] = useState('');
     const [dropdownOptions, setDropdownOptions] = useState([]);
     const [courseRating, setCourseRating] = useState(null);
 
 
-    const [dropdown, setDropdown] = useState(() => {
-        // Find the class in possibleClasses that matches the passedObject's term and instructor
-        if (passedObject && possibleClasses.length > 0) {
-            const match = possibleClasses.find(
-                (cls) => cls.term === passedObject.term && cls.instructor.toLowerCase() === passedObject.instructor.toLowerCase()
-            );
-            return match ? match._id : '';
-        }
-        return '';
-    });
+    const [dropdown, setDropdown] = useState('');
+
+    const [description, setDescription] = useState('');
+    const [units, setUnits] = useState('');
+    const [title, setTitle] = useState('');
 
 
     useEffect(() => {
         const userObj = JSON.parse(localStorage.getItem('user_id'));
         getCourseRating();
+        getCourseDescription();
         if (userObj && userObj._id) {
             setId(userObj._id);   
         }
         if (passedObject) {
             classQuery();
         } else {
-            alert("No class information provided.");}
+        alert("No class information provided.");}
+            
     }, []);
+
+
+    useEffect(() => {
+        if (possibleClasses.length > 0) {
+            setDropdown(possibleClasses[0]._id || '');
+            // Remove grade entries with null values
+            const filteredGrades = Object.entries(possibleClasses[0].grades || {})
+                .filter(([_, value]) => value !== null)
+                .reduce((acc, [name, value]) => {
+                    acc[name] = value;
+                    return acc;
+                }, {});
+            setGradesObj(filteredGrades);
+            setHistogramData(
+                Object.entries(filteredGrades).map(([name, value]) => ({
+                    name,
+                    value
+                }))
+            );
+            setTerm(possibleClasses[0].term || '');
+            setInstructor(possibleClasses[0].instructor || '');
+        }
+    }, [possibleClasses]);
 
 
     function capitalizeWords(str) {
@@ -127,15 +147,7 @@ function SearchPage() {
         setInstructor(selectedClass.instructor);
     }
     
-    useEffect(() => {
-        if (passedObject && possibleClasses.length > 0) {
-            const match = possibleClasses.find(
-                (cls) => cls.term === passedObject.term && cls.instructor.toLowerCase() === passedObject.instructor.toLowerCase()
-            );
-            if (match) setDropdown(match._id);
-        }
-        
-    }, [possibleClasses, passedObject]);
+    
 
     async function getCourseRating() {
         
@@ -155,6 +167,32 @@ function SearchPage() {
         } catch (error) {
             setCourseRating(null);
         }
+    }
+
+    async function getCourseDescription() {
+        
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/description/${passedObject.subject}/${passedObject.catalog}`, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                
+                const data = await response.json();
+                setTitle(data.title);
+                setUnits(data.units);
+                setDescription(data.description);
+                return data.description; 
+            } else {
+                alert("No description found for this course");
+                return "No description available";
+            }
+        } catch (error) {
+            return "Error fetching description";
+        }
+
     }
 
     return (
@@ -201,8 +239,10 @@ function SearchPage() {
                     ? `Course Rating: ${courseRating.rating ?? 'No rating available'}`
                     : courseRating ?? 'N/A'}
                 </h1>
-
-
+               
+                <h1>{description}</h1>
+                <h1> {units}</h1>
+                <h1> {title}</h1>
 
 
 

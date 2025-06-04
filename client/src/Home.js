@@ -529,16 +529,16 @@ function Home() {
               <div>{String("Missing time information")}</div>
             )}
           </div>
-          <button style={{ marginTop: '10px', backgroundColor:'white', cursor:'pointer' }} onClick={() => {
-            addClass(id._id, item._id, "add");
-            setDataFromQuery(prev => prev.filter(i => i._id !== item._id));
-            runGetClasses(id._id);
-          }}>Add to Plan</button>
-
-
-           <button style={{marginTop:'10px', marginLeft:'190px', backgroundColor:'white', cursor:'pointer'}} onClick={() => {
-            navigate('/SearchPage', { state: { classInfo: item } });
-        }}> More Info</button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+            <button style={{ backgroundColor:'white', cursor:'pointer' }} onClick={() => {
+              addClass(id._id, item._id, "add");
+              setDataFromQuery(prev => prev.filter(i => i._id !== item._id));
+              runGetClasses(id._id);
+            }}>Add to Plan</button>
+            <button style={{ backgroundColor:'white', cursor:'pointer' }} onClick={() => {
+              navigate('/SearchPage', { state: { classInfo: item } });
+            }}> More Info</button>
+          </div>
         </div>
 
        
