@@ -198,13 +198,37 @@ def upload_courses_to_api(simplified_courses, user_id):
         # For now we process honors courses as regular courses
         if course_catalog.endswith("H"):
             course_name = course_catalog[:-1].strip()
+
+        # TODO Lab variants?
         
         # If course catalog starts with "T"
         # These are AP classes
-        # TODO process these as their equivalent courses
-        if course_catalog.startswith("T"):
-            continue
         course_name = f"{course_subject} {course_catalog}"
+        
+        if course_catalog.startswith("T"):
+            # AP CALC BC
+            if course_name == "MATH T01":
+                courses_to_add.append({
+                    "term": "PAST",
+                    "course_name": "MATH 31A",
+                })
+                courses_to_add.append({
+                    "term": "PAST",
+                    "course_name": "MATH 31B",
+                })
+            
+            # TODO AP CALC AB 
+
+            # AP Physics C: Mechanics
+            if course_name == "PHYSICS T11":
+                courses_to_add.append({
+                    "term": "PAST",
+                    "course_name": "PHYSICS 1A",
+                })
+
+            # TODO AP Physics C: Electricity and Magnetism
+            
+        
         # term = course['term']
         # For frontend purposes, this needs to be "PAST"
         term = "PAST"
@@ -214,6 +238,18 @@ def upload_courses_to_api(simplified_courses, user_id):
             "course_name": course_name,
         }
         courses_to_add.append(course_entry)
+
+    
+        # If they took COM SCI 31, add COM SCI 30 as well
+        if course_name == "COM SCI 31":
+            courses_to_add.append({
+                "term": term,
+                "course_name": "COM SCI 30",
+            })
+        
+        
+
+        
             
     result = collection.update_one(
         {"_id": user_object_id},

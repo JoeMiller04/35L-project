@@ -14,23 +14,25 @@ async def upload_file(
     file: UploadFile = File(...),
 ):
     
+    if not file or not hasattr(file, "filename") or not file.filename:
+        raise HTTPException(status_code=400, detail="No file uploaded")
+    filename = file.filename
+    file_extension = os.path.splitext(filename)[1].lower()
+    if file_extension != ".html":
+        raise HTTPException(status_code=400, detail="Only HTML files are allowed")
+    upload_dir = "server/uploads"
+    os.makedirs(upload_dir, exist_ok=True)
+    file_path = os.path.join(upload_dir, file.filename)
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)   
+        
     try:
-        print("Starting upload")
-        upload_dir = "server/uploads"
-        os.makedirs(upload_dir, exist_ok=True)
-        file_path = os.path.join(upload_dir, file.filename)
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)   
-        print("Completed upload")
-
-        print("Calling script")
         script_path = os.path.abspath("server/data/Dars/dars-parser.py")
         result = subprocess.run(
             [sys.executable, script_path, file_path, user_id],
             capture_output=True,
             text=True
         )
-        print("Completed script call")
         
 
         if result.returncode != 0:
@@ -39,7 +41,7 @@ async def upload_file(
         # 3. Return the output (JSON) from dars-parser.py
         # Is this for debugging or production?
         return "Test"
-        return {"filename": file.filename, "dars_output": json.loads(result.stdout)}
 
     except Exception as e:
+        print(f"Error during file upload: {e}")
         raise HTTPException(status_code=500, detail=str(e))
