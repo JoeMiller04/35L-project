@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './App.css';
 
 
+// Helper to convert display term to backend code
+function displayTermToCode(term) {
+  const [season, year] = term.split(' ');
+  if (!season || !year) return term;
+  if (season === 'Winter') return year + 'W';
+  if (season === 'Spring') return year + 'S';
+  if (season === 'Summer') return year + '1';
+  if (season === 'Fall') return year + 'F';
+  return term;
+}
 
 const availableTerms = [
   "Winter 25", "Spring 25", "Summer 25", "Fall 25",
@@ -26,12 +35,12 @@ export default function FuturePlanner() {
   const [plan, setPlan] = useState([]); 
   const [selectedTerm, setSelectedTerm] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
-  const [selectedDegree, setSelectedDegree] = useState('');
+  const [selectedDegree, setSelectedDegree] = useState('CS');
   const [validationMessage, setValidationMessage] = useState('');
   const navigate = useNavigate();
   const userObj = JSON.parse(localStorage.getItem("user_id"));
   const userId = userObj._id;
-  const [major, setMajor] = useState('');
+  const [major, setMajor] = useState('CS');
   const [popup, setPopup] = useState(false);
 
 
@@ -289,32 +298,31 @@ if (majorObj && majorObj.major) {
   // Add selected course to selected term in plan
   const addCourseToQuarter = () => {
     if (!selectedTerm || !selectedCourse) return;
-
+    const backendTerm = selectedTerm;
     setPlan((prevPlan) => {
-      const existing = prevPlan.find((entry) => entry.term === selectedTerm);
+      const existing = prevPlan.find((entry) => entry.term === backendTerm);
       if (existing) {
         return prevPlan.map((entry) =>
-          entry.term === selectedTerm
+          entry.term === backendTerm
             ? { ...entry, classes: [...new Set([...entry.classes, selectedCourse])] }
             : entry
         );
       } else {
-        return [...prevPlan, { term: selectedTerm, classes: [selectedCourse] }];
+        return [...prevPlan, { term: backendTerm, classes: [selectedCourse] }];
       }
     });
-
+    alert(backendTerm);
     fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      term: selectedTerm,
-      course_name: selectedCourse,
-      action: "add",
-    }),
-  });
-
-  setSelectedCourse('');
-};
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        term: backendTerm,
+        course_name: selectedCourse,
+        action: "add",
+      }),
+    });
+    setSelectedCourse('');
+  };
 
   // Remove course from a specific term
 const removeCourse = (termToRemove, courseToRemove) => {
@@ -341,18 +349,43 @@ const removeCourse = (termToRemove, courseToRemove) => {
   });
 };
 
+  // For display, map backend code to display term
+function codeToDisplayTerm(code) {
+  const year = code.slice(0, 2);
+  const season = code.slice(2);
+  if (season === 'W') return `Winter ${year}`;
+  if (season === 'S') return `Spring ${year}`;
+  if (season === '1') return `Summer ${year}`;
+  if (season === 'F') return `Fall ${year}`;
+  return code;
+}
+
+
+
+
+
+
+
   return (
     <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
         <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
         <div style={{ width: '80%', marginLeft: '10%', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
     {/* Header */}
     <div style={{ width: '100%' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
-            <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold', marginLeft:'150px' }}>Future Plan</h1>
-            <button onClick={()=>toggleMajor()} style={{cursor:'pointer', backgroundColor:'white', marginRight:'-100px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}> Change Major</button>
-            <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Past Courses</button>
-
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px' }}>
+          {/* Left button group */}
+          <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
+            <button onClick={() => navigate('/Home')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Home</button>
+            <button onClick={() => navigate('/PastCourses')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '20px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Past Courses</button>
+          </div>
+          {/* Centered title */}
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+            <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold', margin: 0 }}>Future Plan</h1>
+          </div>
+          {/* Right button group */}
+          <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', right: 0, height: '100%' }}>
+            <button onClick={() => toggleMajor()} style={{ cursor: 'pointer', backgroundColor: 'white', marginRight: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Change Major</button>
+          </div>
         </div>
                 <hr style={{color:'black', backgroundColor:'black', height:'2px', border:'none', marginTop:'0px'}}/>
     </div>
@@ -375,7 +408,7 @@ const removeCourse = (termToRemove, courseToRemove) => {
         >
           <option value="">Select Term</option>
           {availableTerms.map((term) => (
-            <option key={term} value={term}>
+            <option key={term} value={displayTermToCode(term)}>
               {term}
             </option>
           ))}
@@ -428,16 +461,17 @@ const removeCourse = (termToRemove, courseToRemove) => {
     {/* everything but past */}
     <div style={{ width: '85%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', textAlign: 'left', marginLeft:'50px', marginRight:'-30px' }}>
       {availableTerms.map((term) => {
-        const planEntry = plan.find((entry) => entry.term === term);
+        const backendTerm = displayTermToCode(term);
+        const planEntry = plan.find((entry) => entry.term === backendTerm);
         const classes = planEntry ? planEntry.classes : [];
         return (
-          <div key={term}>
+          <div key={backendTerm}>
             <h2>{term}</h2>
             <ul style={{ marginTop: '-20px', listStyleType: 'none', paddingLeft: '0px' }}>
               {classes.length > 0 ? (
                 classes.map((c) => (
                   <li key={c}>
-                    <button onClick={() => removeCourse(term, c)} style={{ border: 'none', cursor: 'pointer', color: 'red' }}>X</button>
+                    <button onClick={() => removeCourse(backendTerm, c)} style={{ border: 'none', cursor: 'pointer', color: 'red' }}>X</button>
                     <span>{c}</span>
                   </li>
                 ))
@@ -502,7 +536,7 @@ const removeCourse = (termToRemove, courseToRemove) => {
                     </button>
                     <h2 style={{ marginTop: '10px' }}>Select Your Major</h2>
                     <select value={selectedDegree} style={{marginLeft:'0px'}} onChange={(e) => { setSelectedDegree(e.target.value); updateMajor(e.target.value); }}>
-                       <option value="">Select Degree</option> {/* Default option */}
+                       
                     <option value="CS">Computer Science (CS)</option>
                      <option value="CSE">Computer Science and Engineering (CSE)</option>
                  </select>

@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import './App.css';
 import { useState, useEffect } from 'react';
 
 //this page should be mostly done. It is the home page
@@ -40,7 +39,7 @@ function Home() {
     const [index, setIndex] = useState(-1);
     const [dropdown, setDropdown] = useState('- Select Dept -');
     const [dropdownClass, setDropdownClass] = useState('- Select a Class -');
-    const [quarter, setQuarter] = useState("25S");
+    const [quarter, setQuarter] = useState("Any Term");
     const [dataFromQuery, setDataFromQuery] = useState([]);
     const [id, setId] = useState(null);
     const [subjects, setSubjects] = useState([]);
@@ -67,6 +66,8 @@ function Home() {
         getSubjects();
         setClassesPerSubject({'- Select Dept -': ['- Select a Class -']});
     }, []);
+
+  
 
     //fetch classes from backend
     async function updateUserCourseList(userId, courseId) {
@@ -196,7 +197,7 @@ function Home() {
             temp = "EC ENGR";
         }
         let params = new URLSearchParams();
-        if (quarter === "idk") {
+        if (quarter === "idk" || quarter === "Any Term") {
             params = new URLSearchParams({
                 subject: temp,
                 catalog: dropdownClass
@@ -277,12 +278,12 @@ function Home() {
     //dropdown change function
     function handleChange(drop) {
         setDropdown(drop.target.value);
-        getClassesBySubject(drop.target.value);
+        getClassesBySubject(drop.target.value, quarter);
     }
 
     function handleQuarterChange(drop) {
         setQuarter(drop.target.value);
-    }
+    getClassesBySubject(dropdown, drop.target.value);    }
 
     function handleClassChange(drop) {
         setDropdownClass(drop.target.value);
@@ -318,15 +319,23 @@ function Home() {
         }
     }
 
-    async function getClassesBySubject(subject) {
+    async function getClassesBySubject(subject, term) {
+        
+        let url = '';
         if (subject === '- Select Dept -') {
             setClassesPerSubject({'- Select Dept -': ['- Select a Class -']});
             setDropdownClass('- Select a Class -');
             return [];
+            alert("why are we in here");
+        }
+       
+        if (term === 'idk' || term === 'Any Term') {
+            url = `http://127.0.0.1:8000/courses/catalogs/${encodeURIComponent(subject)}`;
+        } else {
+            url = `http://127.0.0.1:8000/courses/catalogs/${encodeURIComponent(subject)}?term=${encodeURIComponent(term)}`;
         }
         try {
-        
-            const response = await fetch(`http://127.0.0.1:8000/courses/catalogs/${encodeURIComponent(subject)}`, {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -336,6 +345,11 @@ function Home() {
                 throw new Error('Failed to fetch catalogs');
             }
             const catalogs = await response.json();
+            if (catalogs.length === 0) {
+                setClassesPerSubject({ [subject]: ['No Classes'] });
+                setDropdownClass('No Classes');
+                return ['No Classes for This Quarter'];
+            }
             setClassesPerSubject(prev => ({ ...prev, [subject]: catalogs }));
             setDropdownClass((catalogs && catalogs.length > 0) ? catalogs[0] : '- Select a Class -');
             return catalogs;
@@ -348,24 +362,33 @@ function Home() {
 
     function logOut() {
         localStorage.removeItem('user_id');
+        localStorage.removeItem('major');
         navigate('/');
     }
     
     return (
-        <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
+        <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '180vh' }}>
         <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
         <div style={{ width: '80%', marginLeft: '10%', marginRight: '10%', zIndex: 2 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button  onClick={() => logOut()} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Logout</button>
-
-                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Past Courses</button>
-                    <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>Schedule Planner Thing</h1>
-                    <button onClick={() => navigate('/InfoPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'0px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}> Classes</button>
-                    <button onClick={() => navigate('/FuturePlanner')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Future Plan</button>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px', marginTop:'10px' }}>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
+                        <button onClick={() => logOut()} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Logout</button>
+                        <button onClick={() => navigate('/PastCourses')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '20px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Past Courses</button>
+                    </div>
+                    
+                    <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+                        <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold', margin: 0 }}>Schedule</h1>
+                    </div>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', right: 0, height: '100%' }}>
+                        <button onClick={() => navigate('/InfoPage')} style={{ cursor: 'pointer', backgroundColor: 'white', marginRight: '20px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Classes</button>
+                        <button onClick={() => navigate('/FuturePlanner')} style={{ cursor: 'pointer', backgroundColor: 'white', marginRight: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Future Plan</button>
+                    </div>
                 </div>
 
                 <div style={{ position: 'relative', width: '80%', minHeight: `${144 * 5}px`, margin: '0 auto', marginTop: '40px' }}>
-                  {/* time labels*/}
+              
                   <div style={{
                     position: 'absolute',
                     top: 0,

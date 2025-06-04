@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import './App.css';
 import {useState} from 'react';
+import './App.css'; 
 
 
 function CreateUser() {
@@ -126,14 +126,15 @@ function CreateUser() {
                         setPasswordLengthError(false);
                         setUserTooShort(false);
                     }}
-                    style={{ padding: '10px 20px', fontSize: '16px' }}
+                    style={{ padding: '10px 20px', fontSize: '16px', cursor:'pointer' }}
                 >
                     Back to Log In
                 </button>
                 
                 <button
                     onClick={() => handleCreateUser()}
-                    style={{ padding: '10px 20px', fontSize: '16px' }}
+                    style={{ padding: '10px 20px', fontSize: '16px', cursor:'pointer' }}
+                
                 >
                     Create User
                 </button>

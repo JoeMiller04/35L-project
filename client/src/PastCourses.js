@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import './App.css';
+
 
 export default function PastCourses() {
   // Track which courses have been checked (i.e., taken by the user)
@@ -80,7 +80,7 @@ async function loadPastCourses() {
 
   useEffect(() => {
     const majorObj = JSON.parse(localStorage.getItem('major'));
-    const majorStr = majorObj ? majorObj.major : '';
+    const majorStr = majorObj ? majorObj.major : 'CS';
     setSelectedDegree(majorStr);
     setMajor(majorStr);
     loadPastCourses();
@@ -135,14 +135,22 @@ async function loadPastCourses() {
         <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
         <div style={{ width: '80%', marginLeft: '10%', zIndex: 2 }}>
     
-         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'40px', padding: '10px 20px', fontSize: '15px', marginTop:'10px' }}>Home</button>
-                    <button onClick={() => toggleFilePopup()} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'-70px', padding: '10px 20px', fontSize: '15px', marginTop:'10px' }}>Upload</button>
-                    <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold', marginLeft:'60px' }}>Past Course Checklist</h1>
-                    <button onClick={()=>toggleMajor()} style={{cursor:'pointer', backgroundColor:'white', marginRight:'-70px', padding: '10px 20px', fontSize: '15px', marginTop:'10px' }}> Change Major</button>
-                                   <button onClick={() => navigate('/FuturePlanner')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'40px', padding: '10px 20px', fontSize: '15px', marginTop:'10px' }}>Future Plan</button>
-
-                </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px', marginTop: '20px' }}>
+          {/* Left button group */}
+          <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
+            <button onClick={() => navigate('/Home')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Home</button>
+            <button onClick={() => toggleFilePopup()} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '20px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Upload</button>
+          </div>
+          {/* Centered title */}
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+            <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold', margin: 0 }}>Past Course Checklist</h1>
+          </div>
+          {/* Right button group */}
+          <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', right: 0, height: '100%' }}>
+            <button onClick={() => toggleMajor()} style={{ cursor: 'pointer', backgroundColor: 'white', marginRight: '20px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Change Major</button>
+            <button onClick={() => navigate('/FuturePlanner')} style={{ cursor: 'pointer', backgroundColor: 'white', marginRight: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Future Plan</button>
+          </div>
+        </div>
                 <hr style={{color:'black', backgroundColor:'black', height:'1px', border:'none', marginTop:'0px'}}/>
 
            
@@ -220,8 +228,8 @@ async function loadPastCourses() {
                         ×
                     </button>
                     <h2 style={{ marginTop: '10px' }}>Select Your Major</h2>
-                    <select value={selectedDegree} style={{marginLeft:'0px'}} onChange={(e) => { setSelectedDegree(e.target.value); updateMajor(e.target.value); }}>
-                       <option value="">Select Degree</option> {/* Default option */}
+                    <select value={selectedDegree} style={{marginLeft:'0px'}} onChange={(e) => { setSelectedDegree(e.target.value); updateMajor(e.target.value); loadPastCourses();}}>
+                      
                     <option value="CS">Computer Science (CS)</option>
                      <option value="CSE">Computer Science and Engineering (CSE)</option>
                  </select>

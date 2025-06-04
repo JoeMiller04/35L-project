@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import './App.css';
 import { useState, useEffect } from 'react';
 
 //this page should be mostly done. It is the page to remove classes
@@ -120,12 +119,20 @@ function InfoPage() {
                 <div style={{ width: '80%', marginLeft: '10%', marginRight: '10%', zIndex: 2 }}>
 
                             {/*upper area*/}
-                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                  <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px'}}>Go to Home</button>
-                                  <h1 style={{fontSize:'50px'}}>Current Class Information</h1>
-           
-                                     <button style={{  marginRight:'50px',  fontSize: '16px', marginTop:'10px', borderWidth:'0px', width:'90px'}}></button>
-                             </div>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px' }}>
+              {/* Left button group */}
+              <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
+                <button onClick={() => navigate('/Home')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Go to Home</button>
+              </div>
+              {/* Centered title */}
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+                <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold', margin: 0 }}>Current Class Information</h1>
+              </div>
+              {/* Right button group (placeholder for symmetry) */}
+              <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', right: 0, height: '100%' }}>
+                <button style={{ marginRight: '50px', fontSize: '12px', marginTop: '10px', borderWidth: '0px', width: '90px', backgroundColor: 'white', fontWeight: 'bold' }}></button>
+              </div>
+            </div>
 
 
         {/*class rendering*/}
@@ -153,9 +160,10 @@ function InfoPage() {
                   } else {
                     timeText = String(time);
                   }
+                  alert(timeText);
                   return (
                     <div key={day} style={{fontSize:'15px'}}>
-                      <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {timeText}
+                        <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {item.times === null ? 'Missing time information' : timeText}
                     </div>
                   );
                 })}
@@ -164,11 +172,16 @@ function InfoPage() {
               <div>{String(item.times)}</div>
             )}
           </div>
-          <button style={{ marginTop: '10px' }} onClick={() => {
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+          <button style={{ marginTop: '10px', background:'white', cursor:'pointer' }} onClick={() => {
             removeClass(item._id);
             setClasses(prev => prev.filter(i => i._id !== item._id));
             runGetClasses(id._id);
           }}>Remove Class</button>
+           <button style={{ backgroundColor:'white', cursor:'pointer' }} onClick={() => {
+              navigate('/SearchPage', { state: { classInfo: item } });
+            }}> More Info</button>
+            </div>
         </div>
       ))}
     </div>

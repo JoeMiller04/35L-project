@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'; // No need for BrowserRouter here
-import './App.css';
 import Home from './Home';
 import SearchPage from './SearchPage';
 import InfoPage from './InfoPage';
