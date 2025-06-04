@@ -233,7 +233,6 @@ async def upload_courses(user_id):
         return past_courses, other_courses
     else:
         raise ValueError("User not found or no saved_courses")
-        return [], []
 
     
 async def executioner(user_id, eng_comp: bool = False):

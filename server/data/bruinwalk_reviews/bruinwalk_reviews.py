@@ -39,8 +39,8 @@ def fetch_and_print_overall_rating(input_url : str, page_number : int):
 
 def executioner():
     all_class_scores = []
-    min_rating = Decimal("3.0")
-    max_rating = Decimal("3.9")
+    min_rating = Decimal("1.0")
+    max_rating = Decimal("4.9")
     step = Decimal("0.1")
 
     for rating in [min_rating + i * step for i in range(int((max_rating - min_rating) / step) + 1)]:
