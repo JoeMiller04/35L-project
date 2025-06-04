@@ -195,18 +195,69 @@ function SearchPage() {
 
     }
 
+    
+function getRatingColor(rating) {
+    if (typeof rating !== 'number') return 'black';
+    if (rating < 1.75) return '#8B0000'; 
+    if (rating < 2.5) return 'red';
+    if (rating < 3.5) return '#FFD600'; 
+    if (rating < 4.25) return '#90EE90'; 
+    return 'green';
+}
+
     return (
          <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
             <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
             <div style={{ width: '80%', marginLeft: '10%', zIndex: 2 }}>
-             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'100px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
-                    <h1 style={{ marginRight:'450px', fontSize: '30px' }}>{passedObject.subject} {passedObject.catalog} Information</h1>
+             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
+                    <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
+                    <h1 style={{ margin: '0 auto', fontSize: '30px', textAlign: 'center' }}>{passedObject.subject} {passedObject.catalog}: {passedObject.title}</h1>
+                    <button style={{backgroundColor:'transparent', border:'none', width:'90px'}}></button>
                 </div>
 
-                <hr style={{color:'black', backgroundColor:'black', height:'1px', border:'none', marginTop:'0px'}} />
+                <hr style={{color:'black', backgroundColor:'black', height:'1px', border:'none', marginTop:'20px'}} />
 
-                <h1 style={{ textAlign: 'center', fontSize: '20px', fontWeight:'normal', marginTop:'30px' }}>Grade Distribution for {term} {passedObject.subject} {passedObject.catalog} with {capitalizeWords(instructor.toLowerCase())}</h1>
+
+             <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '50vh' }}>
+                    <div style={{ width: '60%', marginLeft: '5%', zIndex: 4, borderRight: '1px solid black', height:'100%', marginRight:'100px' }}>
+                        <h1 style={{ fontWeight:'bold', textAlign: 'left', fontSize: '20px', marginTop:'30px', zIndex:5, marginLeft:'30px', marginRight:'30px' }}>{passedObject.subject} {passedObject.catalog} - {passedObject.title}</h1>
+                        <h1 style={{ fontSize:'18px', textAlign: 'left',  fontWeight:'normal', marginTop:'10px', zIndex:5, marginLeft:'30px', marginRight:'30px' }}>Units: {units}</h1>
+                        <h1 style={{ textAlign: 'left', fontSize: '18px', fontWeight:'normal', marginTop:'10px', zIndex:5, marginLeft:'30px', marginRight:'50px' }}>{description}</h1>
+                    
+                    
+                    
+                    </div>
+                    <div style={{ width: '35%', zIndex: 5, marginLeft:'-10%' }}>
+                        
+                        <h1 style={{ fontWeight:'bold', textAlign: 'center', fontSize: '20px', marginTop:'30px' }}>Overall Course Rating:</h1>
+                        <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight:'normal', marginTop:'10px', color: (() => {
+    let val = null;
+    if (courseRating && typeof courseRating === 'object' && typeof courseRating.rating === 'string' && courseRating.rating.includes(':')) {
+        val = parseFloat(courseRating.rating.split(':').pop().trim());
+    } else if (courseRating && typeof courseRating === 'object' && typeof courseRating.rating === 'number') {
+        val = courseRating.rating;
+    } else if (typeof courseRating === 'number') {
+        val = courseRating;
+    }
+    return getRatingColor(val);
+})() }}>
+    {courseRating && typeof courseRating === 'object' && typeof courseRating.rating === 'string' && courseRating.rating.includes(':')
+        ? courseRating.rating.split(':').pop().trim() || 'No rating available'
+        : courseRating && typeof courseRating === 'object' && courseRating.rating
+            ? courseRating.rating
+            : courseRating ?? 'N/A'}
+</h1>
+
+
+                    </div>
+                </div>
+
+                <h1 style={{ textAlign: 'center', fontSize: '20px', fontWeight:'normal', marginTop:'-100px' }}>Grade Distribution for {term} {passedObject.subject} {passedObject.catalog} with {capitalizeWords(instructor.toLowerCase())}</h1>
+
+
+
+
+
 
 
                 <ResponsiveContainer width="70%" height={200} alignItems="center" justifyContent="center" style={{ margin: '0 auto', marginTop: '20px' }}>
@@ -232,18 +283,8 @@ function SearchPage() {
                     </select>
                 
                 
-                
-                    
-                        <h1 style={{ textAlign: 'center', fontSize: '20px', fontWeight:'normal', marginTop:'30px' }}>
-                  {courseRating && typeof courseRating === 'object'
-                    ? `Course Rating: ${courseRating.rating ?? 'No rating available'}`
-                    : courseRating ?? 'N/A'}
-                </h1>
                
-                <h1>{description}</h1>
-                <h1> {units}</h1>
-                <h1> {title}</h1>
-
+         
 
 
 
