@@ -46,7 +46,15 @@ This project was created using Create React App.
 
 `PastCourses.js`: This page lets the user input their past classes so that they appear on the Future Plan page. There is an upload button that will only take student DARS files. Uploading a DARS file here will automatically check off classes in the list that the user has taken or is currently taking. The user can navigate to Future Planner or Home from here. In both `FuturePlanner.js` and `PastCourses.js`, there is a change major button that can be used to display different courses depending on what major you are. This defaults to CS, and only supports CS and CSE as of now. 
 
-`InfoPage.js`: This page displays all of the classes in your current schedule in a clean format. This is where the user can remove current classes from their schedule. 
+`InfoPage.js`: This page displays all of the classes in your current schedule in a clean format. This is where the user can remove current classes from their schedule. They can also navigate to the info page about classes from here. (the name of this page is not accurate).
+
+`SearchPage.js`: This page displays all the information about a specific class. It can be accessed via home and `InfoPage.js`. It includes a short description, ratings, and grade distributions. 
+
+## Usage
+
+1. **Log-in/Create user**: Users will be prompted to create an account when they first visit the applicaiton
+2. **Search for Classes**: Users will be able to query for UCLA classes on the home page. Classes from the last few years will appear with information about the class. 
+3. **Add Classes**: 
 
 
 
