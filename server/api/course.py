@@ -177,22 +177,31 @@ async def query_courses(
 
 
 @router.get("/courses/catalogs/{subject}", response_model=List[str])
-async def get_catalogs_by_subject(subject: str):
+async def get_catalogs_by_subject(subject: str, term: Optional[str] = None):
     """
     Get all unique catalog numbers for a specific subject.
     If subject is not found, returns an empty list.
     subject is case-insensitive.
     Parameters:
-    - subject: Course subject (e.g., "COM SCI")
+    - subject: Course subject (e.g., "COM SCI"), case-insensitive
+    - term: Optional term to filter by (e.g., "23F", "25S")
     
     Returns:
     - List of unique catalog numbers for the given subject, kind of sorted
     """
     try:
         subject = subject.upper()
+        
+        # Build query filter
+        query = {"subject": subject}
+        
+        # Add term filter if provided
+        if term:
+            query["term"] = term
+        
         catalogs = await course_collection.distinct(
             "catalog", 
-            {"subject": subject}
+            query
         )
         
         # I try to sort the catalog numbers in a relatively natural way
@@ -239,7 +248,7 @@ async def get_catalogs_by_subject(subject: str):
     except Exception as e:
         raise HTTPException(
             status_code=500, 
-            detail=f"Error retrieving catalogs for subject {subject}: {str(e)}"
+            detail=f"Error retrieving catalogs for subject {subject}{' for term ' + term if term else ''}: {str(e)}"
         )
 
 
