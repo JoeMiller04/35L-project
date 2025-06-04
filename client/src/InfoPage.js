@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import './App.css';
 import { useState, useEffect } from 'react';
 
 //this page should be mostly done. It is the page to remove classes
@@ -161,9 +160,10 @@ function InfoPage() {
                   } else {
                     timeText = String(time);
                   }
+                  alert(timeText);
                   return (
                     <div key={day} style={{fontSize:'15px'}}>
-                      <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {timeText}
+                        <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {item.times === null ? 'Missing time information' : timeText}
                     </div>
                   );
                 })}
@@ -172,11 +172,16 @@ function InfoPage() {
               <div>{String(item.times)}</div>
             )}
           </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
           <button style={{ marginTop: '10px', background:'white', cursor:'pointer' }} onClick={() => {
             removeClass(item._id);
             setClasses(prev => prev.filter(i => i._id !== item._id));
             runGetClasses(id._id);
           }}>Remove Class</button>
+           <button style={{ backgroundColor:'white', cursor:'pointer' }} onClick={() => {
+              navigate('/SearchPage', { state: { classInfo: item } });
+            }}> More Info</button>
+            </div>
         </div>
       ))}
     </div>

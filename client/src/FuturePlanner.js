@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './App.css';
+
 
 // Helper to convert display term to backend code
 function displayTermToCode(term) {
@@ -35,12 +35,12 @@ export default function FuturePlanner() {
   const [plan, setPlan] = useState([]); 
   const [selectedTerm, setSelectedTerm] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
-  const [selectedDegree, setSelectedDegree] = useState('');
+  const [selectedDegree, setSelectedDegree] = useState('CS');
   const [validationMessage, setValidationMessage] = useState('');
   const navigate = useNavigate();
   const userObj = JSON.parse(localStorage.getItem("user_id"));
   const userId = userObj._id;
-  const [major, setMajor] = useState('');
+  const [major, setMajor] = useState('CS');
   const [popup, setPopup] = useState(false);
 
 
@@ -79,10 +79,9 @@ export default function FuturePlanner() {
     "COM SCI C121",
     "COM SCI C122",
     "COM SCI C124",
-    "COM SCI 131",
     "COM SCI 130",
+    "COM SCI 131",
     "COM SCI 132",
-    "COM SCI M151B",
     "COM SCI 133",
     "COM SCI 134",
     "COM SCI 136",
@@ -94,9 +93,9 @@ export default function FuturePlanner() {
     "COM SCI 145",
     "COM SCI M146",
     "COM SCI M148",
+    "COM SCI M151B",
     "COM SCI M152A",
     "COM SCI 152B",
-    "COM SCI 180",
     "COM SCI 161",
     "COM SCI 162",
     "COM SCI 163",
@@ -107,6 +106,7 @@ export default function FuturePlanner() {
     "COM SCI 174A",
     "COM SCI 174B",
     "COM SCI C174C",
+    "COM SCI 180",
     "COM SCI 181",
     "COM SCI M182",
     "COM SCI 183",
@@ -161,10 +161,9 @@ export default function FuturePlanner() {
     "COM SCI C121",
     "COM SCI C122",
     "COM SCI C124",
-    "COM SCI 131",
     "COM SCI 130",
+    "COM SCI 131",
     "COM SCI 132",
-    "COM SCI M151B",
     "COM SCI 133",
     "COM SCI 134",
     "COM SCI 136",
@@ -176,9 +175,9 @@ export default function FuturePlanner() {
     "COM SCI 145",
     "COM SCI M146",
     "COM SCI M148",
+    "COM SCI M151B",
     "COM SCI M152A",
     "COM SCI 152B",
-    "COM SCI 180",
     "COM SCI 161",
     "COM SCI 162",
     "COM SCI 163",
@@ -189,6 +188,7 @@ export default function FuturePlanner() {
     "COM SCI 174A",
     "COM SCI 174B",
     "COM SCI C174C",
+    "COM SCI 180",
     "COM SCI 181",
     "COM SCI M182",
     "COM SCI 183",
@@ -311,6 +311,7 @@ if (majorObj && majorObj.major) {
         return [...prevPlan, { term: backendTerm, classes: [selectedCourse] }];
       }
     });
+    alert(backendTerm);
     fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -358,6 +359,12 @@ function codeToDisplayTerm(code) {
   if (season === 'F') return `Fall ${year}`;
   return code;
 }
+
+
+
+
+
+
 
   return (
     <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
@@ -529,7 +536,7 @@ function codeToDisplayTerm(code) {
                     </button>
                     <h2 style={{ marginTop: '10px' }}>Select Your Major</h2>
                     <select value={selectedDegree} style={{marginLeft:'0px'}} onChange={(e) => { setSelectedDegree(e.target.value); updateMajor(e.target.value); }}>
-                       <option value="">Select Degree</option> {/* Default option */}
+                       
                     <option value="CS">Computer Science (CS)</option>
                      <option value="CSE">Computer Science and Engineering (CSE)</option>
                  </select>

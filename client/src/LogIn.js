@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import './App.css';
 import {useState} from 'react';
+import './App.css';
 
 
 function LogIn() {
@@ -77,13 +77,13 @@ function LogIn() {
             <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', marginTop: '10px' }}>
                  <button
                     onClick={() => navigate('/CreateUser')}
-                    style={{ padding: '10px 20px', fontSize: '16px' }}
+                    style={{ padding: '10px 20px', fontSize: '16px', cursor:'pointer' }}
                 >
                     Create User
                 </button>
                 <button
                     onClick={() => handleLogin()}
-                    style={{ padding: '10px 20px', fontSize: '16px' }}
+                    style={{ padding: '10px 20px', fontSize: '16px', cursor:'pointer' }}
                 >
                     Log In
                 </button>
