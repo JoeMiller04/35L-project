@@ -15,7 +15,7 @@ from server.db.mongodb import users_collection as users
 
 from bson.objectid import ObjectId
 
-quarter_order = {"w": 0, "s": 1, "f": 2}
+quarter_order = {"w": 0, "s": 1, "1": 2, "f": 3}
 
 def parse_catalog_year(catalog_year):
     # Example input: "21f"
@@ -37,12 +37,12 @@ def find_lowest_quarter(other_courses):
 def generate_quarter_sequence(start_year, start_quarter_idx, num_years=4):
     # Generate catalog_year strings from start point, covering num_years ahead
     
-    quarters = ["W", "S", "F"]
+    quarters = ["W", "S", "SS", "F"]
     sequence = []
     year = start_year
     quarter_idx = start_quarter_idx
     
-    for _ in range(num_years * 3):  # 3 quarters per year
+    for _ in range(num_years * 4):  # 3 quarters per year
         catalog_str = f"{year:02d}{quarters[quarter_idx]}"
         sequence.append(catalog_str)
         
@@ -71,13 +71,13 @@ async def isValid(previous_courses, sorted_list, eng_comp):
         if course_name in ("GE 1", "GE 2", "GE 3", "GE 4", "GE 5"):
             GE_counter += 1
             total_units += 5
-        elif course_name in ("SCI TECH 1", "SCI TECH 2", "SCI- ECH 3"):
+        elif course_name in ("SCI TECH 1", "SCI TECH 2", "SCI TECH 3"):
             SCI_TECH_counter += 1
             total_units += 4
         elif course_name in ("TECH BREADTH 1", "TECH BREADTH 2", "TECH BREADTH 3"):
             TECH_BREADTH_counter += 1
             total_units += 4
-        elif course_name == "ENG COMP 3":
+        elif course_name == "ENGCOMP 3":
             eng_comp_bool = True
             total_units += 4
         elif course_name == "ETHICS":
@@ -263,7 +263,7 @@ async def executioner(user_id, eng_comp: bool = False):
 
 
 async def main():
-    other_courses, validity = await executioner('6830e672275677ab5f408af6')
+    other_courses, validity = await executioner('6840d18240100a7eb9ebc999')
     if validity:
         print("The list satisfies CS requirements")
     else:
