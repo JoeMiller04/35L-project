@@ -4,7 +4,12 @@ import './App.css';
 
 
 
-const availableTerms = ["25W", "25S", "25SS","25F",   "26W", "26FS", "26SS","26F", "27W", "27S", "27SS", "27F",  "28W", "28S", "28SS","28F"];
+const availableTerms = [
+  "Winter 25", "Spring 25", "Summer 25", "Fall 25",
+  "Winter 26", "Spring 26", "Summer 26", "Fall 26",
+  "Winter 27", "Spring 27", "Summer 27", "Fall 27",
+  "Winter 28", "Spring 28", "Summer 28", "Fall 28"
+];
 
   
   const termToSortable = (term) => {

@@ -317,6 +317,11 @@ function Home() {
             return [];
         }
     }
+
+    function logOut() {
+        localStorage.removeItem('user_id');
+        navigate('/');
+    }
     
     return (
         <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
@@ -324,7 +329,7 @@ function Home() {
         <div style={{ width: '80%', marginLeft: '10%', marginRight: '10%', zIndex: 2 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Past Courses</button>
-                    <button onClick={() => navigate('/SearchPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'0px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Joe's Page</button>
+                    <button  onClick={() => logOut()} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Logout</button>
                     <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>Schedule Planner Thing</h1>
                     <button onClick={() => navigate('/InfoPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'0px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}> Classes</button>
                     <button onClick={() => navigate('/FuturePlanner')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Future Plan</button>
@@ -512,25 +517,26 @@ function Home() {
                     } else {
                       timeText = String(time);
                     }
+                    
                     return (
                       <div key={day} style={{fontSize:'15px'}}>
-                        <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {timeText}
+                        <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {item.times === null ? 'Missing time information' : timeText}
                       </div>
                     );
                   })}
               </div>
             ) : (
-              <div>{String(item.times)}</div>
+              <div>{String("Missing time information")}</div>
             )}
           </div>
-          <button style={{ marginTop: '10px' }} onClick={() => {
+          <button style={{ marginTop: '10px', backgroundColor:'white', cursor:'pointer' }} onClick={() => {
             addClass(id._id, item._id, "add");
             setDataFromQuery(prev => prev.filter(i => i._id !== item._id));
             runGetClasses(id._id);
           }}>Add to Plan</button>
 
 
-           <button style={{marginTop:'10px', marginLeft:'50px'}} onClick={() => {
+           <button style={{marginTop:'10px', marginLeft:'190px', backgroundColor:'white', cursor:'pointer'}} onClick={() => {
             navigate('/SearchPage', { state: { classInfo: item } });
         }}> More Info</button>
         </div>

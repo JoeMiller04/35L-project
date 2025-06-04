@@ -21,11 +21,24 @@ function SearchPage() {
     const [term, setTerm] = useState(passedObject.term);
     const [instructor, setInstructor] = useState(passedObject.instructor);
     const [dropdownOptions, setDropdownOptions] = useState([]);
-    const [dropdown, setDropdown] = useState(passedObject.term + passedObject.instructor);
+    const [courseRating, setCourseRating] = useState(null);
+
+
+    const [dropdown, setDropdown] = useState(() => {
+        // Find the class in possibleClasses that matches the passedObject's term and instructor
+        if (passedObject && possibleClasses.length > 0) {
+            const match = possibleClasses.find(
+                (cls) => cls.term === passedObject.term && cls.instructor.toLowerCase() === passedObject.instructor.toLowerCase()
+            );
+            return match ? match._id : '';
+        }
+        return '';
+    });
 
 
     useEffect(() => {
         const userObj = JSON.parse(localStorage.getItem('user_id'));
+        getCourseRating();
         if (userObj && userObj._id) {
             setId(userObj._id);   
         }
@@ -58,11 +71,16 @@ function SearchPage() {
                 },
                 });
             if (response.ok) {
-                const data = await response.json()
+                let data = await response.json();
+                // Filter out classes with null grades
+                data = data.filter(cls => cls.grades != null);
                 setPossibleClasses(data);
                 if (data.length === 0) {
                     alert("No classes found for the selected criteria.");
                 }
+
+                
+                
               
             } else if (response.status === 400) {
                 alert("NOOO")
@@ -82,11 +100,25 @@ function SearchPage() {
     function handleChange(drop) {
         setDropdown(drop.target.value);
         const selectedClass = possibleClasses.find(
-            (possibleClass) => possibleClass.term + possibleClass.instructor === drop.target.value
+            (possibleClass) => possibleClass._id === drop.target.value
         );
-        setGradesObj(selectedClass.grades || {});
+        if (!selectedClass) {
+            setGradesObj({});
+            setHistogramData([]);
+            setTerm('');
+            setInstructor('');
+            return;
+        }
+        // Remove grade entries with null values
+        const filteredGrades = Object.entries(selectedClass.grades || {})
+            .filter(([_, value]) => value !== null)
+            .reduce((acc, [name, value]) => {
+                acc[name] = value;
+                return acc;
+            }, {});
+        setGradesObj(filteredGrades);
         setHistogramData(
-            Object.entries(selectedClass.grades || {}).map(([name, value]) => ({
+            Object.entries(filteredGrades).map(([name, value]) => ({
                 name,
                 value
             }))
@@ -95,7 +127,35 @@ function SearchPage() {
         setInstructor(selectedClass.instructor);
     }
     
+    useEffect(() => {
+        if (passedObject && possibleClasses.length > 0) {
+            const match = possibleClasses.find(
+                (cls) => cls.term === passedObject.term && cls.instructor.toLowerCase() === passedObject.instructor.toLowerCase()
+            );
+            if (match) setDropdown(match._id);
+        }
+        
+    }, [possibleClasses, passedObject]);
 
+    async function getCourseRating() {
+        
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/ratings/${passedObject.subject}/${passedObject.catalog}`, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                });
+            if (response.ok) {
+                const data = await response.json();
+                setCourseRating(data); // Store the result in courseRating state
+            } else {
+                setCourseRating(null);
+            }
+        } catch (error) {
+            setCourseRating(null);
+        }
+    }
 
     return (
          <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
@@ -108,31 +168,39 @@ function SearchPage() {
 
                 <hr style={{color:'black', backgroundColor:'black', height:'1px', border:'none', marginTop:'0px'}} />
 
-                <h1 style={{ textAlign: 'center', fontSize: '20px', fontWeight:'normal' }}>Grade Distribution for {term} {passedObject.subject} {passedObject.catalog} with {capitalizeWords(instructor.toLowerCase())}</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '20px', fontWeight:'normal', marginTop:'30px' }}>Grade Distribution for {term} {passedObject.subject} {passedObject.catalog} with {capitalizeWords(instructor.toLowerCase())}</h1>
 
 
                 <ResponsiveContainer width="70%" height={200} alignItems="center" justifyContent="center" style={{ margin: '0 auto', marginTop: '20px' }}>
-                  <BarChart data={histogramData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="value" fill="#8884d8" />
-                  </BarChart>
+                  {gradesObj && Object.keys(gradesObj).length > 0 ? (
+                    <BarChart data={histogramData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Bar dataKey="value" fill="#8884d8" />
+                    </BarChart>
+                  ) : (
+                    <div style={{textAlign: 'center', width: '100%', paddingTop: '80px', fontSize: '20px', color: '#888'}}>No grade data available</div>
+                  )}
                 </ResponsiveContainer>
 
-                 <select value={dropdown} onChange={handleChange} style={{ cursor:'pointer', width: '250px', height: '30px', border:'2px solid black' }}>
+                 <select value={dropdown} onChange={handleChange} style={{ cursor:'pointer', width: '250px', height: '30px', border:'2px solid black',  display:'block', margin: '20px auto' }}>
                         {possibleClasses.map((possibleClasses, idx) => (
-                            <option key={idx} value={possibleClasses.term + capitalizeWords(possibleClasses.instructor.toLowerCase())}>
+                            <option key={idx} value={possibleClasses._id}>
                                 {possibleClasses.term} - {capitalizeWords(possibleClasses.instructor.toLowerCase())}
                             </option>
                         ))}
                     </select>
                 
-
                 
-
-
+                
+                    
+                        <h1 style={{ textAlign: 'center', fontSize: '20px', fontWeight:'normal', marginTop:'30px' }}>
+                  {courseRating && typeof courseRating === 'object'
+                    ? `Course Rating: ${courseRating.rating ?? 'No rating available'}`
+                    : courseRating ?? 'N/A'}
+                </h1>
 
 
 
@@ -150,7 +218,7 @@ function SearchPage() {
              </div>
             
             
-            <div style={{ width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
+            <div style={{ position: 'fixed', right: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
         </div>
     );
 }
