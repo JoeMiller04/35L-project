@@ -15,7 +15,8 @@ import traceback
 opts = Options()
 # Should work headless or not, but headless is faster
 # # If you want to see the browser, comment out the next line
-opts.add_argument("--headless")
+# CURRENTLY CRASHES IN HEADLESS MODE
+# opts.add_argument("--headless")
 opts.add_argument("--window-size=1920,1080")
 opts.add_argument("--disable-gpu")
 opts.add_argument("--no-sandbox")
@@ -145,7 +146,7 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
             
             // Extract subject and catalog
             // THIS IS THE PART THAT NEEDS ADJUSTMENT FOR OTHER SUBJECTS
-            const catalogMatch = containerId.match(/COMSCI(\d+[A-Za-z]*)/);
+            const catalogMatch = containerId.match(/"""+subject_code+"""(\d+[A-Za-z]*)/);
             if (catalogMatch) {
                 courseData.subject = subjectFull;
                 courseData.catalog = catalogMatch[1];
@@ -216,10 +217,10 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     """
     
     # Execute script with host element as argument, passing the subject code and full subject name
-    # extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject)
-    with open('extract_data.js') as f:
-        script = f.read()
-    extracted_courses = driver.execute_script(script, getHost(), subject_code, subject)
+    extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject)
+    # with open('extract_data.js') as f:
+    #     script = f.read()
+    # extracted_courses = driver.execute_script(script, getHost(), subject_code, subject)
     print(f"Extracted data for {len(extracted_courses)} courses")
     
     # Save the extracted data to a JSON file (for backup)
@@ -248,9 +249,10 @@ try:
     """
     # PARAMETERS
     TERMS = ["24S", "25W", "25S", "25F"]
+    TERMS = ["24S"]
     # SUBJECTS NEED TO BE HARDCODED IN EXTRACT_DATA.JS
     # SO YOU ONLY CAN RUN ONE AT A TIME FOR NOW (sob)
-    SUBJECTS = ["PHYSICS"]
+    SUBJECTS = ["PHYSICS", "COM SCI"]
 
     # Track total courses added across all pages
     total_added = 0
@@ -265,7 +267,7 @@ try:
         for SUBJECT in SUBJECTS:
 
             page_num = 1
-            total_pages += 1
+            
             # List to collect all courses across all pages
 
             url = (
@@ -284,6 +286,7 @@ try:
             
             repeat = True
             while repeat:
+                total_pages += 1
                 print(f"Processing courses for {TERM} - {SUBJECT} (Page {page_num})")
                 clickExpandAll(host)
                 
