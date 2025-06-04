@@ -14,10 +14,9 @@ async def upload_file(
     file: UploadFile = File(...),
 ):
     
-    
+    if not file or not hasattr(file, "filename") or not file.filename:
+        raise HTTPException(status_code=400, detail="No file uploaded")
     filename = file.filename
-    if filename is None:
-        raise HTTPException(status_code=400, detail="Filename must be provided")
     file_extension = os.path.splitext(filename)[1].lower()
     if file_extension != ".html":
         raise HTTPException(status_code=400, detail="Only HTML files are allowed")
