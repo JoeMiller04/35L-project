@@ -96,7 +96,7 @@ function SearchPage() {
                 data = data.filter(cls => cls.grades != null);
                 setPossibleClasses(data);
                 if (data.length === 0) {
-                    alert("No classes found for the selected criteria.");
+                    //alert("No classes found for the selected criteria.");
                 }
 
                 
@@ -209,11 +209,20 @@ function getRatingColor(rating) {
          <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
             <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
             <div style={{ width: '80%', marginLeft: '10%', zIndex: 2 }}>
-             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
-                    <button onClick={() => navigate('/Home')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '16px', marginTop:'10px' }}>Home</button>
-                    <h1 style={{ margin: '0 auto', fontSize: '30px', textAlign: 'center' }}>{passedObject.subject} {passedObject.catalog}: {passedObject.title}</h1>
-                    <button style={{backgroundColor:'transparent', border:'none', width:'90px'}}></button>
+             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px', marginTop: '20px' }}>
+             
+                <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
+                  <button onClick={() => navigate('/Home')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Home</button>
                 </div>
+              
+                <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+                  <h1 style={{ margin: 0, fontSize: '30px', textAlign: 'center', fontWeight: 'bold' }}>{passedObject.subject} {passedObject.catalog}: {passedObject.title}</h1>
+                </div>
+                
+                <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', right: 0, height: '100%' }}>
+                  <button style={{ marginRight: '50px', fontSize: '12px', marginTop: '10px', borderWidth: '0px', width: '90px', backgroundColor: 'white', fontWeight: 'bold' }}></button>
+                </div>
+              </div>
 
                 <hr style={{color:'black', backgroundColor:'black', height:'1px', border:'none', marginTop:'20px'}} />
 
@@ -252,8 +261,10 @@ function getRatingColor(rating) {
                     </div>
                 </div>
 
-                <h1 style={{ textAlign: 'center', fontSize: '20px', fontWeight:'normal', marginTop:'-100px' }}>Grade Distribution for {term} {passedObject.subject} {passedObject.catalog} with {capitalizeWords(instructor.toLowerCase())}</h1>
 
+                {gradesObj && Object.keys(gradesObj).length > 0 && (
+                <h1 style={{ textAlign: 'center', fontSize: '20px', fontWeight:'normal', marginTop:'-100px' }}>Grade Distribution for {term} {passedObject.subject} {passedObject.catalog} with {capitalizeWords(instructor.toLowerCase())}</h1>
+                )}
 
 
 
@@ -274,13 +285,15 @@ function getRatingColor(rating) {
                   )}
                 </ResponsiveContainer>
 
-                 <select value={dropdown} onChange={handleChange} style={{ cursor:'pointer', width: '250px', height: '30px', border:'2px solid black',  display:'block', margin: '20px auto' }}>
+                 {gradesObj && Object.keys(gradesObj).length > 0 && (
+                  <select value={dropdown} onChange={handleChange} style={{ cursor:'pointer', width: '250px', height: '30px', border:'2px solid black',  display:'block', margin: '20px auto' }}>
                         {possibleClasses.map((possibleClasses, idx) => (
                             <option key={idx} value={possibleClasses._id}>
                                 {possibleClasses.term} - {capitalizeWords(possibleClasses.instructor.toLowerCase())}
                             </option>
                         ))}
                     </select>
+                 )}
                 
                 
                
