@@ -8,7 +8,35 @@ import { useState, useEffect } from 'react';
 function Home() {
     const navigate = useNavigate();
     const [classes, setClasses] = useState([]);
-    const colors = ['#FFD1DC', '#FFABAB', '#FFC3A0', '#FF677D', '#D4A5A5', '#392F5A', '#31A2AC', '#61C0BF', '#6B4226', '#D9BF77']; //someone change these to something better
+    //const colors = ['#F4D35E', '#FFB88A', '#FF9C5B', '#F67B45', '#FBC2C2', '#E39B99', '#CB7876', '#B4CFA4', '#8BA47C', '#62866C']; //someone change these to something better
+    const colors = [
+  '#FFB3BA', // pastel pink
+  '#FFDFBA', // pastel peach
+  '#FFFFBA', // pastel yellow
+  '#BAFFC9', // pastel mint
+  '#BAE1FF', // pastel baby blue
+  '#E3BAFF', // pastel lavender
+  '#FFE4E1', // pastel coral
+  '#D0F4DE', // pastel mint green
+  '#FCE1E4', // pastel rose
+  '#F3E8FF'  // pastel lilac
+];
+
+// const colors = [
+//   '#FADADD', // pastel blush
+//   '#FAF3DD', // pastel cream
+//   '#E3F2FD', // pastel sky blue
+//   '#E0F7FA', // pastel aqua
+//   '#F1F8E9', // pastel light green
+//   '#FFF9C4', // pastel lemon
+//   '#FCE4EC', // pastel bubblegum
+//   '#EDE7F6', // pastel violet
+//   '#FFF3E0', // pastel peach cream
+//   '#ECEFF1'  // pastel grey-blue
+// ];
+    
+    
+    
     const [index, setIndex] = useState(-1);
     const [dropdown, setDropdown] = useState('- Select Dept -');
     const [dropdownClass, setDropdownClass] = useState('- Select a Class -');
@@ -328,8 +356,9 @@ function Home() {
         <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
         <div style={{ width: '80%', marginLeft: '10%', marginRight: '10%', zIndex: 2 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Past Courses</button>
                     <button  onClick={() => logOut()} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Logout</button>
+
+                    <button onClick={() => navigate('/PastCourses')} style={{cursor:'pointer', backgroundColor:'white', marginLeft:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Past Courses</button>
                     <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>Schedule Planner Thing</h1>
                     <button onClick={() => navigate('/InfoPage')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'0px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}> Classes</button>
                     <button onClick={() => navigate('/FuturePlanner')} style={{cursor:'pointer', backgroundColor:'white', marginRight:'50px', padding: '10px 20px', fontSize: '12px', marginTop:'10px', fontWeight: 'bold' }}>Future Plan</button>
