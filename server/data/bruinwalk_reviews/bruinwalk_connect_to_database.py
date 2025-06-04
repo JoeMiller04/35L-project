@@ -8,6 +8,7 @@ results.txt format:
 Every line should be in the format: 
 [subject] [catalog number]: [rating]
 E.g. "COM SCI 35L: 4.5"
+Running mulitple times will append to the existing data.
 """
 
 
@@ -41,7 +42,7 @@ def export_to_mongodb():
                     }
                     collection.insert_one(document)
                     count += 1
-
+        return count
     except Exception as e:
         print(f"Error exporting to MongoDB: {e}")
         return 0

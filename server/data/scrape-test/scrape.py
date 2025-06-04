@@ -15,7 +15,8 @@ import traceback
 opts = Options()
 # Should work headless or not, but headless is faster
 # # If you want to see the browser, comment out the next line
-opts.add_argument("--headless")
+# CURRENTLY CRASHES IN HEADLESS MODE
+# opts.add_argument("--headless")
 opts.add_argument("--window-size=1920,1080")
 opts.add_argument("--disable-gpu")
 opts.add_argument("--no-sandbox")
@@ -25,6 +26,9 @@ opts.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap
 
 driver = webdriver.Chrome(options=opts)
 wait = WebDriverWait(driver, 15)
+
+# Keeps track if there was a page where we found no courses
+zero_page = False
 
 def getHost():
     # The page usees something called a shadow DOM apparently
@@ -105,7 +109,7 @@ def go_next_page() -> bool:
         return False
 
 
-def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="COM SCI"):
+def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="COM SCI", term="24S"):
     """
     Extract course data from current page
     
@@ -113,6 +117,7 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     - filename: where to save this page's data
     - all_courses: list to append this page's courses to (for combined output)
     - subject: the subject being scraped (e.g., "COM SCI", "PHYSICS")
+    - term: the term being scraped (e.g., "24S", "25W")
     
     Returns:
     - List of extracted courses from this page
@@ -126,6 +131,7 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     const host = arguments[0];
     const subjectCode = arguments[1];
     const subjectFull = arguments[2];
+    const term = arguments[3];
     const shadowRoot = host.shadowRoot;
     const containers = Array.from(shadowRoot.querySelectorAll('[id$="-container"]'));
     
@@ -140,12 +146,12 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
             if (!containerId.includes(subjectCode)) continue;
             
             const courseData = {
-                container_id: containerId
+                container_id: containerId,
+                term: term  
             };
             
             // Extract subject and catalog
-            // THIS IS THE PART THAT NEEDS ADJUSTMENT FOR OTHER SUBJECTS
-            const catalogMatch = containerId.match(/COMSCI(\d+[A-Za-z]*)/);
+            const catalogMatch = containerId.match(/"""+subject_code+"""(\d+[A-Za-z]*)/);
             if (catalogMatch) {
                 courseData.subject = subjectFull;
                 courseData.catalog = catalogMatch[1];
@@ -216,10 +222,10 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     """
     
     # Execute script with host element as argument, passing the subject code and full subject name
-    # extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject)
-    with open('extract_data.js') as f:
-        script = f.read()
-    extracted_courses = driver.execute_script(script, getHost(), subject_code, subject)
+    extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject, term)
+    # with open('extract_data.js') as f:
+    #     script = f.read()
+    # extracted_courses = driver.execute_script(script, getHost(), subject_code, subject)
     print(f"Extracted data for {len(extracted_courses)} courses")
     
     # Save the extracted data to a JSON file (for backup)
@@ -231,6 +237,19 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     if len(extracted_courses) == 0:
         print(f"WARNING: No courses found on this page for subject {subject}!")
         driver.save_screenshot(f"no_courses_found_{subject.replace(' ', '_')}.png")
+        print("Trying one more time")
+
+        time.sleep(15)  # Wait a bit more before retrying
+
+        extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject, term)
+        print(f"Extracted data for {len(extracted_courses)} courses after retry")
+
+        if len(extracted_courses) == 0:
+            global zero_page
+            zero_page = True
+
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(extracted_courses, f, indent=2)
     
     # If all_courses list is provided, append these courses to it
     if all_courses is not None:
@@ -247,10 +266,10 @@ try:
     that as we upload to MongoDB.
     """
     # PARAMETERS
-    TERMS = ["24S", "25W", "25S", "25F"]
+    TERMS = ["25S"]
     # SUBJECTS NEED TO BE HARDCODED IN EXTRACT_DATA.JS
     # SO YOU ONLY CAN RUN ONE AT A TIME FOR NOW (sob)
-    SUBJECTS = ["PHYSICS"]
+    SUBJECTS = ["PHYSICS", "COM SCI"]
 
     # Track total courses added across all pages
     total_added = 0
@@ -265,7 +284,7 @@ try:
         for SUBJECT in SUBJECTS:
 
             page_num = 1
-            total_pages += 1
+            
             # List to collect all courses across all pages
 
             url = (
@@ -284,11 +303,12 @@ try:
             
             repeat = True
             while repeat:
+                total_pages += 1
                 print(f"Processing courses for {TERM} - {SUBJECT} (Page {page_num})")
                 clickExpandAll(host)
                 
                 # Pass the all_courses list to append this page's courses
-                courses = extractPageInfo(f"courses_term_{TERM}_subject_{SUBJECT.replace(' ', '_')}_page_{page_num}.json", all_courses, subject=SUBJECT)
+                courses = extractPageInfo(f"courses_term_{TERM}_subject_{SUBJECT.replace(' ', '_')}_page_{page_num}.json", all_courses, subject=SUBJECT, term=TERM)
                 total_added += len(courses)
                 
                 # Try to go to the next page
@@ -302,6 +322,9 @@ try:
     print(f"\nSaving {len(all_courses)} total courses to {combined_output_file}")
     with open(combined_output_file, "w", encoding="utf-8") as f:
         json.dump(all_courses, f, indent=2)
+    
+    if zero_page:
+        print("WARNING: At least one page had no courses found even after retrying! Check the screenshots for details.")
     
     print(f"\nScraping completed: processed {total_pages} pages with {total_added} total courses")
 

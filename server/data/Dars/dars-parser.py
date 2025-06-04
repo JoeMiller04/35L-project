@@ -206,27 +206,7 @@ def upload_courses_to_api(simplified_courses, user_id):
         course_name = f"{course_subject} {course_catalog}"
         
         if course_catalog.startswith("T"):
-            # AP CALC BC
-            if course_name == "MATH T01":
-                courses_to_add.append({
-                    "term": "PAST",
-                    "course_name": "MATH 31A",
-                })
-                courses_to_add.append({
-                    "term": "PAST",
-                    "course_name": "MATH 31B",
-                })
-            
-            # TODO AP CALC AB 
-
-            # AP Physics C: Mechanics
-            if course_name == "PHYSICS T11":
-                courses_to_add.append({
-                    "term": "PAST",
-                    "course_name": "PHYSICS 1A",
-                })
-
-            # TODO AP Physics C: Electricity and Magnetism
+            continue
             
         
         # term = course['term']
@@ -247,9 +227,33 @@ def upload_courses_to_api(simplified_courses, user_id):
                 "course_name": "COM SCI 30",
             })
         
+        if course_name == "PHYSICS 1B":
+            courses_to_add.append({
+                "term": term,
+                "course_name": "PHYSICS 1A",
+            })
+            courses_to_add.append({
+                "term": term,
+                "course_name": "MATH 31B",
+            })
+            courses_to_add.append({
+                "term": term,
+                "course_name": "MATH 32A",
+            })
         
+        if course_name == "MATH 32A":
+            courses_to_add.append({
+                "term": term,
+                "course_name": "MATH 31A",
+            })
+        
+        if course_name == "MATH 32B":
+            courses_to_add.append({
+                "term": term,
+                "course_name": "MATH 31B",
+            })
 
-        
+
             
     result = collection.update_one(
         {"_id": user_object_id},
