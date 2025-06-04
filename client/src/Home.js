@@ -49,7 +49,7 @@ function Home() {
     const [popup, setPopup] = useState(false);
     const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    // Run changeColor every time a new class is rendered
+    // Run changeColor every time a ne w class is rendered
     useEffect(() => {
         if (classes.length > 0) {
             changeColor();
