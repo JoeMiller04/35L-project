@@ -141,7 +141,7 @@ def upload_classes():
             [classes["COM SCI 32"], classes["MATH 33A"], classes["MATH 170E"]],
             [classes["COM SCI 32"], classes["MATH 33A"], classes["MATH 170A"]]
         ])
-    classes["COM SCI 131"] = make_prereq(4, requisites=
+    classes["COM SCI 131"] = make_prereq(4, False, requisites=
         [
             [classes["COM SCI 33"], classes["COM SCI 35L"]]
         ])
