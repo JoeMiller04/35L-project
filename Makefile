@@ -1,7 +1,7 @@
-.PHONY: deps load-db check clean
+.PHONY: deps load-db check clean setup-env start start-server start-client
 
 deps:
-	pip install -r server/requirements.txt
+	pip install -r server/requirements.txt --quiet
 
 load-db: deps
 # This will reset your course database
@@ -11,6 +11,8 @@ load-db: deps
 	echo "Grades database loaded successfully."
 # This will reset your course descriptions database
 	python server/data/Kyle/load_descriptions.py server/data/Kyle/35L-project.descriptions.json --drop
+# This will reset your course ratings database
+	python server/data/bruinwalk_reviews/bruinwalk_connect_to_database.py server/data/bruinwalk_reviews/course_reviews.txt
 
 setup-env:
 	@if [ ! -f server/.env ]; then \
@@ -25,4 +27,18 @@ check: deps setup-env
 	pytest
 
 clean: deps
-	echo "Removing all example courses from database"
+	python server/data/clean_db.py
+
+start-server: deps setup-env
+	uvicorn server.main:app --reload
+
+start-client:
+	cd client && npm install && npm start
+
+start: deps setup-env
+	@echo "Starting both server and client..."
+	@echo "Use Ctrl+C to stop both processes"
+	@(trap 'kill 0' SIGINT; \
+		$(MAKE) start-server & \
+		$(MAKE) start-client & \
+		wait)

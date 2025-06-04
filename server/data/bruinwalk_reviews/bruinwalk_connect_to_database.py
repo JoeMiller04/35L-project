@@ -2,6 +2,7 @@
 
 from pymongo import MongoClient
 import os
+import argparse
 
 """
 results.txt format:
@@ -12,7 +13,7 @@ Running mulitple times will append to the existing data.
 """
 
 
-def export_to_mongodb():
+def export_to_mongodb(filename="results.txt"):
 
     MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
     DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
@@ -21,10 +22,13 @@ def export_to_mongodb():
     db = client[DATABASE_NAME]
     collection = db["course_ratings"]
 
+    print("Dropping existing 'course_ratings' collection...")
+    collection.drop()
+
     count = 0
 
     try:
-        with open("results.txt", "r") as file:
+        with open(filename, "r") as file:
             for line in file:
                 if ":" in line:
                     course, rating = line.strip().split(":")
@@ -48,7 +52,13 @@ def export_to_mongodb():
         return 0
 
 
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser(description='Import course descriptions from JSON to MongoDB')
+    parser.add_argument('file_path', help='Path to the JSON file containing course descriptions')
+    args = parser.parse_args()
     print("Exporting data to MongoDB...")
-    count = export_to_mongodb()
+    count = export_to_mongodb(args.file_path)
     print(f"Exported {count} records to MongoDB.")
+
+if __name__ == "__main__":
+    main()
