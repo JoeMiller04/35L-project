@@ -14,7 +14,7 @@ ADMIN_KEY = os.getenv("ADMIN_KEY")
 def test_get_description_successful(client):
     """Test successful retrieval of a description"""
     # Test getting PHYSICS 1A description
-    response = client.get("/descriptions/PHYSICS/1A")
+    response = client.get("/description/PHYSICS/1A")
     
     assert response.status_code == 200
     data = response.json()
