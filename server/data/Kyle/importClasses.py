@@ -2,30 +2,18 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import time
-
+import re
 import os
 from pymongo import MongoClient
 import json
-from pathlib import Path
+from bson import json_util
 
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
 
 client = MongoClient(MONGO_URI)
 db = client[DATABASE_NAME]
-  
 collection = db["descriptions"]
-
-
-
-
-
-
-
-
-import requests
-import json
-import re
 
 options = Options()
 options.add_argument('--headless')  # Run in headless mode (no window)
@@ -230,11 +218,11 @@ urls = [
     "https://registrar.ucla.edu/academics/course-descriptions?search=Vietnamese", 
     "https://registrar.ucla.edu/academics/course-descriptions?search=World+Arts+and+Cultures", 
     "https://registrar.ucla.edu/academics/course-descriptions?search=Yiddish"
-
 ]
 
 
 all_courses = []
+added = 0
 count = 0
 
 for url in urls:
@@ -276,20 +264,23 @@ for url in urls:
             'description': description
         }
         existing_course = collection.find_one({
-            
             'subject': course_json['subject'],
-            'catalog': course_json['catalog'],
-            
+            'catalog': course_json['catalog'],    
         })
-
+        count += 1
         if not existing_course:
             result = collection.insert_one(course_json)
-            count += 1
-
+            added += 1
 
         all_courses.append(course_json)
         print(f"Scraped course: {dept_name} {title} {catalog}- {units} units")
-print(count)
+print(f"Total courses scraped: {count}")
+print(f"Total courses added: {added}")
+
+# Save all courses to a JSON file as a backup
+with open('scraped_courses.json', 'w', encoding='utf-8') as f:
+    json.dump(all_courses, f, indent=2, ensure_ascii=False, default=json_util.default)
+print(f"All courses saved to scraped_courses.json")
 driver.quit()
 
 
