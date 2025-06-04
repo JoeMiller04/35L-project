@@ -58,7 +58,9 @@ class CourseResponse(BaseModel):
     title: str
     instructor: str
     real: bool
-    times: Optional[TimeSchedule] = None  
+    times: Optional[TimeSchedule] = None
+
+    grades: Optional[Dict[str, int]] = None  # Grade distribution  
     
     model_config = ConfigDict(
         populate_by_name=True,

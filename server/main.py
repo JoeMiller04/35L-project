@@ -4,6 +4,8 @@ from server.api.user import router as user_router
 from server.api.course import router as course_router
 from server.api.validation import router as valid_router
 from server.api.rating import router as ratings_router
+from server.api.your_upload_route import router as upload_router
+from server.api.description import router as description_router
 
 app = FastAPI()
 
@@ -29,3 +31,5 @@ app.include_router(user_router, tags=["users"])
 app.include_router(course_router, tags=["courses"])
 app.include_router(valid_router, tags=["valid"])
 app.include_router(ratings_router, tags=["ratings"])
+app.include_router(upload_router, tags=["uploads"])
+app.include_router(description_router, tags=["descriptions"])
