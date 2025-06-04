@@ -12,7 +12,16 @@ load-db: deps
 # This will reset your course descriptions database
 	python server/data/Kyle/load_descriptions.py server/data/Kyle/35L-project.descriptions.json --drop
 
-check: deps
+setup-env:
+	@if [ ! -f server/.env ]; then \
+        echo "Creating default .env file"; \
+        echo 'ADMIN_KEY=abc' > server/.env; \
+		echo "PLEASE CHANGE THIS KEY"; \
+	else \
+		echo ".env file already exists"; \
+    fi
+
+check: deps setup-env
 	pytest
 
 clean: deps
