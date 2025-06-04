@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import './App.css';
+
 
 export default function PastCourses() {
   // Track which courses have been checked (i.e., taken by the user)
@@ -80,7 +80,7 @@ async function loadPastCourses() {
 
   useEffect(() => {
     const majorObj = JSON.parse(localStorage.getItem('major'));
-    const majorStr = majorObj ? majorObj.major : '';
+    const majorStr = majorObj ? majorObj.major : 'CS';
     setSelectedDegree(majorStr);
     setMajor(majorStr);
     loadPastCourses();
@@ -228,8 +228,8 @@ async function loadPastCourses() {
                         ×
                     </button>
                     <h2 style={{ marginTop: '10px' }}>Select Your Major</h2>
-                    <select value={selectedDegree} style={{marginLeft:'0px'}} onChange={(e) => { setSelectedDegree(e.target.value); updateMajor(e.target.value); }}>
-                       <option value="">Select Degree</option> {/* Default option */}
+                    <select value={selectedDegree} style={{marginLeft:'0px'}} onChange={(e) => { setSelectedDegree(e.target.value); updateMajor(e.target.value); loadPastCourses();}}>
+                      
                     <option value="CS">Computer Science (CS)</option>
                      <option value="CSE">Computer Science and Engineering (CSE)</option>
                  </select>

@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import './App.css';
 import { useState, useEffect } from 'react';
 
 //this page should be mostly done. It is the home page
@@ -363,6 +362,7 @@ function Home() {
 
     function logOut() {
         localStorage.removeItem('user_id');
+        localStorage.removeItem('major');
         navigate('/');
     }
     
