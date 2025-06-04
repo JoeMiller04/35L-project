@@ -78,7 +78,7 @@ This file implements API for fetching ratings of courses. Pass in subject and ca
 
 ### Security API
 
-This file implements the authentication check for the admin key for protected calls. The admin key is stored in a local .env file.
+This file implements the authentication check for the admin key for protected calls. The admin key is stored in a local `.env` file.
 
 ### User API
 
@@ -102,7 +102,7 @@ This file implements API for uploading a DARS file. This will read in a user's i
 
 ### Bruinwalk Reviews
 
-data/bruinwalk_reviews/` contains a script to pull ratings from and a script to upload the data to MongoDB.
+`data/bruinwalk_reviews/` contains a script to pull ratings from and a script to upload the data to MongoDB.
 
 Please add to description.
 
@@ -132,9 +132,9 @@ For testing purposes `clone_real_courses.py` can take existing courses in the da
 
 ## Mongo Database
 
-The **users** collection stores user data including username, password hash, past courses, and calendar.
-The **courses** collection stores course data for specific courses including term, subject, catalog number, instructor, times, and title.
-The **course_ratings** collection stores ratings for courses.
+The **users** collection stores user data including username, password hash, past courses, and calendar.  
+The **courses** collection stores course data for specific courses including term, subject, catalog number, instructor, times, and title.  
+The **course_ratings** collection stores ratings for courses.  
 The **descriptions** collection stores descriptions for courses.
 
 Please add descriptions for the colections Aliases, pre-reqs, profesor_ratings, sample, previous courses, and future courses.
@@ -176,4 +176,5 @@ Please add a description
 
 - **Joseph Miller**: API, MongoDB, Course Scraping, Grade Distributions, DARS
 - **Kyle Reisinger**: Scraper, API, and testing for course descriptions
+
   Please add role descriptions for Arian Dehnavizadeh, Johnny Duong, Samuel Oh.
