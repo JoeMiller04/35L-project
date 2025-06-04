@@ -1,0 +1,1296 @@
+COM SCI 1: Jason Cong: 3.2
+COM SCI 1: Adnan Darwiche: N/A
+COM SCI 1: Eliezer Gafni: 3.3
+COM SCI 1: Mario Gerla: 4.6
+COM SCI 1: Todd Millstein: 3.3
+COM SCI 1: Jens Palsberg: 3.0
+COM SCI 1: Amit Sahai: 2.0
+COM SCI 30: Kaylie Bair: N/A
+COM SCI 30: K Bair: N/A
+COM SCI 30: Parvaneh Ghaforyfard: N/A
+COM SCI 30: Todd Millstein: 4.8
+COM SCI 30: Andrei Storozhenko: N/A
+COM SCI 31: Yutao He: 3.7
+COM SCI 31: Rose He: N/A
+COM SCI 31: Bruce Huang: 3.2
+COM SCI 31: Qianru Li: N/A
+COM SCI 31: Xuheng Li: N/A
+COM SCI 31: Ani Nahapetian: 2.3
+COM SCI 31: L Pouchet: N/A
+COM SCI 31: Vahab Pournaghshband: N/A
+COM SCI 31: John Rohr: 2.3
+COM SCI 31: Solomon Russell: N/A
+COM SCI 31: Michael Shindler: N/A
+COM SCI 31: David Smallberg: 4.1
+COM SCI 31: Howard Stahl: 3.7
+COM SCI 32: Edwin Ambrosio: 3.8
+COM SCI 32: Kung-Hua Chang: N/A
+COM SCI 32: Qianru Li: N/A
+COM SCI 32: Carey Nachenberg: 4.7
+COM SCI 32: Shardul Shailendra Parab: N/A
+COM SCI 32: Solomon Russell: N/A
+COM SCI 32: Parth Shah: N/A
+COM SCI 32: Michael Shindler: N/A
+COM SCI 32: David Smallberg: 4.0
+COM SCI 32: Howard Stahl: 4.5
+COM SCI 32: Jake Wallin: N/A
+COM SCI 32: Seunghyun Yoo: N/A
+COM SCI 33: Paul Eggert: 3.1
+COM SCI 33: Parvaneh Ghaforyfard: 2.6
+COM SCI 33: Jochen Haber: N/A
+COM SCI 33: Hyunjin Kim: N/A
+COM SCI 33: Ani Nahapetian: 2.6
+COM SCI 33: Anthony Nowatzki: 4.4
+COM SCI 33: L Pouchet: N/A
+COM SCI 33: Glenn Reinman: 3.8
+COM SCI 33: John Rohr: 1.7
+COM SCI 33: David Smallberg: 3.3
+COM SCI 33: Andrei Storozhenko: N/A
+COM SCI 33: Jake Wallin: N/A
+COM SCI 35L: Tanmay Chinchore: N/A
+COM SCI 35L: Shivam Dalmia: N/A
+COM SCI 35L: Tyler Davis: N/A
+COM SCI 35L: Kedar Deshpande: N/A
+COM SCI 35L: Rishab Doshi: N/A
+COM SCI 35L: Paul Eggert: 2.8
+COM SCI 35L: Ruolin Fan: N/A
+COM SCI 35L: Sharath Gopal: N/A
+COM SCI 35L: Joe Halabi: N/A
+COM SCI 35L: Aditya Joglekar: N/A
+COM SCI 35L: Pradeep Kannan: N/A
+COM SCI 35L: Tameez Latib: N/A
+COM SCI 35L: Daniel Meirovitch: N/A
+COM SCI 35L: Nandan Parikh: N/A
+COM SCI 35L: Rucha Rangnekar: N/A
+COM SCI 35L: Jeremy Rotman: N/A
+COM SCI 35L: Vignesh Sairaj: N/A
+COM SCI 35L: Lauren Samy: 3.5
+COM SCI 35L: Ritam Sarmah: N/A
+COM SCI 35L: Hengda Shi: N/A
+COM SCI 35L: Chinmay Talegaonkar: N/A
+COM SCI 35L: Diane Tan: N/A
+COM SCI 35L: Joshua Vaughen: N/A
+COM SCI 35L: Thuy Vu: 3.0
+COM SCI 35L: Tomer Weiss: N/A
+COM SCI 35L: Tiandong Zhao: N/A
+COM SCI 35L: Aaron Zhou: N/A
+COM SCI 35L: Diyu Zhou: N/A
+COM SCI 35L: Guangyu Zhou: N/A
+COM SCI M51A: Omid Abari: 3.9
+COM SCI M51A: Leon Alkalai: N/A
+COM SCI M51A: Danijela Cabric: N/A
+COM SCI M51A: Xiang Chen: N/A
+COM SCI M51A: Hooman Darabi: 4.5
+COM SCI M51A: J Drobman: N/A
+COM SCI M51A: Milos Ercegovac: 3.3
+COM SCI M51A: Parvaneh Ghaforyfard: 2.9
+COM SCI M51A: Lei He: N/A
+COM SCI M51A: Yutao He: 4.0
+COM SCI M51A: Hyunjin Kim: N/A
+COM SCI M51A: Richard Korf: 3.9
+COM SCI M51A: Qianru Li: N/A
+COM SCI M51A: Robert McIlhenny: N/A
+COM SCI M51A: Ankur Mehta: N/A
+COM SCI M51A: Jack Mortazavi: N/A
+COM SCI M51A: Ani Nahapetian: 2.2
+COM SCI M51A: Miodrag Potkonjak: 2.3
+COM SCI M51A: Shuwen Qiu: N/A
+COM SCI M51A: Ramin Ramezani: 3.0
+COM SCI M51A: Mani Srivastava: 2.0
+COM SCI M51A: Chih-Kong Yang: N/A
+COM SCI M51A: C.-K. Yang: N/A
+COM SCI M51A: Seunghyun Yoo: N/A
+MATH 31A: Michael Andrews: 4.3
+MATH 31A: Tonci Antunovic: 4.1
+MATH 31A: Matthias Aschenbrenner: 3.1
+MATH 31A: Alexander Adam Azzam: N/A
+MATH 31A: Erkao Bao: N/A
+MATH 31A: Marek Biskup: 2.4
+MATH 31A: Don Blasius: N/A
+MATH 31A: Joseph Breen: N/A
+MATH 31A: Demetri Brizolis: 3.1
+MATH 31A: Demetrios Brizolis: N/A
+MATH 31A: Robert Brown: 4.7
+MATH 31A: Steven Butler: 4.3
+MATH 31A: Francesc Castella: N/A
+MATH 31A: Andreia Chapouto: 2.7
+MATH 31A: Raymond Chu: N/A
+MATH 31A: Will Conley: 4.5
+MATH 31A: William Conley: N/A
+MATH 31A: Lingyun Ding: 5.0
+MATH 31A: Konstantin Dragomiretskiy: N/A
+MATH 31A: Jens Eberhardt: 4.3
+MATH 31A: Haofei Fan: 3.2
+MATH 31A: Hector Fattorini: 3.3
+MATH 31A: Thomas Gannon: 4.8
+MATH 31A: Tom Gannon: 4.9
+MATH 31A: Oleg Gleizer: 2.0
+MATH 31A: Sherry Gong: 3.6
+MATH 31A: Mary Greene: N/A
+MATH 31A: Paige Greene: 4.5
+MATH 31A: Robert Greene: 1.1
+MATH 31A: Rachel Greenfeld: 2.1
+MATH 31A: Jonathan Handy: N/A
+MATH 31A: Steven Heilman: 3.2
+MATH 31A: Nadja Hempel: 1.6
+MATH 31A: Michael Hill: N/A
+MATH 31A: Cyril Houdayer: 2.4
+MATH 31A: Chi-Yun Hsu: 4.1
+MATH 31A: Connie Jung: N/A
+MATH 31A: Sudesh Kalyanswamy: 5.0
+MATH 31A: Jukka Keranen: 4.6
+MATH 31A: Mohammed Harris Khan: 4.5
+MATH 31A: Benjamin Krause: N/A
+MATH 31A: Derek Levinson: N/A
+MATH 31A: Thomas Liggett: 3.0
+MATH 31A: Alex Lin: N/A
+MATH 31A: Gang Liu: N/A
+MATH 31A: Gregory Lynn: N/A
+MATH 31A: Melissa Lynn: N/A
+MATH 31A: Wumaier Maimaitiyiming: 3.6
+MATH 31A: Jean-Michel Maldague: N/A
+MATH 31A: Andrew Marks: N/A
+MATH 31A: Calin Martin: 2.5
+MATH 31A: Tingwei Meng: 1.7
+MATH 31A: Georg Menz: N/A
+MATH 31A: Ronald Miech: N/A
+MATH 31A: Alexey Miroshnikov: N/A
+MATH 31A: Hatice Mutlu Akaturk: 2.0
+MATH 31A: Hatice Mutlu-Akatürk: N/A
+MATH 31A: Zachary Norwood: N/A
+MATH 31A: Levon Nurbekyan: 3.6
+MATH 31A: Wenhao Ou: 2.9
+MATH 31A: Frederick Park: 4.3
+MATH 31A: Sorin Popa: 3.7
+MATH 31A: Jing Qin: N/A
+MATH 31A: Eric Radke: N/A
+MATH 31A: Olga Radko: 3.6
+MATH 31A: Anand Rajagopalan: 4.0
+MATH 31A: Samuel Ramsey: N/A
+MATH 31A: David Renfrew: 3.6
+MATH 31A: Thomas Richthammer: 3.3
+MATH 31A: Bruce Rothschild: N/A
+MATH 31A: Ricardo Salazar: 2.7
+MATH 31A: C Schubert: 4.6
+MATH 31A: Brendan Sheehan: 4.9
+MATH 31A: Andrew Smith: 3.0
+MATH 31A: Bailin Song: 1.8
+MATH 31A: David Soukup: N/A
+MATH 31A: Chadwick Sprouse: 5.0
+MATH 31A: Benjamin Szczesny: N/A
+MATH 31A: David Taylor: N/A
+MATH 31A: Konstantinos Varvarezos: 4.7
+MATH 31A: Liam Watson: 3.7
+MATH 31A: Thomas Watson: 3.8
+MATH 31A: Michael Willis: 4.6
+MATH 31A: Tianqi Wu: N/A
+MATH 31A: Jeremy Wu: 3.1
+MATH 31A: Yu Zhang: 2.5
+MATH 31B: Nickolas Andersen: 4.5
+MATH 31B: Michael Andrews: 4.3
+MATH 31B: David Antieau: N/A
+MATH 31B: Matthias Aschenbrenner: 3.3
+MATH 31B: Alexander Austin: N/A
+MATH 31B: Baskar Balasubramanyam: 3.3
+MATH 31B: Erkao Bao: 3.5
+MATH 31B: Nivedita Bhaskhar: N/A
+MATH 31B: Marek Biskup: 2.3
+MATH 31B: Anton Bobkov: N/A
+MATH 31B: Joseph Breen: N/A
+MATH 31B: Demetri Brizolis: 2.4
+MATH 31B: Demetrios Brizolis: N/A
+MATH 31B: Tova Brown: 3.1
+MATH 31B: Robert Brown: 4.2
+MATH 31B: Jesse Burke: 3.0
+MATH 31B: Francesc Castella: 4.2
+MATH 31B: William Conley: N/A
+MATH 31B: Will Conley: 4.0
+MATH 31B: Yesim Demiroglu: N/A
+MATH 31B: Robert Denomme: 3.0
+MATH 31B: Rodolfo De Sapio: N/A
+MATH 31B: Changying Ding: 4.5
+MATH 31B: Taylor Dupuy: N/A
+MATH 31B: Jens Eberhardt: 4.6
+MATH 31B: Koffi Enakoutsa: 4.0
+MATH 31B: Hector Fattorini: 3.7
+MATH 31B: R Fernandez: 4.5
+MATH 31B: Patrick Flynn: 3.9
+MATH 31B: Kyle Gannon: 4.5
+MATH 31B: Robert Greene: 1.3
+MATH 31B: Mary Greene: N/A
+MATH 31B: Paige Greene: 4.1
+MATH 31B: Nathaniel Grossman: 2.6
+MATH 31B: Nestor Guillen: N/A
+MATH 31B: Christian Haesemeyer: N/A
+MATH 31B: Steven Heilman: N/A
+MATH 31B: Kristen Hendricks: N/A
+MATH 31B: Michael Hitrik: N/A
+MATH 31B: Daniel Hoff: N/A
+MATH 31B: Cyril Houdayer: 2.7
+MATH 31B: Chi-Yun Hsu: 4.1
+MATH 31B: P Jenkins: N/A
+MATH 31B: Kenley Jung: N/A
+MATH 31B: Victoria Kala: N/A
+MATH 31B: Mohammed Harris Khan: N/A
+MATH 31B: Rizwanur Khan: N/A
+MATH 31B: Mikhail Khitrik: N/A
+MATH 31B: Sungjin Kim: 4.0
+MATH 31B: Tamara Kucherenko: 3.6
+MATH 31B: Aleksandra Kwiatkowska: 3.0
+MATH 31B: Matthew Lafferty: 4.7
+MATH 31B: Ioannis Lagkas-Nikolos: N/A
+MATH 31B: Brian Lawrence: N/A
+MATH 31B: Derek Levinson: N/A
+MATH 31B: Stephanie Lewkiewicz: N/A
+MATH 31B: Linfeng Li: 3.4
+MATH 31B: Yajing Liu: N/A
+MATH 31B: Gang Liu: 2.7
+MATH 31B: Jose Ramon Madrid Padilla: 2.9
+MATH 31B: Jean-Michel Maldague: N/A
+MATH 31B: Ciprian Manolescu: 4.8
+MATH 31B: Marco Marengon: 3.3
+MATH 31B: Andrew Marks: 1.0
+MATH 31B: Calin Martin: 2.1
+MATH 31B: Geoffrey Mess: N/A
+MATH 31B: Hyunki Min: 4.0
+MATH 31B: Adam Moreno: 4.6
+MATH 31B: Yiannis Moschovakis: 3.3
+MATH 31B: Chenchen Mou: N/A
+MATH 31B: Pablo Ocal: 1.9
+MATH 31B: Wenhao Ou: 4.0
+MATH 31B: Keith Ouellette: N/A
+MATH 31B: Stanley Palasek: N/A
+MATH 31B: Frederick Park: 4.2
+MATH 31B: Sorin Popa: 4.0
+MATH 31B: Eric Radke: 4.0
+MATH 31B: Olga Radko: 3.4
+MATH 31B: Samuel Ramsey: 3.5
+MATH 31B: David Renfrew: N/A
+MATH 31B: Casey Richardson: 1.3
+MATH 31B: Thomas Richthammer: 3.2
+MATH 31B: Niccolo Ronchetti: N/A
+MATH 31B: Jacob Rooney: 4.3
+MATH 31B: Bruce Rothschild: 2.7
+MATH 31B: Palina Salanevich: 3.2
+MATH 31B: Ricardo Salazar: N/A
+MATH 31B: Pablo Sanchez Ocal: 2.4
+MATH 31B: Sucharit Sarkar: N/A
+MATH 31B: Federico Scavia: 3.1
+MATH 31B: George Schaeffer: 4.2
+MATH 31B: Craig Schroeder: 2.2
+MATH 31B: Brendan Sheehan: 4.9
+MATH 31B: Martin Short: 2.4
+MATH 31B: Thomas Sinclair: 3.3
+MATH 31B: Timothy Smits: 1.0
+MATH 31B: Bailin Song: 1.5
+MATH 31B: David Soukup: N/A
+MATH 31B: Matthew Stone: 5.0
+MATH 31B: John Susice: N/A
+MATH 32A: Nickolas Andersen: 3.0
+MATH 32A: Ioannis Angelopoulos: N/A
+MATH 32A: David Antieau: N/A
+MATH 32A: Tyler Arant: N/A
+MATH 32A: David Arnold: 4.0
+MATH 32A: Alexander Austin: 3.7
+MATH 32A: Vivian Bailey: N/A
+MATH 32A: Don Blasius: N/A
+MATH 32A: Joseph Breen: N/A
+MATH 32A: Tova Brown: 3.0
+MATH 32A: Iftikhar Burhanuddin: 2.0
+MATH 32A: Steven Butler: 4.4
+MATH 32A: Hood Chatham: 3.4
+MATH 32A: Robert Chatham: N/A
+MATH 32A: Lincoln Chayes: 2.0
+MATH 32A: Laura Cladek: N/A
+MATH 32A: William Conley: N/A
+MATH 32A: Will Conley: 4.2
+MATH 32A: Shouxin Dai: 3.5
+MATH 32A: Omprokash Das: 3.2
+MATH 32A: Yesim Demiroglu: 4.0
+MATH 32A: Robert Denomme: N/A
+MATH 32A: Rolando de Santiago: N/A
+MATH 32A: Rodolfo De Sapio: 3.1
+MATH 32A: William Duke: 3.2
+MATH 32A: Mark Ebert: 2.2
+MATH 32A: Koffi Enakoutsa: 3.4
+MATH 32A: Sylvester Eriksson-Bique: 4.9
+MATH 32A: Hector Fattorini: 4.0
+MATH 32A: R Fernandez: 4.5
+MATH 32A: T Fernos: 2.6
+MATH 32A: Stefano Filipazzi: 3.6
+MATH 32A: Rita Fioresi: N/A
+MATH 32A: Justin Forlano: N/A
+MATH 32A: James Freitag: 3.3
+MATH 32A: Martin Gallauer Alves De Souza: 2.0
+MATH 32A: Sherry Gong: 4.3
+MATH 32A: Robert Greene: 1.4
+MATH 32A: Lucio Guerberoff: N/A
+MATH 32A: Howard Heaton: N/A
+MATH 32A: Steven Heilman: 4.2
+MATH 32A: Kristen Hendricks: 4.2
+MATH 32A: Patrick Hiatt: N/A
+MATH 32A: Michael Hill: 4.9
+MATH 32A: Michael Hitrik: 4.2
+MATH 32A: Ko Honda: 3.5
+MATH 32A: Connie Jung: N/A
+MATH 32A: Victoria Kala: N/A
+MATH 32A: Alexander Kastner: N/A
+MATH 32A: Jukka Keranen: 5.0
+MATH 32A: Rowan Killip: 4.2
+MATH 32A: Sungjin Kim: 4.1
+MATH 32A: Rostyslav Kozhan: N/A
+MATH 32A: Benjamin Krause: N/A
+MATH 32A: Ioannis Lagkas-Nikolos: N/A
+MATH 32A: E Lee: N/A
+MATH 32A: Sangchul Lee: N/A
+MATH 32A: Derek Levinson: N/A
+MATH 32A: Minchen Li: 4.8
+MATH 32A: Bon-Soon Lin: N/A
+MATH 32A: Michael Lindstrom: N/A
+MATH 32A: Yajing Liu: 3.7
+MATH 32A: Gang Liu: 2.8
+MATH 32A: Jean-Michel Maldague: N/A
+MATH 32A: Jeffrey Manning: 3.9
+MATH 32A: Charles Marshak: N/A
+MATH 32A: Calin Martin: 2.2
+MATH 32A: Clover May: 3.2
+MATH 32A: Daniel Mckenzie: 4.9
+MATH 32A: Geoffrey Mess: 1.3
+MATH 32A: Mario Micheli: 4.6
+MATH 32A: Ronald Miech: N/A
+MATH 32A: Alejandro Morales: N/A
+MATH 32A: Yiannis Moschovakis: 3.2
+MATH 32A: Chenchen Mou: 3.0
+MATH 32A: Kyeongsik Nam: 3.9
+MATH 32A: Zachary Norwood: N/A
+MATH 32A: Wenhao Ou: 4.2
+MATH 32A: Frederick Park: 4.6
+MATH 32A: David Penneys: 4.5
+MATH 32A: Ciprian Preda: N/A
+MATH 32A: Olga Radko: 3.8
+MATH 32A: James Ralston Jr: 3.7
+MATH 32A: Evan Randles: N/A
+MATH 32A: Jonathan Rogawski: 3.4
+MATH 32A: Jacob Rooney: N/A
+MATH 32A: Marcus Roper: N/A
+MATH 32A: Jonathan Rubin: 4.9
+MATH 32A: Ricardo Salazar: N/A
+MATH 32A: Sucharit Sarkar: N/A
+MATH 32A: Federico Scavia: N/A
+MATH 32A: Craig Schroeder: 2.5
+MATH 32A: Raanan Schul: 3.7
+MATH 32A: Brendan Sheehan: 4.4
+MATH 32A: Brian Shin: 4.6
+MATH 32A: Jason Snyder: N/A
+MATH 32A: Bailin Song: 1.7
+MATH 32A: David Soukup: N/A
+MATH 32A: Pieter Patrick B Spaas: N/A
+MATH 32A: Pieter Spaas: 4.2
+MATH 32B: Nickolas Andersen: 5.0
+MATH 32B: Michael Andrews: N/A
+MATH 32B: Alexander Adam Azzam: 5.0
+MATH 32B: Erkao Bao: 4.0
+MATH 32B: March Boedihardjo: 4.5
+MATH 32B: Joseph Breen: N/A
+MATH 32B: James Cameron: 3.2
+MATH 32B: Lincoln Chayes: 1.5
+MATH 32B: Will Conley: 4.6
+MATH 32B: Omprokash Das: 3.0
+MATH 32B: Rodolfo De Sapio: 3.0
+MATH 32B: Kim Do: 4.0
+MATH 32B: Kim Tuan Do: 3.9
+MATH 32B: Robert Edwards: 2.0
+MATH 32B: Edward Effros: 2.6
+MATH 32B: Koffi Enakoutsa: 3.9
+MATH 32B: Justin Forlano: 3.9
+MATH 32B: Jérôme Gilles: 3.0
+MATH 32B: Allison Gilmore: N/A
+MATH 32B: Oleg Gleizer: 3.3
+MATH 32B: Robert Greene: 3.5
+MATH 32B: Lucio Guerberoff: 3.3
+MATH 32B: Benjamin Harrop-Griffiths: 4.6
+MATH 32B: Steven Heilman: N/A
+MATH 32B: Kristen Hendricks: 5.0
+MATH 32B: Patrick Hiatt: N/A
+MATH 32B: Michael Hill: N/A
+MATH 32B: Victoria Kala: N/A
+MATH 32B: Alexander Kastner: N/A
+MATH 32B: Jukka Keranen: N/A
+MATH 32B: Rowan Killip: 3.6
+MATH 32B: Tamara Kucherenko: 3.2
+MATH 32B: Ioannis Lagkas-Nikolos: N/A
+MATH 32B: Sangchul Lee: 4.3
+MATH 32B: Derek Levinson: N/A
+MATH 32B: Gang Liu: 3.1
+MATH 32B: Maria Lombardo: N/A
+MATH 32B: Yifei Lou: N/A
+MATH 32B: Jean-Michel Maldague: N/A
+MATH 32B: Calin Martin: 2.8
+MATH 32B: Clover May: 2.3
+MATH 32B: Scott McCalla: N/A
+MATH 32B: Geoffrey Mess: 1.2
+MATH 32B: Alpar Meszaros: 3.3
+MATH 32B: Mario Micheli: 4.6
+MATH 32B: Alexey Miroshnikov: 5.0
+MATH 32B: Enes Ozel: 5.0
+MATH 32B: Olga Radko: 4.0
+MATH 32B: James Ralston Jr: 3.8
+MATH 32B: David Renfrew: N/A
+MATH 32B: Jonathan Rogawski: 3.4
+MATH 32B: Jacob Rooney: 4.6
+MATH 32B: Ricardo Salazar: N/A
+MATH 32B: Raanan Schul: 3.4
+MATH 32B: William Simmons: 3.4
+MATH 32B: Jason Snyder: N/A
+MATH 32B: David Soukup: N/A
+MATH 32B: Pieter Patrick B Spaas: N/A
+MATH 32B: Pieter Spaas: 4.3
+MATH 32B: John Susice: N/A
+MATH 32B: Benjamin Szczesny: N/A
+MATH 32B: Christoph Thiele: 2.2
+MATH 32B: Konstantinos Varvarezos: 4.7
+MATH 32B: Siddarth Venkatesh: 2.4
+MATH 32B: Siddharth Venkatesh: N/A
+MATH 32B: Chuntian Wang: 5.0
+MATH 32B: Jared Weinstein: 3.5
+MATH 32B: David Weisbart: 3.5
+MATH 32B: Noah White: 4.5
+MATH 32B: Michael Williams: 4.3
+MATH 32B: Michael Willis: 5.0
+MATH 32B: Richard Wong: 4.4
+MATH 32B: Tianqi Wu: N/A
+MATH 32B: Damir Yeliussizov: 3.0
+MATH 32B: Wern Yeen Yeong: 2.8
+MATH 32B: Changyong Yin: 2.7
+MATH 33A: Nickolas Andersen: 5.0
+MATH 33A: Ioannis Angelopoulos: 3.0
+MATH 33A: Vassilis Angelopoulos: 2.5
+MATH 33A: Tyler Arant: 4.1
+MATH 33A: Alexander Adam Azzam: N/A
+MATH 33A: Paul Balmer: 2.8
+MATH 33A: Omer Ben Neria: 3.7
+MATH 33A: Nivedita Bhaskhar: 4.0
+MATH 33A: Mario Bonk: 2.0
+MATH 33A: Joseph Breen: N/A
+MATH 33A: Tova Brown: 3.2
+MATH 33A: Jesse Burke: 2.8
+MATH 33A: Francesc Castella: 4.6
+MATH 33A: Jocelyn Chanussot: N/A
+MATH 33A: Wutichai Chongchitmate: N/A
+MATH 33A: Laura Cladek: 3.0
+MATH 33A: Will Conley: 4.6
+MATH 33A: Omprokash Das: 2.6
+MATH 33A: Rodolfo De Sapio: 3.5
+MATH 33A: Hector Fattorini: 3.3
+MATH 33A: Stefano Filipazzi: 4.5
+MATH 33A: Martin Gallauer Alves De Souza: 1.9
+MATH 33A: Thomas Gannon: 4.9
+MATH 33A: Oleg Gleizer: 4.4
+MATH 33A: Nicolle Gonzalez: N/A
+MATH 33A: Christy Hazel: 4.5
+MATH 33A: Nadja Hempel: 1.2
+MATH 33A: Patrick Hiatt: N/A
+MATH 33A: Mikhail Hlushchanka: 3.0
+MATH 33A: Robert Housden: 5.0
+MATH 33A: Longxiu Huang: 2.7
+MATH 33A: Asgar Jamneshan: 4.0
+MATH 33A: Victoria Kala: N/A
+MATH 33A: Jukka Keranen: 4.5
+MATH 33A: Mohammed Harris Khan: N/A
+MATH 33A: Rowan Killip: 3.0
+MATH 33A: Boyan Kostadinov: 4.7
+MATH 33A: Tamara Kucherenko: 4.0
+MATH 33A: Ioannis Lagkas-Nikolos: N/A
+MATH 33A: Alan Laub: N/A
+MATH 33A: Sangchul Lee: 2.5
+MATH 33A: Yuan-pin Lee: 3.7
+MATH 33A: Bon-Soon Lin: N/A
+MATH 33A: Kefeng Liu: 2.2
+MATH 33A: Gang Liu: 2.2
+MATH 33A: Jie Ma: 1.5
+MATH 33A: Jose Ramon Madrid Padilla: 3.0
+MATH 33A: Jean-Michel Maldague: N/A
+MATH 33A: Andrew Manion: N/A
+MATH 33A: William Meyerson: N/A
+MATH 33A: Benjamin Miller: N/A
+MATH 33A: Hyunki Min: N/A
+MATH 33A: Samuel Miner: N/A
+MATH 33A: George Mohler: N/A
+MATH 33A: Rose Morris Wright: N/A
+MATH 33A: Rose Morris-Wright: 4.6
+MATH 33A: Hatice Mutlu Akaturk: 3.5
+MATH 33A: Itay Neeman: 2.7
+MATH 33A: Marc-Hubert Nicole: N/A
+MATH 33A: Pablo Ocal: 4.1
+MATH 33A: Nina Otter: 3.9
+MATH 33A: Keith Ouellette: 4.1
+MATH 33A: Frederick Park: 4.6
+MATH 33A: David Penneys: 3.3
+MATH 33A: Jing Qin: N/A
+MATH 33A: Eric Radke: 4.5
+MATH 33A: Olga Radko: N/A
+MATH 33A: Marcy Robertson: 1.0
+MATH 33A: Michaela Rombach: 3.1
+MATH 33A: Niccolo Ronchetti: 3.7
+MATH 33A: Aaron Royer: 3.2
+MATH 33A: Pablo Sanchez Ocal: 4.2
+MATH 33A: Brian Shin: 4.5
+MATH 33A: Dimitri Shlyakhtenko: 4.5
+MATH 33A: Timothy Smits: N/A
+MATH 33A: Jason Snyder: N/A
+MATH 33A: David Soukup: N/A
+MATH 33A: Fumiaki Suzuki: 3.9
+MATH 33A: Benjamin Szczesny: N/A
+MATH 33A: David Taylor: 3.2
+MATH 33A: Matthew Tyler: N/A
+MATH 33A: David Uminsky: 3.7
+MATH 33A: Monica Visan: 4.0
+MATH 33A: Stephanie Wang: 4.0
+MATH 33A: Chengxi Wang: 4.0
+MATH 33A: David Weisbart: 2.8
+MATH 33A: Michael Willis: 4.7
+MATH 33A: Katherine Willis: N/A
+MATH 33A: Tongou Yang: 3.8
+MATH 33A: Ke Yin: N/A
+MATH 33A: Xinwei Yu: 2.8
+MATH 33B: Pedro Aceves Sanchez: N/A
+MATH 33B: Nickolas Andersen: N/A
+MATH 33B: Christopher Anderson: 4.6
+MATH 33B: Tonci Antunovic: N/A
+MATH 33B: Erkao Bao: 2.6
+MATH 33B: Omer Ben Neria: 4.0
+MATH 33B: Jeremy Brightbill: N/A
+MATH 33B: Jantre Christian: N/A
+MATH 33B: William Conley: N/A
+MATH 33B: Will Conley: 4.4
+MATH 33B: Shouxin Dai: 3.5
+MATH 33B: Karthik Elamvazhuthi: 2.4
+MATH 33B: Koffi Enakoutsa: 4.6
+MATH 33B: Haofei Fan: 3.8
+MATH 33B: Rita Fioresi: N/A
+MATH 33B: James Freitag: N/A
+MATH 33B: Hongwei Gao: N/A
+MATH 33B: Edward Gao: 4.0
+MATH 33B: Allen Gehret: 4.6
+MATH 33B: Isaac Goldbring: 3.7
+MATH 33B: Robert Greene: N/A
+MATH 33B: Nathaniel Grossman: 2.5
+MATH 33B: Michael Hall: N/A
+MATH 33B: Nadja Hempel: 2.8
+MATH 33B: Mikhail Hlushchanka: 4.6
+MATH 33B: Victoria Kala: 1.0
+MATH 33B: Alexander Kastner: N/A
+MATH 33B: Christina Kim: 2.1
+MATH 33B: Tamara Kucherenko: 3.8
+MATH 33B: Brian Leary: N/A
+MATH 33B: Gyueun Lee: N/A
+MATH 33B: Flavien Leger: 4.1
+MATH 33B: Guo-Ying Lei: N/A
+MATH 33B: Stephanie Lewkiewicz: N/A
+MATH 33B: Alex Lin: N/A
+MATH 33B: Bon-Soon Lin: N/A
+MATH 33B: Siting Liu: N/A
+MATH 33B: Zachary Maddock: N/A
+MATH 33B: Wumaier Maimaitiyiming: 3.0
+MATH 33B: Andrew Manion: 4.0
+MATH 33B: Aliki Mavromoustaki: 4.5
+MATH 33B: Geoffrey Mess: N/A
+MATH 33B: Hyunki Min: 5.0
+MATH 33B: Adam Moreno: 5.0
+MATH 33B: Daniel Murfet: 2.4
+MATH 33B: Richard Oberlin: 2.4
+MATH 33B: Aaron Palmer: 3.3
+MATH 33B: David Penneys: 3.5
+MATH 33B: Kartik Prasanna: N/A
+MATH 33B: Eric Radke: 3.4
+MATH 33B: Olga Radko: N/A
+MATH 33B: James Ralston Jr: 3.6
+MATH 33B: Niccolo Ronchetti: 5.0
+MATH 33B: Marcus Roper: 2.0
+MATH 33B: Ricardo Salazar: 3.4
+MATH 33B: Timothy Smits: N/A
+MATH 33B: Jason Snyder: N/A
+MATH 33B: Bailin Song: 2.0
+MATH 33B: Arthur Szlam: 1.2
+MATH 33B: Roman Taranets: N/A
+MATH 33B: David Taylor: 3.3
+MATH 33B: Melissa Tong: 1.8
+MATH 33B: Henry Towsner: 1.0
+MATH 33B: Jukka Virtanen: N/A
+MATH 33B: Monica Visan: 4.0
+MATH 33B: Preston Wake: 2.7
+MATH 33B: Xiaowei Wang: 2.5
+MATH 33B: Chengxi Wang: 3.8
+MATH 33B: Jared Weinstein: 3.4
+MATH 33B: David Weisbart: 3.5
+MATH 33B: Michael Willis: 5.0
+MATH 33B: Tianqi Wu: N/A
+MATH 33B: Bokai Yan: N/A
+MATH 33B: Damir Yeliussizov: N/A
+MATH 33B: Leif Zinn-Bjorkman: 5.0
+MATH 33B: Leif Zinn-Brooks: N/A
+MATH 61: Marina Angel: N/A
+MATH 61: Ioannis Angelopoulos: N/A
+MATH 61: Tyler Arant: N/A
+MATH 61: Michael Bateman: N/A
+MATH 61: Nivedita Bhaskhar: N/A
+MATH 61: Steven Butler: 3.9
+MATH 61: James Cameron: 2.3
+MATH 61: Will Conley: N/A
+MATH 61: Omprokash Das: N/A
+MATH 61: Kim Do: 3.9
+MATH 61: Kim Tuan Do: 4.0
+MATH 61: Jens Eberhardt: 4.0
+MATH 61: Koffi Enakoutsa: 4.7
+MATH 61: Herbert Enderton: 3.5
+MATH 61: Martin Gallauer Alves De Souza: 5.0
+MATH 61: Kyle Gannon: 5.0
+MATH 61: Allen Gehret: 4.0
+MATH 61: Terrence George: 4.4
+MATH 61: David Gieseker: 2.7
+MATH 61: Oleg Gleizer: 2.6
+MATH 61: Christy Hazel: 4.2
+MATH 61: Haruzo Hida: 3.2
+MATH 61: Longxiu Huang: 3.8
+MATH 61: Siddarth Kannan: 4.7
+MATH 61: Mohammed Harris Khan: N/A
+MATH 61: Aleksandra Kwiatkowska: N/A
+MATH 61: Brian Leary: 2.3
+MATH 61: Jeffrey Lindquist: N/A
+MATH 61: Jeffrey Manning: 3.8
+MATH 61: Ciprian Manolescu: 4.2
+MATH 61: Andrew Marks: 5.0
+MATH 61: Donald Martin: N/A
+MATH 61: Alejandro Morales: 4.5
+MATH 61: Zachary Norwood: N/A
+MATH 61: Nina Otter: 4.5
+MATH 61: Keith Ouellette: 4.0
+MATH 61: Enes Ozel: 5.0
+MATH 61: Igor Pak: 3.2
+MATH 61: Pietro Poggi-Corradini: N/A
+MATH 61: Eden Prywes: N/A
+MATH 61: Eric Radke: N/A
+MATH 61: Olga Radko: N/A
+MATH 61: Samuel Ramsey: 4.2
+MATH 61: Colleen Robichaux: 3.3
+MATH 61: Michaela Rombach: N/A
+MATH 61: Bruce Rothschild: N/A
+MATH 61: Jonathan Rubin: 5.0
+MATH 61: Ricardo Salazar: 3.6
+MATH 61: George Schaeffer: 4.6
+MATH 61: Jason Snyder: N/A
+MATH 61: David Soukup: N/A
+MATH 61: Pieter Patrick B Spaas: N/A
+MATH 61: Henry Towsner: 1.3
+MATH 61: Spencer Unger: 4.0
+MATH 61: Mariana Vicaria Angel: 2.9
+MATH 61: Michael Williams: 4.3
+MATH 61: Tianqi Wu: N/A
+MATH 170A: Ioannis Angelopoulos: N/A
+MATH 170A: Tonci Antunovic: 4.8
+MATH 170A: Tyler Arant: N/A
+MATH 170A: Alexander Austin: N/A
+MATH 170A: Johannes Baeumler: 2.5
+MATH 170A: Alethea Barbaro: 1.7
+MATH 170A: Marek Biskup: 2.5
+MATH 170A: March Boedihardjo: 4.9
+MATH 170A: Andrea Brose: 2.4
+MATH 170A: Lincoln Chayes: 1.3
+MATH 170A: Alberto Chiarini: N/A
+MATH 170A: Stephen Desalvo: N/A
+MATH 170A: Shay Deutsch: N/A
+MATH 170A: Mitia Duerinckx: N/A
+MATH 170A: Edward Effros: 2.4
+MATH 170A: Hongwei Gao: N/A
+MATH 170A: Edward Gao: N/A
+MATH 170A: John Garnett: N/A
+MATH 170A: Allen Gehret: N/A
+MATH 170A: Robert Greene: 5.0
+MATH 170A: Nestor Guillen: N/A
+MATH 170A: Jamie Haddock: 5.0
+MATH 170A: Steven Heilman: 5.0
+MATH 170A: Deanna Hunter: 5.0
+MATH 170A: Annina Iseli: 3.6
+MATH 170A: Alexander Kastner: N/A
+MATH 170A: Rowan Killip: 4.3
+MATH 170A: Sungjin Kim: 3.7
+MATH 170A: Ioannis Lagkas-Nikolos: N/A
+MATH 170A: Jesus Rosado Linares: N/A
+MATH 170A: Hanbaek Lyu: N/A
+MATH 170A: Jean-Michel Maldague: N/A
+MATH 170A: Georg Menz: N/A
+MATH 170A: Alexey Miroshnikov: 5.0
+MATH 170A: George Mohler: N/A
+MATH 170A: Chenchen Mou: 5.0
+MATH 170A: Deanna Needell: N/A
+MATH 170A: Hung Nguyen: N/A
+MATH 170A: Aaron Palmer: N/A
+MATH 170A: Greta Panova: N/A
+MATH 170A: Eviatar Procaccia: N/A
+MATH 170A: Evan Randles: N/A
+MATH 170A: Elizaveta Rebrova: 3.5
+MATH 170A: David Renfrew: 3.3
+MATH 170A: Thomas Richthammer: 3.4
+MATH 170A: Pierre Rodriguez: 4.5
+MATH 170A: Michaela Rombach: N/A
+MATH 170A: Ricardo Salazar: N/A
+MATH 170A: T Schmitz: N/A
+MATH 170A: David Soukup: N/A
+MATH 170A: Wenpin Tang: 3.3
+MATH 170A: Martin Tassy: 3.9
+MATH 170A: Huy Tran: N/A
+MATH 170A: Olga Turanova: 2.0
+MATH 170A: Chuntian Wang: 4.5
+MATH 170A: David Weisbart: 3.4
+MATH 170A: Noah White: 4.0
+MATH 170A: Michael Williams: 4.9
+MATH 170A: Tianqi Wu: N/A
+MATH 170A: Damir Yeliussizov: N/A
+MATH 170A: Jun Yin: 5.0
+MATH 170A: Ke Yin: N/A
+MATH 170E: Tyler Arant: 2.7
+MATH 170E: Marek Biskup: N/A
+MATH 170E: March Boedihardjo: N/A
+MATH 170E: Swee Chan: 3.8
+MATH 170E: Swee Hong Chan: N/A
+MATH 170E: William Conley: N/A
+MATH 170E: Yesim Demiroglu: 2.0
+MATH 170E: Mitia Duerinckx: N/A
+MATH 170E: Justin Forlano: 2.8
+MATH 170E: Jamie Haddock: 5.0
+MATH 170E: Benjamin Harrop-Griffiths: 4.7
+MATH 170E: Deanna Hunter: 5.0
+MATH 170E: Annina Iseli: N/A
+MATH 170E: Halyun Jeong: 4.6
+MATH 170E: Alexander Kastner: N/A
+MATH 170E: Yisub Kye: 2.7
+MATH 170E: Sangchul Lee: 1.0
+MATH 170E: Derek Levinson: 3.3
+MATH 170E: Kyeongsik Nam: 3.4
+MATH 170E: Deanna Needell: 2.0
+MATH 170E: Hung Nguyen: 1.2
+MATH 170E: Collins Odhiambo: N/A
+MATH 170E: Enes Ozel: 4.8
+MATH 170E: Aaron Palmer: N/A
+MATH 170E: Dmitrii Pedchenko: 5.0
+MATH 170E: Pietro Poggi-Corradini: N/A
+MATH 170E: Pierre Rodriguez: N/A
+MATH 170E: Marcus Roper: 3.3
+MATH 170E: Jason Snyder: N/A
+MATH 170E: Rishi Sonthalia: N/A
+MATH 170E: David Soukup: N/A
+MATH 170E: Jiajun Tong: N/A
+MATH 170E: Matthew Tyler: N/A
+MATH 170E: Jun Yin: N/A
+MATH 170E: Zhaoyu Zhang: N/A
+PHYSICS 1A: Shahriar Abachi: 2.3
+PHYSICS 1A: Ernest Abers: 2.1
+PHYSICS 1A: Gerard Andonian: N/A
+PHYSICS 1A: David Bauer: N/A
+PHYSICS 1A: Arash Bellafard: 2.8
+PHYSICS 1A: Luca Bertello: 4.7
+PHYSICS 1A: Anton Bondarenko: 4.0
+PHYSICS 1A: Charles Buchanan: 3.0
+PHYSICS 1A: Wesley Campbell: 3.8
+PHYSICS 1A: Brent Corbin: 3.7
+PHYSICS 1A: Ferdinand Coroniti: N/A
+PHYSICS 1A: Mostafa El Alaoui: 3.0
+PHYSICS 1A: Gabriel Freiman: 2.5
+PHYSICS 1A: Christian Fronsdal: 3.2
+PHYSICS 1A: Walter Gekelman: 3.0
+PHYSICS 1A: Graciela Gelmini: 2.6
+PHYSICS 1A: Michael Gutperle: 4.2
+PHYSICS 1A: Paul Hamilton: 2.8
+PHYSICS 1A: David Hamilton: N/A
+PHYSICS 1A: Nathaniel Hamlin: N/A
+PHYSICS 1A: Brad Hansen: 4.2
+PHYSICS 1A: Kevin Hayakawa: N/A
+PHYSICS 1A: Karoly Holczer: 2.6
+PHYSICS 1A: Michael Jura: 3.0
+PHYSICS 1A: Carina Kamaga: 2.3
+PHYSICS 1A: Alvine Kamaha: 3.5
+PHYSICS 1A: Alexander Kusenko: 4.5
+PHYSICS 1A: James Larkin: 4.6
+PHYSICS 1A: Lukas Lindwasser: N/A
+PHYSICS 1A: Matthew Malkan: 2.7
+PHYSICS 1A: Lara Martini: N/A
+PHYSICS 1A: George Morales: 4.0
+PHYSICS 1A: Pietro Musumeci: 4.5
+PHYSICS 1A: Claudio Pellegrini: 2.6
+PHYSICS 1A: Vahe Peroomian: 4.4
+PHYSICS 1A: Ian Powell: N/A
+PHYSICS 1A: Rajapaksayalage Rajapakse: 3.3
+PHYSICS 1A: Robert Richard: 2.5
+PHYSICS 1A: James Rosenzweig: 2.2
+PHYSICS 1A: Joseph Rudnick: 4.4
+PHYSICS 1A: David Saltzberg: 3.0
+PHYSICS 1A: Joshua Samani: 4.4
+PHYSICS 1A: Shahriar Shadkhoo: N/A
+PHYSICS 1A: Martin Toderi: 5.0
+PHYSICS 1A: Santiago Torres Rodriguez: N/A
+PHYSICS 1A: Nathan Tung: 4.4
+PHYSICS 1A: Vladimir Vassiliev: 3.1
+PHYSICS 1A: Manuel Villasante: 3.0
+PHYSICS 1A: Alec Vinson: N/A
+PHYSICS 1A: Hanguo Wang: 3.5
+PHYSICS 1A: Elizabeth West: 2.4
+PHYSICS 1A: Charles Whitten: 3.8
+PHYSICS 1A: Gary Williams: 2.7
+PHYSICS 1A: Giovanni Zocchi: 2.6
+PHYSICS 1B: Shahriar Abachi: 2.2
+PHYSICS 1B: Jeremy Althouse: 4.4
+PHYSICS 1B: Xin An: 3.2
+PHYSICS 1B: David Bauer: N/A
+PHYSICS 1B: Luca Bertello: 4.6
+PHYSICS 1B: Anton Bondarenko: 3.8
+PHYSICS 1B: Troy Carter: 4.6
+PHYSICS 1B: Ching Kit Chan: N/A
+PHYSICS 1B: Andrea Chaney: 3.7
+PHYSICS 1B: Calvin Chen: N/A
+PHYSICS 1B: Brent Corbin: 3.7
+PHYSICS 1B: Ferdinand Coroniti: 3.1
+PHYSICS 1B: Steven Cowley: 4.3
+PHYSICS 1B: Thomas Dumitrescu: 3.3
+PHYSICS 1B: Mostafa El Alaoui: 3.7
+PHYSICS 1B: Andrew Forrester: N/A
+PHYSICS 1B: Gabriel Freiman: N/A
+PHYSICS 1B: Hector Garcia: 3.6
+PHYSICS 1B: Walter Gekelman: 3.3
+PHYSICS 1B: Michael Gutperle: 4.1
+PHYSICS 1B: Anthony Hall: 3.0
+PHYSICS 1B: Jay Hauser: 3.7
+PHYSICS 1B: Lilian Jiang: 4.9
+PHYSICS 1B: Carina Kamaga: N/A
+PHYSICS 1B: Alexander Kusenko: 4.2
+PHYSICS 1B: Lukas Lindwasser: N/A
+PHYSICS 1B: Matthew Malkan: 2.7
+PHYSICS 1B: Elizabeth Mills: 4.8
+PHYSICS 1B: Samuel Mognet: N/A
+PHYSICS 1B: Smadar Naoz: 2.4
+PHYSICS 1B: Brian Naranjo: 3.3
+PHYSICS 1B: Ni Ni: 2.5
+PHYSICS 1B: Christoph Niemann: 4.1
+PHYSICS 1B: Vahe Peroomian: 4.5
+PHYSICS 1B: Jessica Pilgram: 2.3
+PHYSICS 1B: Ian Powell: N/A
+PHYSICS 1B: Robert Richard: 2.5
+PHYSICS 1B: Nicholas Rombes: 4.4
+PHYSICS 1B: Nicholas Rombes Iii: N/A
+PHYSICS 1B: Shoko Sakai: N/A
+PHYSICS 1B: David Saltzberg: 3.2
+PHYSICS 1B: Joshua Samani: 4.7
+PHYSICS 1B: Shahriar Shadkhoo: 2.5
+PHYSICS 1B: Anna Simpson: 3.0
+PHYSICS 1B: Nathan Tung: N/A
+PHYSICS 1B: Jean Turner: 3.7
+PHYSICS 1B: Hector Vasquez: N/A
+PHYSICS 1B: Vladimir Vassiliev: 2.8
+PHYSICS 1B: Alec Vinson: 4.5
+PHYSICS 1B: Shenshen Wang: N/A
+PHYSICS 1B: Charles Whitten: 3.8
+PHYSICS 1C: David Bauer: 5.0
+PHYSICS 1C: Stuart Brown: 3.6
+PHYSICS 1C: Robijn Bruinsma: 3.8
+PHYSICS 1C: Troy Carter: 4.5
+PHYSICS 1C: Ching Kit Chan: N/A
+PHYSICS 1C: Andrea Chaney: N/A
+PHYSICS 1C: Brent Corbin: 4.0
+PHYSICS 1C: Ferdinand Coroniti: 4.0
+PHYSICS 1C: Steven Cowley: 4.6
+PHYSICS 1C: Daniel Dantchev: 3.6
+PHYSICS 1C: Walter Gekelman: 3.0
+PHYSICS 1C: Anthony Hall: 5.0
+PHYSICS 1C: David Hamilton: 4.5
+PHYSICS 1C: Fenner Harper: 4.4
+PHYSICS 1C: Jay Hauser: 4.6
+PHYSICS 1C: Michael Jura: 2.5
+PHYSICS 1C: Zhongbo Kang: 4.6
+PHYSICS 1C: Georgios Koutroulakis: 4.0
+PHYSICS 1C: Per Kraus: 3.8
+PHYSICS 1C: James Larkin: 1.5
+PHYSICS 1C: Lukas Lindwasser: N/A
+PHYSICS 1C: Daniel Mckeown: 4.5
+PHYSICS 1C: Emin Menachekanian: 1.9
+PHYSICS 1C: Pietro Musumeci: 3.8
+PHYSICS 1C: Brian Naranjo: 4.0
+PHYSICS 1C: Rene Ong: N/A
+PHYSICS 1C: Vahe Peroomian: 4.3
+PHYSICS 1C: Ian Powell: N/A
+PHYSICS 1C: Seth Putterman: 3.0
+PHYSICS 1C: Rajapaksayalage Rajapakse: N/A
+PHYSICS 1C: Brian Regan: N/A
+PHYSICS 1C: B. Regan: 3.4
+PHYSICS 1C: Robert Richard: 2.7
+PHYSICS 1C: Nicholas Rombes: 4.4
+PHYSICS 1C: Nicholas Rombes Iii: N/A
+PHYSICS 1C: James Rosenzweig: 3.0
+PHYSICS 1C: David Saltzberg: 4.3
+PHYSICS 1C: Joshua Samani: 5.0
+PHYSICS 1C: Peter Schlein: 1.6
+PHYSICS 1C: David Schriver: 4.0
+PHYSICS 1C: Shahriar Shadkhoo: 2.0
+PHYSICS 1C: Martin Simon: 2.2
+PHYSICS 1C: Anna Simpson: N/A
+PHYSICS 1C: Allic Sivaramakrishnan: N/A
+PHYSICS 1C: Reiner Stenzel: 2.8
+PHYSICS 1C: Nathan Tung: 3.4
+PHYSICS 1C: Hector Vasquez: N/A
+PHYSICS 1C: Hanguo Wang: 3.8
+PHYSICS 1C: Charles Whitten: 3.5
+PHYSICS 1C: Alfred Wong: 2.2
+PHYSICS 1C: Giovanni Zocchi: 3.2
+PHYSICS 4AL: Tersi Arias-Young: N/A
+PHYSICS 4AL: Katsushi Arisaka: 3.3
+PHYSICS 4AL: Robert Arriaga: N/A
+PHYSICS 4AL: David Bauer: 4.0
+PHYSICS 4AL: Mert Besken: N/A
+PHYSICS 4AL: Wesley Campbell: 1.4
+PHYSICS 4AL: James Carbin: N/A
+PHYSICS 4AL: Christopher Dao: 3.0
+PHYSICS 4AL: Alexander Edison: N/A
+PHYSICS 4AL: Justin Faber: N/A
+PHYSICS 4AL: Nicholas Ferraro: N/A
+PHYSICS 4AL: Hector Garcia: N/A
+PHYSICS 4AL: Paul Hamilton: 2.4
+PHYSICS 4AL: Jay Hauser: N/A
+PHYSICS 4AL: Ping-Kai Hu: N/A
+PHYSICS 4AL: Matthew Jacobs: 5.0
+PHYSICS 4AL: Shengxin Jia: N/A
+PHYSICS 4AL: Katherine Jiang: N/A
+PHYSICS 4AL: Joshua Kelly: N/A
+PHYSICS 4AL: Helen Kim: N/A
+PHYSICS 4AL: Chandan Kittur: N/A
+PHYSICS 4AL: Nicholas Klein: N/A
+PHYSICS 4AL: Joshua Larson: N/A
+PHYSICS 4AL: Hung-I Lee: 5.0
+PHYSICS 4AL: Yi Li: N/A
+PHYSICS 4AL: Haonan Ling: 5.0
+PHYSICS 4AL: Hao Liu: 4.0
+PHYSICS 4AL: Ronald Lopez: N/A
+PHYSICS 4AL: Loic Maxwell: N/A
+PHYSICS 4AL: Neil Mendoza: N/A
+PHYSICS 4AL: Shashank Narayana Gowda: 4.7
+PHYSICS 4AL: Ni Ni: 4.2
+PHYSICS 4AL: Ziqi Pi: N/A
+PHYSICS 4AL: Matthew Pierce: N/A
+PHYSICS 4AL: Ian Powell: N/A
+PHYSICS 4AL: Jianliang Qian: N/A
+PHYSICS 4AL: Rajapaksayalage Rajapakse: N/A
+PHYSICS 4AL: Vivek Rajasenan: N/A
+PHYSICS 4AL: Kewei Ren: N/A
+PHYSICS 4AL: Nicholas Rombes Iii: N/A
+PHYSICS 4AL: Manoj Sankar: N/A
+PHYSICS 4AL: Zhenyu She: N/A
+PHYSICS 4AL: Avni Sheth: N/A
+PHYSICS 4AL: Martin Simon: N/A
+PHYSICS 4AL: Anna Simpson: N/A
+PHYSICS 4AL: Allic Sivaramakrishnan: N/A
+PHYSICS 4AL: William Slater: 1.8
+PHYSICS 4AL: Tianci Song: N/A
+PHYSICS 4AL: Thomas Sutter: 5.0
+PHYSICS 4AL: Andy Tran: N/A
+PHYSICS 4AL: Alec Vinson: N/A
+PHYSICS 4AL: Arshiya Vohra: N/A
+PHYSICS 4AL: Qi Wu: N/A
+PHYSICS 4AL: Xiatong Wu: N/A
+PHYSICS 4AL: Hui Yu: N/A
+PHYSICS 4AL: Xiang Zhang: N/A
+PHYSICS 4AL: Jingwen Zhang: 1.0
+PHYSICS 4BL: Theodore Allen: N/A
+PHYSICS 4BL: Katsushi Arisaka: 2.3
+PHYSICS 4BL: David Bauer: N/A
+PHYSICS 4BL: Arash Bellafard: N/A
+PHYSICS 4BL: Neel Bhuskute: 1.0
+PHYSICS 4BL: Wesley Campbell: 1.5
+PHYSICS 4BL: Jr, Carmona: 3.0
+PHYSICS 4BL: Troy Carter: 4.6
+PHYSICS 4BL: John Charters: N/A
+PHYSICS 4BL: Gary Chen: N/A
+PHYSICS 4BL: Krishna Choudhary: N/A
+PHYSICS 4BL: Brent Corbin: 4.8
+PHYSICS 4BL: Kedar Deshpande: N/A
+PHYSICS 4BL: Steven Durr: N/A
+PHYSICS 4BL: Edgar Elias-Bernabe: N/A
+PHYSICS 4BL: Hector Garcia: N/A
+PHYSICS 4BL: Rhyan Ghosh: N/A
+PHYSICS 4BL: Riyya Hari Iyer: N/A
+PHYSICS 4BL: Jay Hauser: N/A
+PHYSICS 4BL: Dooran Hong: N/A
+PHYSICS 4BL: Subramanian Iyer: N/A
+PHYSICS 4BL: Chandan Kittur: N/A
+PHYSICS 4BL: Erik Kramer: 4.7
+PHYSICS 4BL: Suixuan Li: N/A
+PHYSICS 4BL: Lukas Lindwasser: N/A
+PHYSICS 4BL: Xu Liu: N/A
+PHYSICS 4BL: Thomas Look: N/A
+PHYSICS 4BL: Efstathios Megas: N/A
+PHYSICS 4BL: Grant Mitts: N/A
+PHYSICS 4BL: Tristan O'Neill: N/A
+PHYSICS 4BL: Shivam Babubhai Patel: N/A
+PHYSICS 4BL: Jianliang Qian: N/A
+PHYSICS 4BL: Vivek Rajasenan: N/A
+PHYSICS 4BL: Derek Reitz: 1.8
+PHYSICS 4BL: Andrew Ritchie: N/A
+PHYSICS 4BL: Conrad Roman: N/A
+PHYSICS 4BL: Nicholas Rombes: N/A
+PHYSICS 4BL: Nicholas Rombes Iii: N/A
+PHYSICS 4BL: Manoj Sankar: N/A
+PHYSICS 4BL: Zhenyu She: N/A
+PHYSICS 4BL: Changyeob Shin: N/A
+PHYSICS 4BL: Martin Simon: 3.0
+PHYSICS 4BL: Reiner Stenzel: N/A
+PHYSICS 4BL: Hector Vasquez: N/A
+PHYSICS 4BL: Ritu Verma: N/A
+PHYSICS 4BL: Alec Vinson: N/A
+PHYSICS 4BL: Jian Wang: N/A
+PHYSICS 4BL: Yhoshua Wug: N/A
+PHYSICS 4BL: Tracy Zhang: N/A
+LIFESCI 30A: Michael Andrews: 3.5
+LIFESCI 30A: Steve Bennoun: 4.3
+LIFESCI 30A: William Conley: N/A
+LIFESCI 30A: Will Conley: 4.6
+LIFESCI 30A: Eric Deeds: 4.6
+LIFESCI 30A: Alan Garfinkel: 4.2
+LIFESCI 30A: Artur Jaroszewicz: 4.6
+LIFESCI 30A: Jukka Keranen: 4.7
+LIFESCI 30A: Ryan Lannan: N/A
+LIFESCI 30A: Beth Lazazzera: N/A
+LIFESCI 30A: Stephanie Lewkiewicz: N/A
+LIFESCI 30A: Kristin McCully: N/A
+LIFESCI 30A: Katherine Scranton: N/A
+LIFESCI 30A: Yevgenya Shevtsov: 2.7
+LIFESCI 30A: Jane Shevtsov: 2.7
+LIFESCI 30A: Sharmila Venugopal: 2.8
+LIFESCI 30B: Amber Afshan: N/A
+LIFESCI 30B: Steve Bennoun: 2.9
+LIFESCI 30B: Will Conley: 4.6
+LIFESCI 30B: William Conley: N/A
+LIFESCI 30B: Alan Garfinkel: 4.2
+LIFESCI 30B: Pranshu Garg: N/A
+LIFESCI 30B: Artur Jaroszewicz: 5.0
+LIFESCI 30B: Jukka Keranen: 4.5
+LIFESCI 30B: Beth Lazazzera: N/A
+LIFESCI 30B: Stephanie Lewkiewicz: 4.0
+LIFESCI 30B: Kristin Mc Cully: N/A
+LIFESCI 30B: Kristin McCully: 3.5
+LIFESCI 30B: Yevgenya Shevtsov: 2.9
+LIFESCI 30B: Jane Shevtsov: 2.0
+LIFESCI 30B: Sharmila Venugopal: 3.8
+COM SCI 111: Paul Eggert: 3.9
+COM SCI 111: Jonathan Eyolfson: 4.8
+COM SCI 111: Mark Kampe: 3.1
+COM SCI 111: Edward Kohler: 4.3
+COM SCI 111: Peter Reiher: 3.9
+COM SCI 111: Theano Stavrinos: N/A
+COM SCI 111: Paul Stelling: N/A
+COM SCI 111: Harry Guoqing Xu: N/A
+COM SCI 111: Harry Xu: 2.9
+COM SCI 112: Richard Muntz: 3.0
+COM SCI 112: Medy Sanadidi: 3.3
+COM SCI 112: Mohammad Sanadidi: N/A
+COM SCI 112: Stefano Soatto: N/A
+COM SCI 112: Jenn-Ming Yang: N/A
+COM SCI 117: Revaz Dzhanidze: N/A
+COM SCI 117: Richard Korf: N/A
+COM SCI 117: Arjun Lakshmipathy: N/A
+COM SCI 117: Qianru Li: N/A
+COM SCI 117: Q. Li: N/A
+COM SCI 118: Alexander Afanasyev: 3.3
+COM SCI 118: Wesley Chu: 2.8
+COM SCI 118: Deborah Estrin: 3.7
+COM SCI 118: Mario Gerla: 2.6
+COM SCI 118: Sheila Greibach: 3.2
+COM SCI 118: Qianru Li: N/A
+COM SCI 118: Songwu Lu: 3.2
+COM SCI 118: Ciaran Mc Goldrick: N/A
+COM SCI 118: Giovanni Pau: 2.4
+COM SCI 118: Peter Reiher: N/A
+COM SCI 118: Medy Sanadidi: N/A
+COM SCI 118: George Varghese: 4.0
+COM SCI 118: Lixia Zhang: 2.7
+COM SCI M119: Xiang Chen: N/A
+COM SCI M119: Mani Srivastava: N/A
+COM SCI C121: Harold Pimentel: N/A
+COM SCI C122: Jason Ernst: 5.0
+COM SCI C122: Eleazar Eskin: 4.5
+COM SCI 131: Paul Eggert: 3.1
+COM SCI 131: Todd Millstein: 3.7
+COM SCI 131: Carey Nachenberg: 4.1
+COM SCI 131: Andrei Storozhenko: N/A
+COM SCI 131: Seunghyun Yoo: N/A
+COM SCI 130: Joseph Billock: N/A
+COM SCI 130: Michael Burns: 3.7
+COM SCI 130: Paul Eggert: 3.0
+COM SCI 130: Maged Elaasar: 2.8
+COM SCI 130: James Farrell: N/A
+COM SCI 130: Eric Hennigan: N/A
+COM SCI 130: Joshua Hyman: N/A
+COM SCI 130: Philo Juang: N/A
+COM SCI 130: Mark Kampe: 2.5
+COM SCI 130: Miryung Kim: 3.5
+COM SCI 130: Rupak Majumdar: 3.4
+COM SCI 130: Alexander Monroe: N/A
+COM SCI 132: Todd Millstein: N/A
+COM SCI 132: Jens Palsberg: 4.5
+COM SCI 132: L Pouchet: N/A
+COM SCI M151B: Abirami Anbumani: N/A
+COM SCI M151B: Milos Ercegovac: 3.5
+COM SCI M151B: Puneet Gupta: 3.0
+COM SCI M151B: Lei He: N/A
+COM SCI M151B: Glenn Reinman: 4.3
+COM SCI M151B: David Rennels: 2.3
+COM SCI M151B: Nader Sehatbakhsh: N/A
+COM SCI M151B: Yuval Tamir: 3.1
+COM SCI M151B: Blaise Tine: 2.3
+COM SCI 133: Rajive Bagrodia: 4.8
+COM SCI 133: Jingsheng Cong: N/A
+COM SCI 133: Jason Cong: 3.6
+COM SCI 133: A Kaplan: N/A
+COM SCI 133: Glenn Reinman: 4.4
+COM SCI 134: Ravi Netravali: 4.4
+COM SCI 136: Qianru Li: N/A
+COM SCI 136: Peter Reiher: 4.1
+COM SCI C137A: Todd Millstein: N/A
+COM SCI C137A: Alessandro Warth: N/A
+COM SCI C137B: Todd Millstein: N/A
+COM SCI C137B: Alessandro Warth: N/A
+COM SCI 143: Alfonso Cardenas: 3.6
+COM SCI 143: Junghoo Cho: 4.4
+COM SCI 143: Tyson Condie: 4.5
+COM SCI 143: Ryan Rosario: 2.9
+COM SCI 143: Shwetha Srinath: N/A
+COM SCI 143: Carlo Zaniolo: 2.3
+COM SCI 144: Junghoo Cho: 4.2
+COM SCI 144: Ryan Rosario: 1.9
+COM SCI 145: Si Si: N/A
+COM SCI 145: Yizhou Sun: 3.6
+COM SCI 145: Wei Wang: N/A
+COM SCI M146: Kai-Wei Chang: 3.6
+COM SCI M146: Yihe Deng: N/A
+COM SCI M146: Suhas Diggavi: N/A
+COM SCI M146: Lara Dolecek: 2.4
+COM SCI M146: Dat Duong: N/A
+COM SCI M146: Aditya Grover: 3.5
+COM SCI M146: Sriram Sankararaman: 4.0
+COM SCI M146: Andrei Storozhenko: N/A
+COM SCI M148: Yihe Deng: N/A
+COM SCI M148: Lara Dolecek: N/A
+COM SCI M148: Baharan Mirzasoleiman: 4.1
+COM SCI M148: Majid Sarrafzadeh: 2.7
+COM SCI M148: Yizhou Sun: 4.0
+COM SCI M148: Zeyuan Xu: N/A
+COM SCI M152A: Abirami Anbumani: N/A
+COM SCI M152A: Shayan Fazeli: N/A
+COM SCI M152A: Neil Garg: N/A
+COM SCI M152A: Hongxiang Gu: N/A
+COM SCI M152A: Jia Guo: 4.0
+COM SCI M152A: Migyeong Gwak: N/A
+COM SCI M152A: Lei He: N/A
+COM SCI M152A: Boyuan He: N/A
+COM SCI M152A: Mohammad Kachuee: N/A
+COM SCI M152A: Joshua Kimmel: N/A
+COM SCI M152A: Alice Kuo: N/A
+COM SCI M152A: Rupak Majumdar: N/A
+COM SCI M152A: Rajas Mhaskar: N/A
+COM SCI M152A: Matthew Millar: N/A
+COM SCI M152A: Huan-Sony Nguyen: N/A
+COM SCI M152A: Shardul Shailendra Parab: N/A
+COM SCI M152A: Shivam Babubhai Patel: N/A
+COM SCI M152A: Miodrag Potkonjak: 1.8
+COM SCI M152A: Shuwen Qiu: N/A
+COM SCI M152A: Ananya Ravikumar: N/A
+COM SCI M152A: Dipti Sahu: N/A
+COM SCI M152A: Majid Sarrafzadeh: 3.2
+COM SCI M152A: Parth Shah: N/A
+COM SCI M152A: Rohan Surve: N/A
+COM SCI M152A: Jake Wallin: N/A
+COM SCI M152A: Ziheng Xu: 5.0
+COM SCI M152A: Kaiwen Zheng: N/A
+COM SCI 152B: Milos Ercegovac: N/A
+COM SCI 152B: Ghazal Ershadi: 3.5
+COM SCI 152B: Shuwen Qiu: N/A
+COM SCI 152B: Majid Sarrafzadeh: 2.9
+COM SCI 152B: Tiandong Zhao: N/A
+COM SCI 180: Mark Burgin: 3.5
+COM SCI 180: Michael Campbell: N/A
+COM SCI 180: Matt Ferland: N/A
+COM SCI 180: Eliezer Gafni: 1.2
+COM SCI 180: Cho-Jui Hsieh: 3.4
+COM SCI 180: Raghu Meka: 3.7
+COM SCI 180: Adam Meyerson: N/A
+COM SCI 180: Rafail Ostrovsky: 2.8
+COM SCI 180: Majid Sarrafzadeh: 3.1
+COM SCI 180: Michael Shindler: N/A
+COM SCI 161: Adnan Darwiche: 4.3
+COM SCI 161: Michael Dyer: 2.4
+COM SCI 161: Quanquan Gu: 3.9
+COM SCI 161: Richard Korf: N/A
+COM SCI 161: Xuheng Li: N/A
+COM SCI 161: Bruce Rosen: 1.5
+COM SCI 161: Guy van Den Broeck: 3.9
+COM SCI 162: Violet Peng: 2.3
+COM SCI 162: Nanyun Peng: 4.0
+COM SCI 168: Fabien Scalzo: 4.5
+COM SCI 170A: Petros Faloutsos: 3.7
+COM SCI 170A: D. Stott Parker: 4.4
+COM SCI 170A: Douglas Parker: N/A
+COM SCI M171L: Revaz Dzhanidze: N/A
+COM SCI 174A: Petros Faloutsos: 3.4
+COM SCI 174A: Diana Ford: 1.4
+COM SCI 174A: Scott Friedman: 4.0
+COM SCI 174A: Arjun Lakshmipathy: N/A
+COM SCI 174A: Asish Law: 3.2
+COM SCI 174A: Garett Ridge: N/A
+COM SCI 174A: Stefano Soatto: 2.7
+COM SCI 174A: Demetri Terzopoulos: 3.6
+COM SCI 174A: Manuela Vasilescu: N/A
+COM SCI 174B: Stefano Soatto: N/A
+COM SCI 174B: Demetri Terzopoulos: 3.1
+COM SCI C174C: Petros Faloutsos: 3.4
+COM SCI C174C: Demetri Terzopoulos: N/A
+COM SCI 181: Sandra Batista: 4.0
+COM SCI 181: Mark Burgin: 3.6
+COM SCI 181: Michael Campbell: 3.0
+COM SCI 181: Sheila Greibach: 2.8
+COM SCI 181: Raghu Meka: 4.7
+COM SCI 181: D. Stott Parker: 4.7
+COM SCI 181: Amit Sahai: 4.2
+COM SCI 181: Alexandr Sherstov: 4.6
+COM SCI 181: Alexander Sherstov: 4.0
+COM SCI 181: Andrei Storozhenko: N/A
+COM SCI M182: Joseph Distefano: 2.7
+COM SCI 183: Rafail Ostrovsky: 2.3
+COM SCI M184: Joseph Distefano: 5.0
+COM SCI M184: Eleazar Eskin: 4.0
+COM SCI M184: Jingyuan Fu: N/A
+COM SCI M184: Lisa Gai: N/A
+COM SCI M184: Serghei Mangul: N/A
+COM SCI CM186: Joseph Distefano: 5.0
+COM SCI CM186: Van Savage: N/A
+COM SCI CM187: Tom Chou: N/A
+COM SCI CM187: Joseph Distefano: N/A
+COM SCI CM187: Matteo Pellegrini: N/A
+COM SCI CM187: Daniel Tward: N/A
+COM SCI 188: Michael Blend: N/A
+COM SCI 188: Paul Eggert: N/A
+COM SCI 188: Diana Ford: 4.0
+COM SCI 188: Eliezer Gafni: N/A
+COM SCI 188: Achuta Kadambi: N/A
+COM SCI 188: David Kay: N/A
+COM SCI 188: Uichin Lee: N/A
+COM SCI 188: A Lessard: N/A
+COM SCI 188: Baharan Mirzasoleiman: N/A
+COM SCI 188: Justin Morgan: N/A
+COM SCI 188: Andrew Mutz: 5.0
+COM SCI 188: Ravi Netravali: 4.5
+COM SCI 188: Giovanni Pau: 2.4
+COM SCI 188: Nanyun Peng: N/A
+COM SCI 188: Peter Reiher: 5.0
+COM SCI 188: Johnathan Rothfels: N/A
+COM SCI 188: John Rothfels: 5.0
+COM SCI 188: Sriram Sankararaman: N/A
+COM SCI 188: Majid Sarrafzadeh: N/A
+COM SCI 188: Fabien Scalzo: 4.8
+COM SCI 188: David Smallberg: 3.1
+COM SCI 188: Sheridan Stokes: N/A
+COM SCI 188: Bolei Zhou: 5.0

@@ -40,7 +40,7 @@ def sample():
 
         {"Course": "COM SCI 131", "Quarter": "23W"},
         {"Course": "COM SCI M151B", "Quarter": "23W"},
-        {"Course": "C&E ", "Quarter": "23W"},
+        {"Course": "C&E 110", "Quarter": "23W"},
         {"Course": "GE", "Quarter": "23W"},
 
         {"Course": "COM SCI 181", "Quarter": "23S"},
