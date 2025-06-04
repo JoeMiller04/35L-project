@@ -27,6 +27,9 @@ opts.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap
 driver = webdriver.Chrome(options=opts)
 wait = WebDriverWait(driver, 15)
 
+# Keeps track if there was a page where we found no courses
+zero_page = False
+
 def getHost():
     # The page usees something called a shadow DOM apparently
     host = WebDriverWait(driver, 20).until(
@@ -234,6 +237,19 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     if len(extracted_courses) == 0:
         print(f"WARNING: No courses found on this page for subject {subject}!")
         driver.save_screenshot(f"no_courses_found_{subject.replace(' ', '_')}.png")
+        print("Trying one more time")
+
+        time.sleep(15)  # Wait a bit more before retrying
+
+        extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject, term)
+        print(f"Extracted data for {len(extracted_courses)} courses after retry")
+
+        if len(extracted_courses) == 0:
+            global zero_page
+            zero_page = True
+
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(extracted_courses, f, indent=2)
     
     # If all_courses list is provided, append these courses to it
     if all_courses is not None:
@@ -306,6 +322,9 @@ try:
     print(f"\nSaving {len(all_courses)} total courses to {combined_output_file}")
     with open(combined_output_file, "w", encoding="utf-8") as f:
         json.dump(all_courses, f, indent=2)
+    
+    if zero_page:
+        print("WARNING: At least one page had no courses found even after retrying! Check the screenshots for details.")
     
     print(f"\nScraping completed: processed {total_pages} pages with {total_added} total courses")
 
