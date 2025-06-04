@@ -9,6 +9,8 @@ load-db: deps
 	python server/data/uclagrades/process22f-23s.py server/data/uclagrades/grades-22f-23s.csv
 	python server/data/uclagrades/process23f-24s.py server/data/uclagrades/grades-23f-24s.csv
 	echo "Grades database loaded successfully."
+# This will reset your course descriptions database
+	python server/data/Kyle/load_descriptions.py server/data/Kyle/35L-project.descriptions.json --drop
 
 check: deps
 	pytest
