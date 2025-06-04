@@ -2,11 +2,9 @@
 
 This will be a README specifically for the backend.
 
-## Backend
-
 This project includes a FastAPI backend with MongoDB integration. Below are the details for setting up and running the backend.
 
-### Requirements
+## Requirements
 
 Make sure you have the following installed:
 
@@ -43,9 +41,33 @@ Once the server is running, you can access the interactive API documentation at:
 http://127.0.0.1:8000/docs
 ```
 
-### TODO
+### MongoDB
 
-Add MongoDB for backend storage.
+Make sure you have MongoDB installed.
+MongoDB definitions and collections can be found in `db/mongodb.py`
+
+### Testing
+
+Run `pytest` in project root directory to confirm that the server and database are working. Some tests may require that the database is up to date.
+
+## API
+
+API requests are handled by FastAPI. The server main is found at `server/main.py`. API routing is found in `server/api/`. Models for API request/response and MongoDB interfacing is found is `server/models/`.
+
+### Course API
+
+This file implements API for managing and querying courses in the database. Some API are protected by admin keys.
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | /courses | Create new course (admin only) |
+| GET | /courses{course_id} | Get a specific course by ID |
+| PUT | /courses{course_id} | Update a course (admin only) |
+| DELETE | /courses{course_id} | Delete a course (admin only) |
+| GET | /courses | Query courses with filters |
+| GET | /courses/catalogs/{subject} | Get all catalog numbers for a subject |
+| get | /subjects | Get all available subject codes |
+
+## Sources
 
 ### UCLA Grade Distributions
 

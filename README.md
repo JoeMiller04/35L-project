@@ -49,3 +49,6 @@ pip install -r requirements.txt
 ```
 
 To check, go to http://localhost:3000/
+
+**Backend Information**
+See `server/README.md` for more info
