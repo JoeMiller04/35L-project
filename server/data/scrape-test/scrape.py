@@ -106,7 +106,7 @@ def go_next_page() -> bool:
         return False
 
 
-def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="COM SCI"):
+def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="COM SCI", term="24S"):
     """
     Extract course data from current page
     
@@ -114,6 +114,7 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     - filename: where to save this page's data
     - all_courses: list to append this page's courses to (for combined output)
     - subject: the subject being scraped (e.g., "COM SCI", "PHYSICS")
+    - term: the term being scraped (e.g., "24S", "25W")
     
     Returns:
     - List of extracted courses from this page
@@ -127,6 +128,7 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     const host = arguments[0];
     const subjectCode = arguments[1];
     const subjectFull = arguments[2];
+    const term = arguments[3];
     const shadowRoot = host.shadowRoot;
     const containers = Array.from(shadowRoot.querySelectorAll('[id$="-container"]'));
     
@@ -141,11 +143,11 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
             if (!containerId.includes(subjectCode)) continue;
             
             const courseData = {
-                container_id: containerId
+                container_id: containerId,
+                term: term  
             };
             
             // Extract subject and catalog
-            // THIS IS THE PART THAT NEEDS ADJUSTMENT FOR OTHER SUBJECTS
             const catalogMatch = containerId.match(/"""+subject_code+"""(\d+[A-Za-z]*)/);
             if (catalogMatch) {
                 courseData.subject = subjectFull;
@@ -217,7 +219,7 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     """
     
     # Execute script with host element as argument, passing the subject code and full subject name
-    extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject)
+    extracted_courses = driver.execute_script(js_extract_course_data, host, subject_code, subject, term)
     # with open('extract_data.js') as f:
     #     script = f.read()
     # extracted_courses = driver.execute_script(script, getHost(), subject_code, subject)
@@ -248,8 +250,7 @@ try:
     that as we upload to MongoDB.
     """
     # PARAMETERS
-    TERMS = ["24S", "25W", "25S", "25F"]
-    TERMS = ["24S"]
+    TERMS = ["25S"]
     # SUBJECTS NEED TO BE HARDCODED IN EXTRACT_DATA.JS
     # SO YOU ONLY CAN RUN ONE AT A TIME FOR NOW (sob)
     SUBJECTS = ["PHYSICS", "COM SCI"]
@@ -291,7 +292,7 @@ try:
                 clickExpandAll(host)
                 
                 # Pass the all_courses list to append this page's courses
-                courses = extractPageInfo(f"courses_term_{TERM}_subject_{SUBJECT.replace(' ', '_')}_page_{page_num}.json", all_courses, subject=SUBJECT)
+                courses = extractPageInfo(f"courses_term_{TERM}_subject_{SUBJECT.replace(' ', '_')}_page_{page_num}.json", all_courses, subject=SUBJECT, term=TERM)
                 total_added += len(courses)
                 
                 # Try to go to the next page
