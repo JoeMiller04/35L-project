@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import './App.css';
 import { useState, useEffect } from 'react';
 
+//this page should be mostly done. It is the page to remove classes
+
 
 
 function InfoPage() {
