@@ -29,6 +29,7 @@ wait = WebDriverWait(driver, 15)
 
 # Keeps track if there was a page where we found no courses
 zero_page = False
+failed = []
 
 def getHost():
     # The page usees something called a shadow DOM apparently
@@ -70,9 +71,13 @@ def go_next_page() -> bool:
     Returns True if we really advanced, False when already on last page.
     """
     # Get the current page number from the paginator
-    cur_page = driver.execute_script(
-        'return parseInt(document.querySelector("ucla-sa-soc-app")'
-        '.shadowRoot.querySelector(".jPag-current").textContent, 10);')
+    try:
+        cur_page = driver.execute_script(
+            'return parseInt(document.querySelector("ucla-sa-soc-app")'
+            '.shadowRoot.querySelector(".jPag-current").textContent, 10);')
+    except Exception as e:
+        print(f"Error getting current page number. This often happens when there's only one page of results.")
+        return False
 
     # Find the paginator button for the next page
     clicked = driver.execute_script(
@@ -236,7 +241,7 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     
     if len(extracted_courses) == 0:
         print(f"WARNING: No courses found on this page for subject {subject}!")
-        driver.save_screenshot(f"no_courses_found_{subject.replace(' ', '_')}.png")
+        
         print("Trying one more time")
 
         time.sleep(15)  # Wait a bit more before retrying
@@ -247,6 +252,8 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
         if len(extracted_courses) == 0:
             global zero_page
             zero_page = True
+            driver.save_screenshot(f"no_courses_found_{subject.replace(' ', '_')}.png")
+            failed.append(f"{term} - {subject} (Page {filename})")
 
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(extracted_courses, f, indent=2)
@@ -267,9 +274,10 @@ try:
     """
     # PARAMETERS
     TERMS = ["25S"]
-    # SUBJECTS NEED TO BE HARDCODED IN EXTRACT_DATA.JS
-    # SO YOU ONLY CAN RUN ONE AT A TIME FOR NOW (sob)
-    SUBJECTS = ["PHYSICS", "COM SCI"]
+    UCLA_SUBJECTS = ["A&O SCI", "AERO ST", "AF AMER", "AM IND", "AN N EA", "ANTHRO", "APP CHM", "ARABIC", "ARCH&UD", "ARCHEOL", "ARMENIA", "ART", "ART HIS", "ART&ARC", "ARTS ED", "ASIA AM", "ASIAN", "ASL", "ASTR", "BIOENGR", "BIOINFO", "BIOL CH", "BIOMATH", "BIOSTAT", "BMD RES", "C&EE", "C&EE ST", "C&S BIO", "CCAS", "CESC", "CH ENGR", "CHEM", "CHIN", "CLASSIC", "CLUSTER", "COM HLT", "COM LIT", "COM SCI", "COMM", "COMPTNG", "CS", "DANCE", "DESMA", "DGT HUM", "DIS STD", "DS BMED", "DUTCH", "EA STDS", "EC ENGR", "ECON", "EDUC", "EE BIOL", "ELTS", "ENGCOMP", "ENGL", "ENGR", "ENV HLT", "ENVIRON", "EPIDEM", "EPS SCI", "ESL", "ETHNMUS", "FIAT LX", "FILIPNO", "FILM TV", "FOOD ST", "FRNCH", "GENDER", "GEOG", "GERMAN", "GJ STDS", "GLB HLT", "GLBL ST", "GRAD PD", "GREEK", "GRNTLGY", "HEBREW", "HIN-URD", "HIST", "HLT ADM", "HLT POL", "HNRS", "HUM GEN", "I A STD", "I E STD", "I M STD", "IL AMER", "INDO", "INF STD", "INTL DV", "IRANIAN", "ISLM ST", "ITALIAN", "JAPAN", "JEWISH", "KOREA", "LATIN", "LAW", "LBR STD", "LGBTQS", "LIFESCI", "LING", "M E STD", "M PHARM", "MAT SCI", "MATH", "MC&IP", "MCD BIO", "MECH&AE", "MED", "MED HIS", "MGMT", "MGMTEX", "MGMTFE", "MGMTFT", "MGMTGEX", "MGMTMFE", "MGMTMSA", "MGMTPHD", "MIL SCI", "MIMG", "MOL BIO", "MOL TOX", "MSC IND", "MUSC", "MUSCLG", "NAV SCI", "NEURBIO", "NEURLGY", "NEURO", "NEUROSC", "NR EAST", "NURSING", "OBGYN", "ORL BIO", "PATH", "PBMED", "PEDS", "PHILOS", "PHYSCI", "PHYSICS", "POL SCI", "PORTGSE", "PSYCH", "PSYCTRY", "PUB AFF", "PUB HLT", "PUB PLC", "QNT SCI", "RELIGN", "RES PRC", "ROMANIA", "RUSSN", "S ASIAN", "SCAND", "SCI EDU", "SEASIAN", "SEMITIC", "SLAVC", "SOC GEN", "SOC SC", "SOC WLF", "SOCIOL", "SPAN", "SRB CRO", "STATS", "SURGERY", "SWAHILI", "THAI", "THEATER", "TURKIC", "UG-LAW", "UKRN", "UNIV ST", "URBN PL", "VIETMSE", "WL ARTS", "YIDDSH"]
+    SUBJECTS = [subject for subject in UCLA_SUBJECTS if subject.startswith("D")]
+    # SUBJECTS = ["AERO ST", "AF AMER", "AM IND", "AN N EA", "ANTHRO", "APP CHM", "ARABIC", "ARCH&UD", "ARCHEOL", "ARMENIA", "ART", "ART HIS", "ARTS ED", "ASIA AM", "ASIAN", "ASL", "ASTR"]
+    print(f"Scraping courses for terms: {TERMS} and subjects: {SUBJECTS}")
 
     # Track total courses added across all pages
     total_added = 0
@@ -325,6 +333,8 @@ try:
     
     if zero_page:
         print("WARNING: At least one page had no courses found even after retrying! Check the screenshots for details.")
+        for failed_subject in failed:
+            print(f"Failed to find courses for: {failed_subject}")
     
     print(f"\nScraping completed: processed {total_pages} pages with {total_added} total courses")
 
@@ -339,6 +349,9 @@ except Exception as e:
         print(f"Saving {len(all_courses)} courses collected so far to {emergency_file}")
         with open(emergency_file, "w", encoding="utf-8") as f:
             json.dump(all_courses, f, indent=2)
+        
+        for failed_subject in failed:
+            print(f"Failed to find courses for: {failed_subject}")
     
 finally:
     driver.quit()

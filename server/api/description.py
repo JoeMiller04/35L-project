@@ -50,7 +50,7 @@ async def get_description(subject: str, catalog: str):
             raise e
         raise HTTPException(
             status_code=500, 
-            detail=f"Error retrieving rating: {str(e)}"
+            detail=f"Error retrieving description: {str(e)}"
         )
 
 

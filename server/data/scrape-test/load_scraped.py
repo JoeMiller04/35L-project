@@ -181,6 +181,11 @@ def upload(courses):
 def main():
     data_dir = Path("course_data")
     
+    files_processed = 0
+    total_added = 0
+    total_skipped = 0
+    total_updated = 0
+    
     for json_file in sorted(data_dir.glob("*.json")):
         print(f"Processing file: {json_file}")
         
@@ -191,6 +196,14 @@ def main():
         added_count, skipped_count, updated_count = upload(courses)
         
         print(f"File {json_file} processed: {added_count} added, {skipped_count} skipped, {updated_count} updated")
+        files_processed += 1
+        total_added += added_count
+        total_skipped += skipped_count
+        total_updated += updated_count
+    print(f"Total files processed: {files_processed}")
+    print(f"Total courses added: {total_added}")
+    print(f"Total courses skipped: {total_skipped}")
+    print(f"Total courses updated: {total_updated}")
 
 
 if __name__ == "__main__":
