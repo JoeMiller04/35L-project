@@ -571,14 +571,14 @@ function Home() {
                     }
                     
                     return (
-                      <div key={day} style={{fontSize:'15px'}}>
-                        <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {item.times === null ? 'Missing time information' : timeText}
+                      <div key={day} style={{fontSize:'12px'}}>
+                        <span style={{fontSize:'13px'}}>{capitalizeWords(day.toLowerCase())}:</span> {item.times === null ? 'Missing time information' : timeText}
                       </div>
                     );
                   })}
               </div>
             ) : (
-              <div>{String("Missing time information")}</div>
+              <div style={{fontSize:'13px'}}>{String("Missing time information")}</div>
             )}
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
