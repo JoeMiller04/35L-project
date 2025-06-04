@@ -477,6 +477,8 @@ function Home() {
                     
                     {/*search button*/}
                     <button style={{ width: '100px', height: '30px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer', marginLeft:'40px' }} onClick={()=> handleClassQuery()}>Search</button>    
+                
+            
                 </div>
 
                 
@@ -526,7 +528,14 @@ function Home() {
             setDataFromQuery(prev => prev.filter(i => i._id !== item._id));
             runGetClasses(id._id);
           }}>Add to Plan</button>
+
+
+           <button style={{marginTop:'10px', marginLeft:'50px'}} onClick={() => {
+            navigate('/SearchPage', { state: { classInfo: item } });
+        }}> More Info</button>
         </div>
+
+       
       ))}
     </div>
   ) : typeof dataFromQuery === 'object' && dataFromQuery !== null && Object.keys(dataFromQuery).length > 0 ? (

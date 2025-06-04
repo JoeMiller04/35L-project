@@ -13,3 +13,5 @@ server/data/Dars/extracted_courses.csv
 server/data/Dars/a.json
 server/data/Dars/courses_simple.json
 server/uploads/myaudit.html
+courses_simple.json
+*.json
