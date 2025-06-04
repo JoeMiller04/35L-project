@@ -204,11 +204,19 @@ def upload_courses_to_api(simplified_courses, user_id):
         # If course catalog starts with "T"
         # These are AP classes
         course_name = f"{course_subject} {course_catalog}"
-        
+        if course_subject not in UCLA_SUBJECTS:
+            print(f"Skipping unknown subject: {course_subject} in course {course_name}")
+            continue
+
         if course_catalog.startswith("T"):
             continue
-            
         
+        grade = course['grade']
+        if grade == 'AP':
+            print(f"Skipping course {course_name} with grade {grade}")
+            continue
+
+
         # term = course['term']
         # For frontend purposes, this needs to be "PAST"
         term = "PAST"
@@ -253,7 +261,8 @@ def upload_courses_to_api(simplified_courses, user_id):
                 "course_name": "MATH 31B",
             })
 
-
+    for course in courses_to_add:
+        print(f"Course to add: {course['term']} - {course['course_name']}")
             
     result = collection.update_one(
         {"_id": user_object_id},
@@ -295,6 +304,7 @@ def main():
             sys.path.insert(0, project_root)
         
         output = parse_dars(html_text)
+        print(output)
         
         all_courses = []
 
@@ -323,7 +333,7 @@ def main():
         df_courses = df_courses.sort_values(['term', 'subject', 'catalog'], ascending=[False, True, True])
 
         # Create simplified course list
-        simplified_courses = df_courses[['term', 'subject', 'catalog']].to_dict(orient='records')
+        simplified_courses = df_courses[['term', 'subject', 'catalog', 'grade']].to_dict(orient='records')
 
         # Create directory if it doesn't exist
         os.makedirs(os.path.dirname('server/data/Dars/courses_simple.json'), exist_ok=True)

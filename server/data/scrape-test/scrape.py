@@ -70,9 +70,13 @@ def go_next_page() -> bool:
     Returns True if we really advanced, False when already on last page.
     """
     # Get the current page number from the paginator
-    cur_page = driver.execute_script(
-        'return parseInt(document.querySelector("ucla-sa-soc-app")'
-        '.shadowRoot.querySelector(".jPag-current").textContent, 10);')
+    try:
+        cur_page = driver.execute_script(
+            'return parseInt(document.querySelector("ucla-sa-soc-app")'
+            '.shadowRoot.querySelector(".jPag-current").textContent, 10);')
+    except Exception as e:
+        print(f"Error getting current page number: {e}")
+        return False
 
     # Find the paginator button for the next page
     clicked = driver.execute_script(
@@ -236,7 +240,7 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
     
     if len(extracted_courses) == 0:
         print(f"WARNING: No courses found on this page for subject {subject}!")
-        driver.save_screenshot(f"no_courses_found_{subject.replace(' ', '_')}.png")
+        
         print("Trying one more time")
 
         time.sleep(15)  # Wait a bit more before retrying
@@ -247,6 +251,7 @@ def extractPageInfo(filename="courses_by_id.json", all_courses=None, subject="CO
         if len(extracted_courses) == 0:
             global zero_page
             zero_page = True
+            driver.save_screenshot(f"no_courses_found_{subject.replace(' ', '_')}.png")
 
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(extracted_courses, f, indent=2)
@@ -269,7 +274,8 @@ try:
     TERMS = ["25S"]
     # SUBJECTS NEED TO BE HARDCODED IN EXTRACT_DATA.JS
     # SO YOU ONLY CAN RUN ONE AT A TIME FOR NOW (sob)
-    SUBJECTS = ["PHYSICS", "COM SCI"]
+    SUBJECTS = ["PHYSICS", "COM SCI", "MATH", "EL ENGR"]
+    SUBJECTS = ["AERO ST", "AF AMER", "AM IND", "AN N EA", "ANTHRO", "APP CHM", "ARABIC", "ARCH&UD", "ARCHEOL", "ARMENIA", "ART", "ART HIS", "ARTS ED", "ASIA AM", "ASIAN", "ASL", "ASTR"]
 
     # Track total courses added across all pages
     total_added = 0
