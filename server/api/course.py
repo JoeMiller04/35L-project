@@ -120,7 +120,7 @@ async def query_courses(
     title: Optional[str] = None,
     real: Optional[bool] = None,
     skip: int = 0,
-    limit: int = 20,
+    limit: int = 30,
 ):
     """
     Query courses with optional filters.
@@ -136,7 +136,7 @@ async def query_courses(
     - limit: Maximum number of records to return
 
     skip and limit can be used if you want to read a subset of the courses.
-    E.g. Pagesize of 20, skip 0 for the first page, skip 20 for the second page, etc.
+    E.g. Pagesize of 30, skip 0 for the first page, skip 30 for the second page, etc.
     
     Returns a list of courses matching the criteria.
     """
