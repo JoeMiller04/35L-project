@@ -478,12 +478,7 @@ function Home() {
                     {/*search button*/}
                     <button style={{ width: '100px', height: '30px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer', marginLeft:'40px' }} onClick={()=> handleClassQuery()}>Search</button>    
                 
-                    <button
-  style={{ width: '100px', height: '30px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer' }}
-  onClick={() => { if (dropdown && dropdown !== '- Select Dept -' && dropdownClass && dropdownClass !== '- Select a Class -') { navigate('/SearchPage', { state: { dept: dropdown, class: dropdownClass } }); } else { setError('Please select both a department and a class.'); setPopup(true); } }}
->
-  More Info
-</button>
+            
                 </div>
 
                 
