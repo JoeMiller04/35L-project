@@ -3,6 +3,7 @@
 from pymongo import MongoClient
 from collections import defaultdict
 import re
+import argparse
 
 MONGO_URI = "mongodb://localhost:27017"
 client = MongoClient(MONGO_URI)
@@ -20,14 +21,16 @@ def split_course_name(full_name):
     else:
         return full_name.strip().upper(), ""  
 
-def export_to_mongodb():
-    with open("more_reviews.txt", "r") as file:
+def export_to_mongodb(filename="professor_reviews.txt"):
+    count = 0
+    with open(filename, "r") as file:
         for line in file:
             line = line.strip()
             if not line or line.count(":") < 2:
                 continue  # skip empty or malformed lines
             course, prof, rating = [part.strip() for part in line.split(":", 2)]
             course_map[course].append({"name": prof, "rating": rating})
+            count += 1
 
     for full_course_name, professors in course_map.items():
         subject, catalog = split_course_name(full_course_name)
@@ -41,9 +44,13 @@ def export_to_mongodb():
             {"$set": data},
             upsert=True
         )
-
     print("Upload complete.")
+    return count
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Import professor reviews from txt file to MongoDB')
+    parser.add_argument('file_path', help='Path to the txt file containing professor reviews')
+    args = parser.parse_args()
     print("Exporting data to MongoDB...")
-    count = export_to_mongodb()
+    count = export_to_mongodb(args.file_path)
+    print(f"Uploaded {count} course+professor ratings.")

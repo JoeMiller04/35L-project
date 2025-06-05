@@ -16,13 +16,13 @@ cd 35L-project
 **Build Backend Docker Image:**
 
 ```
-docker build -t my-backend ./server
+docker build -t my-backend -f server/Dockerfile .
 ```
 
 **Run Backend Container:**
 
 ```
-docker run -d --name backend -p 5000:5000 my-backend
+docker run -d --name backend -p 8000:8000 my-backend
 ```
 
 **To Check:**
@@ -49,3 +49,6 @@ pip install -r requirements.txt
 ```
 
 To check, go to http://localhost:3000/
+
+**Backend Information**
+See `server/README.md` for more info
