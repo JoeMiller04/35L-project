@@ -16,7 +16,7 @@ MONGO_DETAILS = "mongodb://localhost:27017"
 
 client = MongoClient(MONGO_URI)
 db = client[DATABASE_NAME]
-pre_reqs = db.get_collection("pre-reqs")
+course_ratings = db.get_collection("course_ratings")
 
 HEADERS = {'User-Agent': 'Mozilla/5.0'}
 
@@ -53,19 +53,18 @@ def fetch_and_print_overall_rating(input_url : str, page_number : int):
     return results
 
 def get_all_course_names():
-    cursor = pre_reqs.find({}, {"course_name": 1, "_id": 0})
-    return [doc["course_name"] for doc in cursor]
+    cursor = course_ratings.find({}, {"subject": 1, "catalog": 1, "_id": 0})
+    return [f"{doc['subject'].lower()}-{doc['catalog'].lower()}" for doc in cursor]
 
 
-def executioner2():    
+def save_professor_reviews():    
     all_class_scores = []
     seen = set()  # Track (course, professor) pairs to avoid duplicates
     collection = get_all_course_names()
 
     for original_name in collection:
-        normalized_name = original_name.replace(" ", "-").lower()
 
-        url = f"https://www.bruinwalk.com/classes/{normalized_name}/?page="
+        url = f"https://www.bruinwalk.com/classes/{original_name}/?page="
 
         for page in range(1, 11):
             class_scores = fetch_and_print_overall_rating(url, page)
@@ -87,4 +86,4 @@ def executioner2():
 
 
 if __name__ == '__main__':
-    executioner2()
+    save_professor_reviews()

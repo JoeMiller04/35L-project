@@ -250,7 +250,7 @@ async def executioner(user_id, eng_comp: bool = False):
     #print(f"Total courses: {len(other_courses) + len(already_taken)}")
     
     lowest = find_lowest_quarter(other_courses)
-    if not lowest:
+    if not lowest and already_taken == []:
         return other_courses, False  # no sorting if no valid quarters found
     start_year, start_quarter_idx = lowest
     quarter_sequence = generate_quarter_sequence(start_year, start_quarter_idx)    
