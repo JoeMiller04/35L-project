@@ -88,29 +88,21 @@ async def isValid(previous_courses, sorted_list, eng_comp):
             total_units += 4
         else:
             result = await reqs.find_one({"course_name": course_name})
-            if not result:
-                alias_result = ali.find_one({"alias_key": course_name})
-                print (alias_result)
-                if alias_result:
-                    course_name = alias_result.get("original_course")
-                    result = await reqs.find_one({"course_name": course_name})
-                else:
-                    return f"Invalid course entry: {course_name}", False
-
-            elective_true = result.get("elective_eligible")  
-            if elective_true:
-                specified_elective_counter += 1
+            if result:
+                elective_true = result.get("elective_eligible")  
+                if elective_true:
+                    specified_elective_counter += 1
             
-            # Add units
-            units = result.get("units")
-            if units is not None:
-                total_units += units
+                # Add units
+                units = result.get("units")
+                if units is not None:
+                    total_units += units
 
-            # Check pre-reqs
-            requisite_courses = result.get("requisites", [])
-            for group in requisite_courses:  # group is a list of course names
-                if not any(pre_req in taken_courses for pre_req in group):
-                    return f"Pre-requisite '{group}' for {course_name} not met", False
+                # Check pre-reqs
+                requisite_courses = result.get("requisites", [])
+                for group in requisite_courses:  # group is a list of course names
+                    if not any(pre_req in taken_courses for pre_req in group):
+                        return False
 
     for course in sorted_list:
         course_name = course.get('course_name', '').strip()
@@ -143,29 +135,21 @@ async def isValid(previous_courses, sorted_list, eng_comp):
             total_units += 4
         else:
             result = await reqs.find_one({"course_name": course_name})
-            if not result:
-                alias_result = ali.find_one({"alias_key": course_name})
-                print(alias_result)
-                if alias_result:
-                    course_name = alias_result.get("original_course")
-                    result = await reqs.find_one({"course_name": course_name})
-                else:
-                    return f"Invalid course entry: {course_name}", False
+            if result:
+                elective_true = result.get("elective_eligible")  
+                if elective_true:
+                    specified_elective_counter += 1
+                
+                # Add units
+                units = result.get("units")
+                if units is not None:
+                    total_units += units
 
-            elective_true = result.get("elective_eligible")  
-            if elective_true:
-                specified_elective_counter += 1
-            
-            # Add units
-            units = result.get("units")
-            if units is not None:
-                total_units += units
-
-            # Check pre-reqs
-            requisite_courses = result.get("requisites", [])
-            for group in requisite_courses:  # group is a list of course names
-                if not any(pre_req in taken_courses for pre_req in group):
-                    return f"Pre-requisite '{group}' for {course_name} not met", False  
+                # Check pre-reqs
+                requisite_courses = result.get("requisites", [])
+                for group in requisite_courses:  # group is a list of course names
+                    if not any(pre_req in taken_courses for pre_req in group):
+                        return False
 
     #Lower-div courses
     for element in ["PHYSICS 1A", "PHYSICS 1B", "PHYSICS 1C"]:
