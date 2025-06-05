@@ -51,17 +51,17 @@ def parse_time_to_schedule(days_str, time_str):
         # Split the time range
         time_range = time_str.split('-')
         if len(time_range) != 2:
-            print(f"Invalid time range format: {time_str}")
+            # print(f"Invalid time range format: {time_str}")
             return None
 
         # Parse start and end times
         start_time_str = time_range[0].strip()
         end_time_str = time_range[1].strip()
         if "am" not in start_time_str and "pm" not in start_time_str:
-            print(f"Invalid start time format: {start_time_str}")
+            # print(f"Invalid start time format: {start_time_str}")
             return None
         if "am" not in end_time_str and "pm" not in end_time_str:
-            print(f"Invalid end time format: {end_time_str}")
+            # print(f"Invalid end time format: {end_time_str}")
             return None
 
         # Save in military time format
@@ -90,7 +90,7 @@ def parse_time_to_schedule(days_str, time_str):
 
     
     except Exception as e:
-        print(f"Error parsing time schedule: {e}")
+        # print(f"Error parsing time schedule: {e}")
         return None
     
     return schedule
@@ -114,7 +114,7 @@ def upload(courses):
     for course_data in courses:
         # Skip if missing essential fields
         if not all(k in course_data for k in ['subject', 'instructor', 'title', 'term']):
-            print(f"Skipping incomplete course: {course_data}")
+            # print(f"Skipping incomplete course: {course_data}")
             skipped_count += 1
             continue
         
@@ -134,7 +134,7 @@ def upload(courses):
             clean_course['catalog'] = title_parts[0].strip()
             clean_course['title'] = title_parts[1].strip()
         else:
-            print(f"Skipping course with strange title: {course_data['title']}")
+            # print(f"Skipping course with strange title: {course_data['title']}")
             skipped_count += 1
             continue
         
@@ -163,15 +163,15 @@ def upload(courses):
                     {'_id': existing_course['_id']},
                     {'$set': {'times': clean_course['times']}}
                 )
-                print(f"Updated course with time information: {clean_course['subject']} {clean_course['catalog']} - {clean_course['instructor']}")
-                print(f"Update result: matched={update_result.matched_count}, modified={update_result.modified_count}")
+                # print(f"Updated course with time information: {clean_course['subject']} {clean_course['catalog']} - {clean_course['instructor']}")
+                # print(f"Update result: matched={update_result.matched_count}, modified={update_result.modified_count}")
                 updated_count += update_result.modified_count
             else:
                 skipped_count += 1   
         else:
             # Insert the new course
             result = collection.insert_one(clean_course)
-            print(f"Added course: {clean_course['subject']} {clean_course['catalog']} - {clean_course['instructor']} (ID: {result.inserted_id})")
+            # print(f"Added course: {clean_course['subject']} {clean_course['catalog']} - {clean_course['instructor']} (ID: {result.inserted_id})")
             added_count += 1
     
     print(f"MongoDB upload complete: {added_count} courses added, {skipped_count} duplicates skipped, {updated_count} courses updated")

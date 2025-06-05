@@ -14,6 +14,11 @@ load-db: deps
 # This will reset your course ratings database
 	python server/data/bruinwalk_reviews/bruinwalk_connect_to_database.py server/data/bruinwalk_reviews/course_reviews.txt
 	python server/data/bruinwalk_reviews/professor_reviews_database.py server/data/bruinwalk_reviews/professor_reviews.txt
+# Pull scraped courses
+	python server/data/scrape-test/load_scraped.py 
+# Load validation stuff
+	python server/data/pre-reqs/pre-reqs.py
+
 
 setup-env:
 	@if [ ! -f server/.env ]; then \
