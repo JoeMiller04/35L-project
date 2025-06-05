@@ -250,12 +250,13 @@ async def executioner(user_id, eng_comp: bool = False):
     #print(f"Total courses: {len(other_courses) + len(already_taken)}")
     
     lowest = find_lowest_quarter(other_courses)
-    if not lowest:
+    if not lowest and already_taken == []:
         return other_courses, False  # no sorting if no valid quarters found
-    start_year, start_quarter_idx = lowest
-    quarter_sequence = generate_quarter_sequence(start_year, start_quarter_idx)    
-    priority_map = {q: i for i, q in enumerate(quarter_sequence)}
-    other_courses.sort(key=lambda c: priority_map.get(c.get("term", ""), 9999))
+    if lowest:
+        start_year, start_quarter_idx = lowest
+        quarter_sequence = generate_quarter_sequence(start_year, start_quarter_idx)    
+        priority_map = {q: i for i, q in enumerate(quarter_sequence)}
+        other_courses.sort(key=lambda c: priority_map.get(c.get("term", ""), 9999))
 
     validity = await isValid(already_taken, other_courses, eng_comp)
 
@@ -263,7 +264,7 @@ async def executioner(user_id, eng_comp: bool = False):
 
 
 async def main():
-    other_courses, validity = await executioner('6840d18240100a7eb9ebc999')
+    other_courses, validity = await executioner('6840e19e6ca4f060782772d3')
     if validity:
         print("The list satisfies CS requirements")
     else:

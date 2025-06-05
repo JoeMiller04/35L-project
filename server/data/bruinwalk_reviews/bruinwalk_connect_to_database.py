@@ -53,8 +53,8 @@ def export_to_mongodb(filename="results.txt"):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Import course descriptions from JSON to MongoDB')
-    parser.add_argument('file_path', help='Path to the JSON file containing course descriptions')
+    parser = argparse.ArgumentParser(description='Import course reviews from txt to MongoDB')
+    parser.add_argument('file_path', help='Path to the txt file containing course reviews')
     args = parser.parse_args()
     print("Exporting data to MongoDB...")
     count = export_to_mongodb(args.file_path)
