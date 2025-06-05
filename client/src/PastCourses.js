@@ -136,16 +136,16 @@ async function loadPastCourses() {
         <div style={{ width: '80%', marginLeft: '10%', zIndex: 2 }}>
     
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px', marginTop: '20px' }}>
-          {/* Left button group */}
+       
           <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
             <button onClick={() => navigate('/Home')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Home</button>
             <button onClick={() => toggleFilePopup()} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '20px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Upload</button>
           </div>
-          {/* Centered title */}
+        
           <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
             <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold', margin: 0 }}>Past Course Checklist</h1>
           </div>
-          {/* Right button group */}
+     
           <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', right: 0, height: '100%' }}>
             <button onClick={() => toggleMajor()} style={{ cursor: 'pointer', backgroundColor: 'white', marginRight: '20px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Change Major</button>
             <button onClick={() => navigate('/FuturePlanner')} style={{ cursor: 'pointer', backgroundColor: 'white', marginRight: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Future Plan</button>
