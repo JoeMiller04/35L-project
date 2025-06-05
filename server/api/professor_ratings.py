@@ -5,7 +5,7 @@ from server.models.professor_ratings import ProfessorRatings
 
 router = APIRouter()
 
-@router.get("/professor_ratings/{subject}/{catalog}", response_model=Description)
+@router.get("/professor_ratings/{subject}/{catalog}", response_model=ProfessorRatings)
 async def get_ratings(subject: str, catalog: str):
     """
     Get a professor ratings for a specific course.

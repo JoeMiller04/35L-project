@@ -33,10 +33,10 @@ function LogIn() {
                 setNoUserOrPassword(false);
                 setIncorrectInfo(true); // Handle incorrect username or password
             } else {
-                alert('Failed to log in');
+                console.log('Failed to log in');
             }
         } catch (error) {
-            alert('Error: ' + error.message);
+            console.log('Error: ' + error.message);
         }
     }
 

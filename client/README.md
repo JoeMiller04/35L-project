@@ -54,7 +54,7 @@ This project was created using Create React App.
 
 1. **Log-in/Create user**: Users will be prompted to create an account when they first visit the applicaiton
 2. **Search for Classes**: Users will be able to query for UCLA classes on the home page. Classes from the last few years will appear with information about the class. 
-3. **Add Classes**: 
+3. **Add/Remove Classes**: Users have the option to add/remove classes 
 
 
 

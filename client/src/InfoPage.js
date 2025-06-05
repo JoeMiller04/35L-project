@@ -44,7 +44,7 @@ function InfoPage() {
             const data = await response.json();
             setClasses(data);
         } catch (err) {
-            alert('Error fetching user course list: ' + err.message);
+            console.log('Error fetching user course list: ' + err.message);
         }
     }
 
@@ -100,8 +100,8 @@ function InfoPage() {
             return await response.json();
 
         } catch (err) {
-            alert(userId);
-            alert('Error: ' + err.message);
+            console.log(userId);
+            console.log('Error: ' + err.message);
         }
     }
 

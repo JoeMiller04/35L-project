@@ -6,6 +6,7 @@ from server.api.validation import router as valid_router
 from server.api.rating import router as ratings_router
 from server.api.your_upload_route import router as upload_router
 from server.api.description import router as description_router
+from server.api.professor_ratings import router as professor_ratings_router
 
 app = FastAPI()
 
@@ -33,3 +34,4 @@ app.include_router(valid_router, tags=["valid"])
 app.include_router(ratings_router, tags=["ratings"])
 app.include_router(upload_router, tags=["uploads"])
 app.include_router(description_router, tags=["descriptions"])
+app.include_router(professor_ratings_router, tags=["ratings"])
