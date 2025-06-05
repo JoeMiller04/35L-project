@@ -251,7 +251,7 @@ async def executioner(user_id, eng_comp: bool = False):
     
     lowest = find_lowest_quarter(other_courses)
     if not lowest and already_taken == []:
-        return other_courses, False  # no sorting if no valid quarters found
+        return other_courses, False  # no sorting if no valid quarters found and taken_quarters is empty
     start_year, start_quarter_idx = lowest
     quarter_sequence = generate_quarter_sequence(start_year, start_quarter_idx)    
     priority_map = {q: i for i, q in enumerate(quarter_sequence)}

@@ -56,15 +56,27 @@ def get_all_course_names():
     cursor = course_ratings.find({}, {"subject": 1, "catalog": 1, "_id": 0})
     return [f"{doc['subject'].lower()}-{doc['catalog'].lower()}" for doc in cursor]
 
+def all_formal_course_names():
+    cursor = course_ratings.find({}, {"subject": 1, "catalog": 1, "_id": 0})
+    return [f"{doc['subject']} {doc['catalog']}" for doc in cursor]
+
 
 def save_professor_reviews():    
-    all_class_scores = []
     seen = set()  # Track (course, professor) pairs to avoid duplicates
     collection = get_all_course_names()
 
-    for original_name in collection:
+    printer = all_formal_course_names()
 
-        url = f"https://www.bruinwalk.com/classes/{original_name}/?page="
+    normalized_name = []
+
+    for original_name in collection:
+        temp = original_name.replace(" ", "-").lower()
+        temp = temp.replace("&", "-").lower()
+        normalized_name.append(temp)
+
+    for i, normalized in enumerate(normalized_name):
+        original_name = printer[i]
+        url = f"https://www.bruinwalk.com/classes/{normalized}/?page="
 
         for page in range(1, 11):
             class_scores = fetch_and_print_overall_rating(url, page)
@@ -77,12 +89,10 @@ def save_professor_reviews():
                     key = (course_name, professor_name)
                     if key not in seen:
                         seen.add(key)
-                        entry["course"] = course_name
-                        all_class_scores.append(entry)
+                        print(f"{course_name}: {professor_name}: {entry['rating']}")
             time.sleep(1)  # Avoid hammering server
 
-    for course in all_class_scores:
-        print(f"{course['course']}: {course['professor']}: {course['rating']}")
+        
 
 
 if __name__ == '__main__':
