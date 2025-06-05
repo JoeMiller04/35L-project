@@ -28,7 +28,6 @@ def reverse_aliases():
             "original_course": original_course
         })
     return aliases_list
-    return aliases_key
 
 
 def make_prereq(units, elective_eligible=False, requisites=None, aliases=None):
