@@ -10,6 +10,7 @@ from server.db.mongodb import pre_reqs as reqs
 from server.db.mongodb import previous_courses as pc
 from server.db.mongodb import future_courses as fc
 from server.db.mongodb import sample as sp
+from server.db.mongodb import aliases as ali
 from server.db.mongodb import users_collection as users
 
 from bson.objectid import ObjectId
@@ -51,14 +52,14 @@ def generate_quarter_sequence(start_year, start_quarter_idx, num_years=4):
             year += 1
     return sequence
 
-async def isValid(previous_courses, sorted_list):
+async def isValid(previous_courses, sorted_list, eng_comp):
     taken_courses = []
     for course in previous_courses:
         taken_courses.append(course["course_name"])
     GE_counter = 0
     SCI_TECH_counter = 0
     TECH_BREADTH_counter = 0
-    eng_comp_bool = False
+    eng_comp_bool = eng_comp
     total_units = 0
     ethics_requirement = False
     elective_counter = 0 # elective that are given with the placeholder name "COM SCI ELECTIVE"
@@ -87,6 +88,14 @@ async def isValid(previous_courses, sorted_list):
             total_units += 4
         else:
             result = await reqs.find_one({"course_name": course_name})
+            if not result:
+                alias_result = ali.find_one({"alias_key": course_name})
+                print (alias_result)
+                if alias_result:
+                    course_name = alias_result.get("original_course")
+                    result = await reqs.find_one({"course_name": course_name})
+                else:
+                    return f"Invalid course entry: {course_name}", False
 
             elective_true = result.get("elective_eligible")  
             if elective_true:
@@ -101,7 +110,7 @@ async def isValid(previous_courses, sorted_list):
             requisite_courses = result.get("requisites", [])
             for group in requisite_courses:  # group is a list of course names
                 if not any(pre_req in taken_courses for pre_req in group):
-                    return False
+                    return f"Pre-requisite '{group}' for {course_name} not met", False
 
     for course in sorted_list:
         course_name = course.get('course_name', '').strip()
@@ -134,6 +143,14 @@ async def isValid(previous_courses, sorted_list):
             total_units += 4
         else:
             result = await reqs.find_one({"course_name": course_name})
+            if not result:
+                alias_result = ali.find_one({"alias_key": course_name})
+                print(alias_result)
+                if alias_result:
+                    course_name = alias_result.get("original_course")
+                    result = await reqs.find_one({"course_name": course_name})
+                else:
+                    return f"Invalid course entry: {course_name}", False
 
             elective_true = result.get("elective_eligible")  
             if elective_true:
@@ -148,56 +165,56 @@ async def isValid(previous_courses, sorted_list):
             requisite_courses = result.get("requisites", [])
             for group in requisite_courses:  # group is a list of course names
                 if not any(pre_req in taken_courses for pre_req in group):
-                    return False
+                    return f"Pre-requisite '{group}' for {course_name} not met", False  
 
     #Lower-div courses
     for element in ["PHYSICS 1A", "PHYSICS 1B", "PHYSICS 1C"]:
         if not any(course.strip().upper() == element for course in taken_courses):
-            return False
+            return f"Lower division physics requirement not met. {element} not taken.", False
     if "PHYSICS 4AL" not in taken_courses and "PHYSICS 4BL" not in taken_courses:
-        return False
+        return f"Lower division physics requirements not met. You must take either Physics 4AL or 4BL.", False
     for element in ["MATH 31A", "MATH 31B", "MATH 32A", "MATH 32B", "MATH 33A", "MATH 33B"]:
         if not any(course.strip().upper() == element for course in taken_courses):
-            return False
+            return f"Lower division math requirements not met. {element} not taken.", False
     for element in ["COM SCI 31", "COM SCI 32", "COM SCI 33", "COM SCI 35L", "COM SCI M51A"]:
         if not any(course.strip().upper() == element for course in taken_courses):
-            return False
+            return f"Lower division computer science requirements not met. {element} not taken.", False
     
     #Upper div checks
     if "COM SCI 130" not in taken_courses and "COM SCI 132" not in taken_courses:
-        return False
+        return f"Upper division computer science requirements not met. You must take either COM SCI 130 or COM SCI 132.", False
     for element in ["COM SCI 111", "COM SCI 118", "COM SCI 131", "COM SCI M151B", "COM SCI M152A",
                     "COM SCI 180", "COM SCI 181"]:
         if not any(course.strip().upper() == element for course in taken_courses):
-            return False
+            return f"Upper division computer science requirements not met. {element} not taken.", False
     if "COM SCI 130" not in taken_courses and "COM SCI 152B" not in taken_courses:
-        return False
+        return "Upper division computer science requirements not met. You must take either COM SCI 130 or COM SCI 152B.", False
     if "COM SCI 130" in taken_courses and "COM SCI 152B" in taken_courses: #both taken, one as an elective, one as a requirement
         specified_elective_counter -= 1
     if ("COM SCI 130" in taken_courses) ^ ("COM SCI 152B" in taken_courses): #xor one taken, only as a requirement
         specified_elective_counter -= 1
     if "MATH 170A" in taken_courses and "MATH 170E" in taken_courses: #probability requirement
-        return False
+        return "Upper division probability requirement not met. You must take MATH 170A, 170E or any of its equivalents.", False
 
     #elective checker
     if (elective_counter + specified_elective_counter) < 5:
-        return False
+        return "Upper division computer science requirements not met. You must take at least 5 upper-divison electives.", False
 
     #Other requirements
     if not ethics_requirement:
-        return False
+        return "Ethics Requirement Not Met", False
     if GE_counter < 5:
-        return False
+        return "Not enoguh GEs", False
     if SCI_TECH_counter < 3:
-        return False
+        return "Not enoguh SCI-TECH courses", False
     if TECH_BREADTH_counter < 3:
-        return False
+        return "Not enoguh TECH BREADTH courses", False
     if total_units < 180:
-        return False
+        return "Lower than 180 total units", False
     if not eng_comp_bool:
-        return False
+        return "English composition requirement not satisfied", False
     
-    return True
+    return "Your plan is valid and satisfies all CS requirements.", True
 
 async def upload_courses(user_id):
     user_doc = await users.find_one({"_id": ObjectId(user_id)})
@@ -220,7 +237,7 @@ async def upload_courses(user_id):
         raise ValueError("User not found or no saved_courses")
 
     
-async def executioner(user_id):
+async def executioner(user_id, eng_comp: bool = False):
     other_courses = []
 
     already_taken, other_courses = await upload_courses(user_id)  
@@ -237,7 +254,7 @@ async def executioner(user_id):
     lowest = find_lowest_quarter(other_courses)
    
     if not lowest and already_taken == []:
-        return False  # no sorting if no valid quarters found
+        return other_courses, False  # no sorting if no valid quarters found
     if lowest:
         start_year, start_quarter_idx = lowest
         quarter_sequence = generate_quarter_sequence(start_year, start_quarter_idx)    
@@ -249,13 +266,13 @@ async def executioner(user_id):
         priority_map = {q: i for i, q in enumerate(quarter_sequence)}
         other_courses.sort(key=lambda c: priority_map.get(c.get("term", ""), 9999))
 
-    validity = await isValid(already_taken, other_courses)
+    validity = await isValid(already_taken, other_courses, eng_comp)
 
-    return validity
+    return other_courses, validity
 
 
 async def main():
-    validity = await executioner('6840d18240100a7eb9ebc999')
+    other_courses, validity = await executioner('6840d140e2a2ba254cc843aa')
     if validity:
         print("The list satisfies CS requirements")
     else:
