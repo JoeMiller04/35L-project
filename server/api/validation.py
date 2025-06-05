@@ -8,7 +8,7 @@ router = APIRouter()
 class PlanValidationResponse(BaseModel):
     valid: bool
     message: str
-    sorted_courses: Optional[List[Dict[str, Any]]] = None # Do we need this?
+
     # It's helpful for debugging
 
 @router.post("/validate-plan/{user_id}", response_model=PlanValidationResponse)
@@ -21,20 +21,19 @@ async def validate_plan(
     Returns validation status and sorted course list
     """
     try:
-        sorted_courses, is_valid = await executioner(user_id, eng_comp)
+        result = await executioner(user_id, eng_comp)
         
         return {
-            "valid": is_valid,
-            "message": "Your course plan meets all CS degree requirements!" if is_valid 
+            "validity": result["validity"],
+            "message": "Your course plan meets all CS degree requirements!" if result["validity"] 
                       else "Your course plan does not meet all requirements.",
-            "sorted_courses": sorted_courses
         }
     except ValueError as e:
         # Handle expected validation errors from the planner check
         return {
             "valid": False,
             "message": str(e),
-            "sorted_courses": None
+
         }
     except Exception as e:
         # Handle unexpected errors

@@ -271,8 +271,8 @@ if (majorObj && majorObj.major) {
 
    const handleValidation = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
-                method: 'GET',
+      const response = await fetch(`http://127.0.0.1:8000/validate-plan/${userId}`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -282,13 +282,16 @@ if (majorObj && majorObj.major) {
                 throw new Error(error.detail || 'Failed to fetch user course list');
             }
       const data = await response.json(); 
-      //const result = isValid(data); // Call isValid function with the current plan
-      
+      alert(data);
 
       if (data.validity) {
-        setValidationMessage("Your plan is valid!");
+        setValidationMessage("");
       } else {
-        setValidationMessage("You plan is not valid"); // Assuming result is an error message from isValid
+        alert(userId)
+        setValidationMessage("")
+        if (typeof data.message === "string"){
+          setValidationMessage("Kill me");
+        }
       }
     } catch (error) {
       setValidationMessage("An error occurred while validating the plan: " + error.message);

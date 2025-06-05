@@ -253,24 +253,20 @@ async def executioner(user_id, eng_comp: bool = False):
     
     lowest = find_lowest_quarter(other_courses)
     if not lowest and already_taken == []:
-        return other_courses, False  # no sorting if no valid quarters found
+        return "Screw you", False  # no sorting if no valid quarters found
     if lowest:
         start_year, start_quarter_idx = lowest
         quarter_sequence = generate_quarter_sequence(start_year, start_quarter_idx)    
         priority_map = {q: i for i, q in enumerate(quarter_sequence)}
         other_courses.sort(key=lambda c: priority_map.get(c.get("term", ""), 9999))
 
-    validity = await isValid(already_taken, other_courses, eng_comp)
+    message, validity = await isValid(already_taken, other_courses, eng_comp)
 
-    return other_courses, validity
+    return {"message": message, "validity": validity}
 
 
 async def main():
-    other_courses, validity = await executioner('6840d140e2a2ba254cc843aa')
-    if validity:
-        print("The list satisfies CS requirements")
-    else:
-        print("The list is invalid")
+    hello = await executioner('6840d18240100a7eb9ebc999')
     '''
     for item in other_courses:
         print(item.get('course_name'), item.get('term'))
