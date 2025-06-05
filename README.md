@@ -28,7 +28,7 @@ pip install -r requirements.txt
 To load python dependencies
 
 ```
-make dep
+make deps
 ```
 
 To load data into MongoDB
