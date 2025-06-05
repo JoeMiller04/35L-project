@@ -179,7 +179,8 @@ def upload(courses):
 
 
 def main():
-    data_dir = Path("course_data")
+    # We should make this a command line argument in the future
+    data_dir = Path("server/data/scrape-test/course_data")
     
     files_processed = 0
     total_added = 0
