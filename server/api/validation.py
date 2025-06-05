@@ -24,5 +24,5 @@ async def validate_plan(
         logger.error(f"Unexpected error in validate_plan: {e}")
         raise HTTPException(
             status_code=500,
-            detail="Internal server error during course plan validation."
+            detail="Plan not valid. Missing requirements." # Should fix this part
         )

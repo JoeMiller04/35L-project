@@ -10,7 +10,6 @@ from server.db.mongodb import pre_reqs as reqs
 from server.db.mongodb import previous_courses as pc
 from server.db.mongodb import future_courses as fc
 from server.db.mongodb import sample as sp
-from server.db.mongodb import aliases as ali
 from server.db.mongodb import users_collection as users
 
 from bson.objectid import ObjectId
@@ -88,14 +87,6 @@ async def isValid(previous_courses, sorted_list):
             total_units += 4
         else:
             result = await reqs.find_one({"course_name": course_name})
-            if not result:
-                alias_result = ali.find_one({"alias_key": course_name})
-                print (alias_result)
-                if alias_result:
-                    course_name = alias_result.get("original_course")
-                    result = await reqs.find_one({"course_name": course_name})
-                else:
-                    return False
 
             elective_true = result.get("elective_eligible")  
             if elective_true:
@@ -143,14 +134,6 @@ async def isValid(previous_courses, sorted_list):
             total_units += 4
         else:
             result = await reqs.find_one({"course_name": course_name})
-            if not result:
-                alias_result = ali.find_one({"alias_key": course_name})
-                print(alias_result)
-                if alias_result:
-                    course_name = alias_result.get("original_course")
-                    result = await reqs.find_one({"course_name": course_name})
-                else:
-                    return False
 
             elective_true = result.get("elective_eligible")  
             if elective_true:
