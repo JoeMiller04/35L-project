@@ -46,11 +46,11 @@ function CreateUser() {
                 
                 
             } else {
-                alert('Failed to create user');
+                console.log('Failed to create user');
                 
             }
         } catch (error) {
-            alert('Error:' + error.message);
+            console.log('Error:' + error.message);
         }
     }
 

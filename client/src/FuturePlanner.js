@@ -283,12 +283,12 @@ if (majorObj && majorObj.major) {
             }
       const data = await response.json(); 
       //const result = isValid(data); // Call isValid function with the current plan
-      const result = true;
+      
 
-      if (result === true) {
+      if (data.validity) {
         setValidationMessage("Your plan is valid!");
       } else {
-        setValidationMessage(result); // Assuming result is an error message from isValid
+        setValidationMessage("You plan is not valid"); // Assuming result is an error message from isValid
       }
     } catch (error) {
       setValidationMessage("An error occurred while validating the plan: " + error.message);
@@ -311,7 +311,7 @@ if (majorObj && majorObj.major) {
         return [...prevPlan, { term: backendTerm, classes: [selectedCourse] }];
       }
     });
-    alert(backendTerm);
+    
     fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

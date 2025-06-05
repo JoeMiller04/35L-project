@@ -17,6 +17,7 @@ course_collection = async_db.get_collection("courses")
 valid_course_collection = async_db.get_collection("valid_courses")
 ratings_collection = async_db.get_collection("course_ratings")
 descriptions_collection = async_db.get_collection("descriptions")
+professor_ratings_collection = async_db.get_collection("professor_ratings")
 
 pre_reqs = async_db.get_collection("pre-reqs")
 previous_courses = async_db.get_collection("Previous courses")

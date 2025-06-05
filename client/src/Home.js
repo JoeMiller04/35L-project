@@ -124,7 +124,7 @@ function Home() {
             const data = await response.json();
             setClasses(data);
         } catch (err) {
-            alert('Error fetching user course list: ' + err.message);
+            console.log('Error fetching user course list: ' + err.message);
         }
     }
 
@@ -226,17 +226,17 @@ function Home() {
                 }
               
             } else if (response.status === 400) {
-                alert("NOOO")
+                console.log("NOOO")
                 
                 
             } else {
                 
-                alert(response.status);
+                console.log(response.status);
                 
                 
             }
         } catch (error) {
-            alert("It is bad if we are here");
+            console.log("It is bad if we are here");
         }
         }
     
@@ -314,7 +314,7 @@ function Home() {
             // Insert a custom first element, e.g., '— Select Dept —'
             setSubjects(['- Select Dept -', ...thing]);
         } catch (error) {
-            alert('Error fetching subjects: ' + error.message);
+            console.log('Error fetching subjects: ' + error.message);
             return [];
         }
     }
@@ -326,7 +326,7 @@ function Home() {
             setClassesPerSubject({'- Select Dept -': ['- Select a Class -']});
             setDropdownClass('- Select a Class -');
             return [];
-            alert("why are we in here");
+            console.log("why are we in here");
         }
        
         if (term === 'idk' || term === 'Any Term') {
@@ -354,7 +354,7 @@ function Home() {
             setDropdownClass((catalogs && catalogs.length > 0) ? catalogs[0] : '- Select a Class -');
             return catalogs;
         } catch (error) {
-            alert('Error fetching catalogs: ' + error.message);
+            console.log('Error fetching catalogs: ' + error.message);
             setDropdownClass('- Select a Class -');
             return [];
         }
@@ -571,14 +571,14 @@ function Home() {
                     }
                     
                     return (
-                      <div key={day} style={{fontSize:'15px'}}>
-                        <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {item.times === null ? 'Missing time information' : timeText}
+                      <div key={day} style={{fontSize:'12px'}}>
+                        <span style={{fontSize:'13px'}}>{capitalizeWords(day.toLowerCase())}:</span> {item.times === null ? 'Missing time information' : timeText}
                       </div>
                     );
                   })}
               </div>
             ) : (
-              <div>{String("Missing time information")}</div>
+              <div style={{fontSize:'13px'}}>{String("Missing time information")}</div>
             )}
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>

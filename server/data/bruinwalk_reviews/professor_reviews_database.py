@@ -26,6 +26,8 @@ def export_to_mongodb(filename="professor_reviews.txt"):
     with open(filename, "r") as file:
         for line in file:
             line = line.strip()
+            if not line or line.count(":") < 2:
+                continue  # skip empty or malformed lines
             course, prof, rating = [part.strip() for part in line.split(":", 2)]
             course_map[course].append({"name": prof, "rating": rating})
             count += 1

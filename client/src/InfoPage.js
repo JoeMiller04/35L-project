@@ -44,7 +44,7 @@ function InfoPage() {
             const data = await response.json();
             setClasses(data);
         } catch (err) {
-            alert('Error fetching user course list: ' + err.message);
+            console.log('Error fetching user course list: ' + err.message);
         }
     }
 
@@ -100,8 +100,8 @@ function InfoPage() {
             return await response.json();
 
         } catch (err) {
-            alert(userId);
-            alert('Error: ' + err.message);
+            console.log(userId);
+            console.log('Error: ' + err.message);
         }
     }
 
@@ -160,16 +160,16 @@ function InfoPage() {
                   } else {
                     timeText = String(time);
                   }
-                  alert(timeText);
+                  
                   return (
-                    <div key={day} style={{fontSize:'15px'}}>
-                        <span style={{fontSize:'15px'}}>{capitalizeWords(day.toLowerCase())}:</span> {item.times === null ? 'Missing time information' : timeText}
+                    <div key={day} style={{fontSize:'13px'}}>
+                        <span style={{fontSize:'13px'}}>{capitalizeWords(day.toLowerCase())}:</span> {item.times === null ? 'Missing time information' : timeText}
                     </div>
                   );
                 })}
               </div>
             ) : (
-              <div>{String(item.times)}</div>
+              <div style={{fontSize:'13px'}}>{String("Missing Time Information")}</div>
             )}
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>

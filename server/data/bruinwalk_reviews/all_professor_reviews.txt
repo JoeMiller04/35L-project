@@ -1,0 +1,783 @@
+CHEM 153D: Robert Clubb: 4.0
+CHEM 153D: James Gober: N/A
+CHEM 153D: Jose Rodriguez: N/A
+CHEM 19: Jonathan Aurnou: N/A
+CHEM 19: L Coles: N/A
+CHEM 19: Neil Garg: 4.4
+CHEM 19: William Gelbart: N/A
+CHEM 19: Michael Gresser: N/A
+CHEM 19: Herbert Kaesz: 2.0
+CHEM 19: Sriram Kosuri: N/A
+CHEM 19: Benjamin Schwartz: N/A
+CHEM 19: David Scott: N/A
+CHEM 19: Alexander Spokoyny: N/A
+CHEM 19: Jorge Torres: N/A
+CHEM 20BH: Louis-Serge Bouchard: 3.7
+CHEM 20BH: William Gelbart: 5.0
+CHEM 20BH: Andrea Liu: 2.8
+CHEM 20BH: Thomas Mason: 2.8
+CHEM 20BH: Sarah Tolbert: 3.0
+CHEM 20BH: Paul Weiss: 4.6
+CHEM 30BL: Alfred Bacher: 2.8
+CHEM 30BL: Salvador Bernardino: N/A
+CHEM 30BL: Timothy Boit: N/A
+CHEM 30BL: Ana Bulger: N/A
+CHEM 30BL: Jason Chari: N/A
+CHEM 30BL: Nicholas Deifel: 3.3
+CHEM 30BL: Douglas Duquette: N/A
+CHEM 30BL: Anton El Khoury: N/A
+CHEM 30BL: Neil Garg: N/A
+CHEM 30BL: Maher Henary: 3.3
+CHEM 30BL: Jacquelin Kammeyer: 4.7
+CHEM 30BL: Rachel Knapp: N/A
+CHEM 30BL: Luca Mcdermott Catena: N/A
+CHEM 30BL: Milauni Mehta: N/A
+CHEM 30BL: Craig Merlic: N/A
+CHEM 30BL: Daniel Nasrallah: 4.2
+CHEM 30BL: Hung Pham: N/A
+CHEM 30BL: Amber Reilly: 4.3
+CHEM 30BL: Nikolas Theopold: N/A
+CHEM 30BL: Joseph Treacy: N/A
+CHEM 30BL: Laura Wonilowicz: N/A
+CHEM 30BL: Jacquelin Woodford: N/A
+CHEM 30BL: Yu Xie: N/A
+CHEM C173: Brandon Jolly: N/A
+CHEM C173: Chong Liu: 4.0
+CHEM C173: Zhengyu Xiang: N/A
+CHEM C174: Alfred Bacher: 2.8
+CHEM C174: Alexander Spokoyny: 5.0
+CH ENGR 104DL: Shuoran Li: N/A
+CH ENGR 104DL: Harold Monbouquette: N/A
+CH ENGR 104DL: Philip Romero: N/A
+CH ENGR 104DL: Tatiana Segura: N/A
+CH ENGR 104DL: Yi Tang: 4.0
+CH ENGR 104DL: Norman Truong: N/A
+CH ENGR 104DL: J Zhan: N/A
+CH ENGR 108A: David Chilin: N/A
+CH ENGR 108A: Zeynep Gerek Ince: N/A
+CH ENGR 108A: Yuzhang Li: N/A
+CH ENGR 108A: Harold Monbouquette: N/A
+CH ENGR 108A: Carlos Morales Guio: 4.0
+CH ENGR 108A: Kwok Pang: N/A
+CH ENGR 108A: Kwok Hing Pang: N/A
+CH ENGR 108A: K. Pang: N/A
+AN N EA CM163: Elizabeth Carter: N/A
+AN N EA CM163: Lara Fabian: 3.5
+AN N EA CM163: Seyed-Ali Mousavi: 4.5
+ANTHRO 113Q: Jeanne Arnold: 4.2
+ANTHRO 113Q: Julienne Bernard: 4.6
+ANTHRO 113Q: David Cheetham: N/A
+ANTHRO 113Q: Kathleen Cheetham: N/A
+ANTHRO 113Q: Terisa Green: 4.2
+ANTHRO 113Q: Benjamin Shepard: N/A
+ANTHRO 113Q: Wendy Teeter: N/A
+ANTHRO 113Q: Thomas Wake: 2.3
+ANTHRO 119: Stephen Acabado: 5.0
+ANTHRO 119: Kathleen Cheetham: N/A
+ANTHRO 119: P Dematte: N/A
+ANTHRO 119: Kelly Fong: N/A
+ANTHRO 119: Erik Gjesfjeld: N/A
+ANTHRO 119: Sonali Gupta-Agarwal: N/A
+ANTHRO 119: Catherine Haradon: N/A
+ANTHRO 119: G Kelly: N/A
+ANTHRO 119: Richard Lesure: N/A
+ANTHRO 119: Lana Martin: N/A
+ANTHRO 119: Li Min: 4.5
+ANTHRO 119: Greg Schachner: 3.0
+ANTHRO 119: J Snead: N/A
+ANTHRO 119: Charles Stanish: N/A
+ANTHRO 119: C Throop: N/A
+ANTHRO 119: Alexei Vranich: N/A
+ANTHRO 119: Thomas Wake: 3.8
+ANTHRO 119: Dan Zborover: N/A
+ANTHRO 129: Harold Barrett: N/A
+ANTHRO 129: Abigail Bigham: N/A
+ANTHRO 129: Erica Cartmill: 5.0
+ANTHRO 129: Daniel Fessler: N/A
+ANTHRO 129: Robin Fisher: N/A
+ANTHRO 129: Molly Fox: N/A
+ANTHRO 129: Brooke Hauser: N/A
+ANTHRO 129: B.A. Hauser: 5.0
+ANTHRO 129: Gail Kennedy: N/A
+ANTHRO 129: Jorge Lazareff: 4.8
+ANTHRO 129: Lene Levy-Storms: N/A
+ANTHRO 129: Jessica Lynch-Alfaro: N/A
+ANTHRO 129: Joseph Manson: N/A
+ANTHRO 129: Susan Perry: N/A
+ANTHRO 129: Jennifer Rashidi: N/A
+ANTHRO 129: Elizabeth Rich: N/A
+ANTHRO 129: Brooke Scelza: 4.2
+ANTHRO 129: Barnett Schlinger: N/A
+ANTHRO 129: Jeffrey Snyder: N/A
+ANTHRO 129: Carole Warde: N/A
+ANTHRO 142Q: Aomar Boum: 4.0
+ANTHRO 160B: Russell Thornton: 4.0
+ANTHRO 161: Abigail Bigham: N/A
+ANTHRO 161: Yanina Gori: N/A
+ANTHRO 161: Kevin Groark: N/A
+ANTHRO 161: Akhil Gupta: N/A
+ANTHRO 161: Allen Johnson: 4.0
+ANTHRO 161: Jananie Kalyanaraman: N/A
+ANTHRO 161: Agatha Palma: N/A
+ANTHRO 161: Ritu Verma: N/A
+ANTHRO 185A: Sharon Bays: 4.0
+ANTHRO 185A: Angeline Gunawardena: 4.0
+ANTHRO C117: Stephen Acabado: N/A
+ANTHRO C117: Hans Barnard: N/A
+ANTHRO C117: Sonia Quon: N/A
+ANTHRO C117: Amr Shahat: N/A
+ANTHRO C117: Thomas Wake: 4.0
+ANTHRO C117: Sonia Zarrillo: N/A
+ANTHRO C117: Sonia Zarrillo (quon): N/A
+BMD RES 1A: Ira Clark: N/A
+BMD RES 1A: Daniel Srole: N/A
+BMD RES 1A: Kirsten Turlo: 4.0
+BMD RES 1A: Tong Xia: N/A
+CCAS 120: Richard Andalon: 4.0
+CCAS 152: Mindy Steinberg: 4.0
+CCAS C141: Helen Ellis: 4.0
+C&EE 108: Mathieu Bauchy: 4.6
+C&EE 108: J Kim: N/A
+C&EE 108: Y Ko: N/A
+C&EE 108: Yi Peng: N/A
+C&EE 108: Fabian Rosner: 3.7
+C&EE 108: Marcus Rueter: N/A
+C&EE 108: Marcus Ruter: 5.0
+C&EE 108: Theodore Shugar: 3.4
+C&EE 108: Longwen Tang: N/A
+C&EE 108: Thien Tran: 1.0
+C&EE 108: Mladen Vucetic: 3.4
+C&EE 108: Jian Zhang: N/A
+C&EE 108: Xiaoyu Zheng: 5.0
+C&EE 108: Yinghui Zhu: N/A
+C&EE 108: Tadeh Zirakian: N/A
+C&EE 123: Scott Brandenberg: N/A
+C&EE 123: Macan Doroudian: N/A
+C&EE 123: Mohammad Eslami: N/A
+C&EE 123: Martin Hudson: N/A
+C&EE 123: Daniel Pradel: 4.0
+C&EE 123: Paolo Zimmaro: N/A
+C&EE 135L: Eric Ahlberg: 4.0
+C&EE 135L: Henry Burton: N/A
+C&EE 135L: Yi Peng: N/A
+C&EE 135L: A Salamanca: N/A
+C&EE 135L: Fariborz Tehrani: N/A
+C&EE 142: Chukwuma Ekwueme: 4.0
+C&EE 142: Yi Peng: 4.7
+C&EE 142: Michael Weyant: N/A
+C&EE 142: Jian Zhang: 3.8
+C&EE 142: Melineh Zomorrodian: N/A
+C&EE 255B: Phillip Gedalanga: N/A
+C&EE 255B: Zhongtian Li: N/A
+C&EE 255B: Michael Stenstrom: 4.0
+C&EE 266: Yifan Gao: N/A
+C&EE 266: Shaily Mahendra: 4.0
+C&EE 266: Alexandra Polasko: N/A
+C&EE 266: Vanessa Thulsiraj: N/A
+C&EE C158: Timu Gallien: 4.0
+C&EE M165: Shaily Mahendra: 4.0
+C&EE M165: Catalina Marambio Jones: N/A
+C&EE M165: Yiming Su: 4.0
+C&EE M165: Meng Wang: N/A
+CH ENGR C128: Vasilios Manousiouthakis: 4.0
+CHICANO 128: Victor Narro: 4.0
+CHICANO 157: Virginia Espino: 4.0
+CHICANO 172: Linda Hall: N/A
+CHICANO 172: Maurice Magana: 4.0
+CHICANO C107: Leisy Abrego: 4.0
+CHICANO C107: Angelica Becerra: N/A
+CHICANO C107: Katie Cobian: N/A
+CHICANO C107: Kendy Rivera: N/A
+CHICANO CM147: Maylei Blackwell: N/A
+CHICANO CM147: Maurice Magana: 4.0
+CHICANO CM147: Kendy Rivera: N/A
+CHICANO CM147: Adriana Silvestre: N/A
+CHICANO M105B: Evelyn Boria-Rivera: N/A
+CHICANO M105B: Abraham Encinas: N/A
+CHICANO M105B: Renee Hudson: N/A
+CHICANO M105B: Marissa Lopez: 4.0
+CHICANO M105B: Rafael Perez-Torres: N/A
+CHICANO M105B: Gregory Toy: N/A
+CHICANO M106: David Hayes-bautista: 4.0
+CHICANO M135: Alicia Gaspar De Alba: 4.0
+CHIN 100A: Y Shen: 3.6
+CHIN 100A: Yan Shen: N/A
+CHIN 100A: Michelle Smith: 3.7
+CHIN 100A: Hongyin Tao: 4.5
+CHIN 100E: Yan Shen: 4.0
+CHIN 110B: Jack Chen: 4.0
+CHIN 110B: Nina Duthie: N/A
+CHIN 110B: Wanmeng Li: N/A
+CHIN 110B: Yunshuang Zhang: N/A
+CHIN 110B: Meimei Zhang: N/A
+CHIN 186: Hung-hsiang Chou: 4.0
+CHIN 186: Hung Chou: N/A
+CHIN 186: Min Li: N/A
+CHIN 186: Li Min: N/A
+CHIN 70: William Bodiford: N/A
+CHIN 70: Faye Lu: N/A
+CHIN 70: Huijun Mai: 4.0
+CHIN 70: Yue Tojimbara: N/A
+CHIN 70: Meimei Zhang: N/A
+CHIN 80: Tzu-Chin Chen: N/A
+CHIN 80: Robert Chi: 4.0
+CHIN 80: Laura Reizman: N/A
+CHIN 80: Kenneth Shima: N/A
+CHIN C150B: Yinghui Wu: 3.0
+CHIN C150B: Yunshuang Zhang: 5.0
+ANTHRO M148: Jared Diamond: 4.0
+ANTHRO M148: Ali Hamdan: N/A
+ANTHRO M148: Scott Lydon: N/A
+ANTHRO M148: Matthew McCoy: N/A
+ANTHRO M148: Hudson Spivey: N/A
+ANTHRO M166Q: Aomar Boum: 5.0
+ANTHRO M166Q: Susan Slyomovics: 3.5
+A&O SCI 107: Daniel Clements: N/A
+A&O SCI 107: Robert Eagle Tripati: 4.0
+A&O SCI 107: Jamie Lucarelli: N/A
+A&O SCI 107: Allison Moreno: N/A
+A&O SCI 107: Rebecca Shipe: N/A
+A&O SCI 107: Aradhna Tripati: N/A
+A&O SCI 121: Suzanne Paulson: 4.0
+A&O SCI 121: Ulrike Seibt: N/A
+A&O SCI M105: Daniele Bianchi: 4.1
+A&O SCI M105: H Brix: 4.5
+A&O SCI M105: Curtis Deutsch: 4.3
+A&O SCI M105: Aaron Ferrel: N/A
+A&O SCI M105: David Gonzalez: N/A
+A&O SCI M105: Anita Leinweber: N/A
+A&O SCI M105: Tina Treude: 1.7
+A&O SCI M106: Yongkang Xue: 4.0
+APPLING 200: Christine Holten: 4.0
+ARABIC 130: Michael Cooperson: 4.0
+AF AMER 188A: Walter Allen: N/A
+AF AMER 188A: Lucas Avidan: N/A
+AF AMER 188A: Bryonn Bain: N/A
+AF AMER 188A: Lynnée Bonner: N/A
+AF AMER 188A: Anuja Bose: N/A
+AF AMER 188A: Mary Corey: N/A
+AF AMER 188A: Wade Dean: N/A
+AF AMER 188A: Tananarive Due: N/A
+AF AMER 188A: Ugo Edu: N/A
+AF AMER 188A: Yogita Goyal: N/A
+AF AMER 188A: Christian Green: N/A
+AF AMER 188A: Sarah Haley: N/A
+AF AMER 188A: Lauren Hirshberg: N/A
+AF AMER 188A: Peter Hudson: 5.0
+AF AMER 188A: Eryn Jones: N/A
+AF AMER 188A: Terence Keel: N/A
+AF AMER 188A: Cheryl Keyes: N/A
+AF AMER 188A: Libby Lewis: N/A
+AF AMER 188A: Kathleen Lytle Hernandez: N/A
+AF AMER 188A: Kyle Mays: N/A
+AF AMER 188A: Vickie Mays: N/A
+AF AMER 188A: Uri McMillan: N/A
+AF AMER 188A: Britt Meitzenheimer: N/A
+AF AMER 188A: Sobukwe Odinga: N/A
+AF AMER 188A: Ketema Paul: N/A
+AF AMER 188A: Keston Perry: N/A
+AF AMER 188A: Jemima Pierre: N/A
+AF AMER 188A: Zachary Price: N/A
+AF AMER 188A: Shana Redmond: N/A
+AF AMER 188A: Melvin Rogers: N/A
+AF AMER 188A: Rael Salley: N/A
+AF AMER 188A: Mark Sawyer: N/A
+AF AMER 188A: Eboni Shaw: N/A
+AF AMER 188A: Sa Smythe: N/A
+AF AMER 188A: David Stein: N/A
+AF AMER 188A: Eric Taylor: N/A
+AF AMER 6: Young Alden: N/A
+AF AMER 6: Benjamin Doleac: N/A
+AF AMER 6: Caroline Streeter: 3.8
+AF AMER 6: Aliyah Symes: N/A
+AF AMER 6: Alden Young: 5.0
+AF AMER M104A: Anthony Kim: N/A
+AF AMER M104A: Jessica Lee: N/A
+AF AMER M104A: Alexander Mazzaferro: N/A
+AF AMER M104A: Robert Mendoza: N/A
+AF AMER M104A: Richard Yarborough: 4.0
+AF AMER M104A: Martin Zirulnik: N/A
+AF AMER M120: Walter Allen: 4.0
+AF AMER M120: Karida Brown: N/A
+AF AMER M120: Abraham Calderon Martinez: N/A
+AF AMER M120: Christian Green: N/A
+AFRKAAN 40: Robert Kirsner: 4.0
+ART HIS C151: Kristopher Kersey: 4.0
+ART HIS C151: Talia Lieber: N/A
+ART HIS C151: Leah Marangos: N/A
+ART HIS C151: Kenichi Sasaki: N/A
+BIOENGR 298: Timothy Deming: N/A
+BIOENGR C139A: Gerard Wong: 4.0
+BIOENGR C139B: Gerard Wong: 4.0
+BIOENGR C147: Nabil Tawil: N/A
+BIOENGR C147: Bill Tawil: 4.0
+BIOENGR CM145: Irene Chen: N/A
+BIOENGR CM145: Yvonne Chen: N/A
+BIOENGR CM145: Jun Park: N/A
+BIOENGR CM145: Junyoung Park: 4.0
+BIOENGR M260: Wentai Liu: 4.0
+BIOSTAT 100A: Hilary Aralis: N/A
+BIOSTAT 100A: Emilie Campos: N/A
+BIOSTAT 100A: Alec Chan-Golston: N/A
+BIOSTAT 100A: David Gjertson: 4.4
+BIOSTAT 100A: Kelsey Ishimoto: N/A
+BIOSTAT 100A: Martin Lee: 3.6
+BIOSTAT 100A: Nicholas Marco: N/A
+BIOSTAT 100A: Karabi Nandy: N/A
+BIOSTAT 100A: Benjamin Rogers: N/A
+BIOSTAT 100A: James Sayre: 4.7
+BIOSTAT 100A: Karabi Sinha: N/A
+BIOSTAT 100A: Bingling Wang: N/A
+BIOSTAT 100A: Jason Wang: N/A
+BIOSTAT 100A: Richard Williams: N/A
+BIOSTAT 100A: Lu Zhang: N/A
+BIOSTAT 100A: Zizhao Zhang: N/A
+BIOSTAT 100A: Joseph Zoller: N/A
+ASTR 19: Bradley Hansen: N/A
+ASTR 19: Alexander Levine: N/A
+ASTR 19: William Newman: N/A
+ASTR 19: Michael Rich: 5.0
+ASTR 81: Anna Ciurlo: N/A
+ASTR 81: Andrea Ghez: 4.2
+ASTR 81: Helen Kim: N/A
+ASTR 81: James Larkin: 4.4
+ASTR 81: Benjamin Zuckerman: 2.2
+BIOENGR 177A: Michael Bogumil: N/A
+BIOENGR 177A: Dino di Carlo: N/A
+BIOENGR 177A: Liang Gao: 4.0
+BIOENGR 177A: Pranshu Garg: N/A
+BIOENGR 177A: Jacob Hambalek: N/A
+BIOENGR 177A: Foad Mashayekhi: N/A
+BIOENGR 177A: Stephanie Seidlits: N/A
+ASIAN 60: Caleb Carter: 4.0
+ASIAN C138: Robert Chi: 4.0
+ASL 1: Benjamin Lewis: 4.2
+ASTR 141: Steven Furlanetto: N/A
+ASTR 141: Michael Turner: 4.0
+ASTR 142: Michael Fitzgerald: 4.0
+FILM TV 84A: Adam Burnstine: N/A
+FILM TV 84A: Andrew deWaard: N/A
+FILM TV 84A: James Fleury: N/A
+FILM TV 84A: Lindsay Giggey: N/A
+FILM TV 84A: Erin Hill: N/A
+FILM TV 84A: Denise Mann: 4.0
+FILM TV 84A: Katherine Marpe: N/A
+FILM TV 84A: Sudeep Sharma: N/A
+FILM TV 84A: Savana Vagueiro Da Fonseca: N/A
+FILM TV 84A: Bryan Wuest: N/A
+FRNCH 100: Carole Delavault: 4.2
+FRNCH 100: Laurence Denie Higney: 4.2
+FRNCH 100: Caroline Ferraris-Besso: N/A
+FRNCH 100: Anneka Haddix: N/A
+FRNCH 100: Ariane Helou: N/A
+FRNCH 100: Kimberly Jansma: 3.6
+FRNCH 100: Andrea Loselle: N/A
+FRNCH 100: Alain Mabanckou: N/A
+FRNCH 100: Hannah Vaughan: N/A
+FRNCH 14: Lia Brozgal: 4.9
+FRNCH 14: Jean-Claude Carron: 3.0
+FRNCH 14: Ileana Chirila: 5.0
+FRNCH 14: Laurence Denie Higney: N/A
+FRNCH 14: Caroline Ferraris-Besso: N/A
+FRNCH 14: Anneka Haddix: N/A
+FRNCH 14: Ariane Helou: 4.5
+FRNCH 14: Francoise Lionnet: 2.5
+FRNCH 14: Sara Melzer: 2.6
+FRNCH 14: Malina Stefanovska: 2.4
+FRNCH 141: Lia Brozgal: N/A
+FRNCH 141: Eric Gans: 3.7
+FRNCH 141: Malina Stefanovska: N/A
+FRNCH 141: Dominic Thomas: 4.5
+FRNCH 3: S Ayari: N/A
+FRNCH 3: Nina Bjekovic: N/A
+FRNCH 3: Florence Bouhali: N/A
+FRNCH 3: G Calafat: N/A
+FRNCH 3: Kendell Clarke: N/A
+FRNCH 3: Clemence Darriet: N/A
+FRNCH 3: Onja Davidson: N/A
+FRNCH 3: Carole Delavault: 5.0
+FRNCH 3: Laurence Denie Higney: 5.0
+FRNCH 3: Elsa Duval: N/A
+FRNCH 3: Christopher Gobeille: N/A
+FRNCH 3: Elias Gueidon: 3.7
+FRNCH 3: Anneka Haddix: N/A
+FRNCH 3: Fadhila Hadjeris: N/A
+FRNCH 3: Nicolas Hauton: N/A
+FRNCH 3: Lernik Hovsepyan: N/A
+FRNCH 3: Kimberly Jansma: 3.9
+FRNCH 3: Magdalena Karpinska: N/A
+FRNCH 3: Gina Lorenz: 5.0
+FRNCH 3: Christina Makdisi: 4.8
+FRNCH 3: Juliana Mazzucotelli: N/A
+FRNCH 3: Clayton McKee: N/A
+FRNCH 3: Michael Mengual: 3.0
+FRNCH 3: Delphine Merx: N/A
+FRNCH 3: Louis Monteils: 4.0
+FRNCH 3: Alizee Morcillo: N/A
+FRNCH 3: Catherine Mullen: N/A
+FRNCH 3: Caroline Penicaud: N/A
+FRNCH 3: Todd Presner: N/A
+FRNCH 3: M Rodrigues: 1.0
+FRNCH 3: Delphin Ruche: N/A
+FRNCH 3: Mohamed Saadouni: N/A
+FRNCH 3: G Saint-jacques: N/A
+FRNCH 3: Ryan Schaller: N/A
+FRNCH 3: Rebecca Temkin: N/A
+FRNCH 3: Annick Tournissac: 3.5
+FRNCH 3: Hannah Vaughan: N/A
+GE CLST 20B: Catherine Bender: N/A
+GE CLST 20B: Anuja Bose: N/A
+GE CLST 20B: Scot Brown: N/A
+GE CLST 20B: Jean-Paul Deguzman: N/A
+GE CLST 20B: Mishuana Goeman: N/A
+GE CLST 20B: Celia Lacayo: N/A
+GE CLST 20B: Valerie Matsumoto: N/A
+GE CLST 20B: Vilma Ortiz: 4.0
+GE CLST 20B: William Rosales: N/A
+GE CLST 20B: Mark Sawyer: N/A
+GE CLST 20B: Ariana Valle: N/A
+GE CLST 20B: Wendsor Yamashita: N/A
+GE CLST 60B: Joel Aberbach: N/A
+GE CLST 60B: Travis Baker: N/A
+GE CLST 60B: Benjamin Beck: N/A
+GE CLST 60B: Wade Dean: N/A
+GE CLST 60B: Jeffrey Decker: 3.0
+GE CLST 60B: Robert Fink: N/A
+GE CLST 60B: Angela Gutierrez: N/A
+GE CLST 60B: Jacob Johnson: N/A
+GE CLST 60B: Ajax Peris: N/A
+GE CLST 60B: Helen Rowe: N/A
+GE CLST 60B: Jessica Schwartz: N/A
+GE CLST 60B: Thomas Sherrer: N/A
+GE CLST 60B: Lynn Vavreck: 5.0
+GE CLST 70B: Ryan Ellingson: N/A
+GE CLST 70B: Anthony Friscia: 4.0
+GE CLST 70B: Emily Guswa: N/A
+GE CLST 70B: James Larkin: N/A
+GE CLST 70B: William Mc Craney: N/A
+GE CLST 70B: Kevin McKeegan: N/A
+GE CLST 80CW: Rita Effros: N/A
+GE CLST 80CW: Paul Hsu: 4.0
+GE CLST 80CW: Lene Levy-Storms: N/A
+GE CLST M1A: Raffaella D'Auria: N/A
+GE CLST M1A: Ashley Fent: N/A
+GE CLST M1A: Jennifer Jay: 4.0
+GE CLST M1A: Cully Nordby: N/A
+GE CLST M1A: David Rice: N/A
+GE CLST M1B: Raffaella D'Auria: N/A
+GE CLST M1B: Adam Dorr: N/A
+GE CLST M1B: Ashley Fent: N/A
+GE CLST M1B: Jennifer Jay: 4.0
+GE CLST M1B: Cully Nordby: N/A
+GE CLST M1B: David Rice: N/A
+GE CLST M1B: Keith Stolzenbach: N/A
+GE CLST M71A: Jonathan Gingerich: N/A
+GE CLST M71A: Anne le Goff: N/A
+GE CLST M71A: Aaron Panofsky: N/A
+GE CLST M71A: Michelle Rensel: 4.0
+GE CLST M72A: Amanda Apgar: N/A
+GE CLST M72A: Arthur Arnold: N/A
+GE CLST M72A: Martie Haselton: 4.0
+GE CLST M72A: Abigail Saguy: N/A
+GE CLST M72A: Rana Sharif: N/A
+GE CLST M72A: Eric Vilain: N/A
+GENDER 101W: Mishuana Goeman: N/A
+GENDER 101W: Talia Gomez: N/A
+GENDER 101W: Elizabeth Marchant: N/A
+GENDER 101W: Talia Quintana: N/A
+GENDER 101W: Sherene Razack: N/A
+GENDER 101W: Laura Terrance: 4.0
+GENDER 113: Elizabeth Dayton: N/A
+GENDER 113: Elizabeth Marchant: N/A
+GENDER 113: Mary Kathryn Norberg: N/A
+GENDER 113: Kathryn Norberg: 4.0
+GENDER 141: Celestina Castillo: N/A
+GENDER 141: Shawndeez Jadali: N/A
+GENDER 141: Zeynep Korkman: 4.0
+GENDER 141: Taryn Marcelino: N/A
+GENDER 141: Jenna Tamimi: N/A
+GENDER 187: Juliann Anesi: N/A
+GENDER 187: Azzarina Basarudin: 5.0
+GENDER 187: Kimberly Clair: N/A
+GENDER 187: Karina Eileraas: N/A
+GENDER 187: Michelle Erai: N/A
+GENDER 187: Aisha Finch: N/A
+GENDER 187: Joshua Guzman: N/A
+GENDER 187: Sondra Hale: 3.7
+GENDER 187: Sarah Haley: N/A
+GENDER 187: Rhonda Hammer: 4.3
+GENDER 187: Ju Hui Han: N/A
+GENDER 187: Sandra Harding: N/A
+GENDER 187: Grace Hong: N/A
+GENDER 187: Kyungwon Hong: N/A
+GENDER 187: Ki Hong: N/A
+GENDER 187: Rachel Lee: N/A
+GENDER 187: Barrie Levy: 4.2
+GENDER 187: Purnima Mankekar: N/A
+GENDER 187: Elizabeth Marchant: N/A
+GENDER 187: Uri McMillan: N/A
+GENDER 187: Nancy Mithlo: N/A
+GENDER 187: Mary Kathryn Norberg: N/A
+GENDER 187: Kathryn Norberg: N/A
+GENDER 187: Sherene Razack: 5.0
+GENDER 187: Sarah Roberts: N/A
+GENDER 187: Nadine Tanio: N/A
+GENDER 187: Sharon Traweek: 3.7
+GENDER 187: Juliet Williams: N/A
+GENDER M108S: Barrie Levy: 4.0
+GENDER M186B: Jennifer Carcamo: N/A
+GENDER M186B: Roanna Cheung: N/A
+GENDER M186B: Ellen DuBois: N/A
+GENDER M186B: Katherine Marino: 4.0
+ETHNOMU 19: Roger Kendall: 3.4
+ETHNOMU 19: Cheryl Keyes: N/A
+ETHNOMU 19: Steven Loza: N/A
+ETHNOMU 19: Helen Rees: N/A
+ETHNOMU 19: Roger Savage: 4.8
+ETHNOMU 289: Helen Rees: 4.0
+ETHNOMU C169: Roger Kendall: 4.0
+FILIPNO 170: Oona Paredes: 4.0
+FILIPNO 170: Veronica Paredes: N/A
+FILM TV 10A: Heather Birdsall: N/A
+FILM TV 10A: Andrew deWaard: N/A
+FILM TV 10A: James Fleury: N/A
+FILM TV 10A: Erin Hill: 4.0
+FILM TV 10A: Emmelle Israel: N/A
+FILM TV 10A: Denise Mann: N/A
+FILM TV 10A: William McDonald: N/A
+FILM TV 10A: Tor Negrete: N/A
+FILM TV 10A: Benjamin Sampson: N/A
+FILM TV 10A: Dahlia Schweitzer: N/A
+FILM TV 10A: Amy Villarejo: N/A
+FILM TV 188N: C Solomon: 4.0
+FILM TV 4: Gregory Armstrong: N/A
+FILM TV 4: Christine Auger-Zivic: N/A
+FILM TV 4: Jacqueline Barnes: N/A
+FILM TV 4: Heather Birdsall: N/A
+FILM TV 4: Georgina Bradley: N/A
+FILM TV 4: Kwanda Ford: N/A
+FILM TV 4: Mohannad Ghawanmeh: N/A
+FILM TV 4: Shelleen Greene: N/A
+FILM TV 4: George Huang: 5.0
+FILM TV 4: Emmelle Israel: N/A
+FILM TV 4: Rory Kelly: 4.3
+FILM TV 4: Jonathan Kuntz: 4.8
+FILM TV 4: David Maquiling: N/A
+FILM TV 4: Kathleen McHugh: 2.0
+FILM TV 4: Tor Negrete: N/A
+FILM TV 4: Veronica Paredes: 4.0
+FILM TV 4: Michael Reinhard: N/A
+FILM TV 4: Kenneth Reinhard: N/A
+FILM TV 4: Christopher Rogers: N/A
+FILM TV 4: Dustin Romero: N/A
+FILM TV 4: Ingrid Sanchez: N/A
+FILM TV 4: Jasmine Trice: 3.7
+FILM TV 4: Josias Troyer: N/A
+FILM TV 4: Emily Trueswell: N/A
+FILM TV 4: Philip Wagner: N/A
+FILM TV 4: Bryan Wuest: N/A
+ENVIRON 180C: Emma Barnosky: N/A
+ENVIRON 180C: Alan Barreca: N/A
+ENVIRON 180C: James Bassett: N/A
+ENVIRON 180C: Joscha Beninde: N/A
+ENVIRON 180C: Erin Coutts: N/A
+ENVIRON 180C: Edith de Guzman: N/A
+ENVIRON 180C: Magali Delmas: N/A
+ENVIRON 180C: Robert Eagle Tripati: N/A
+ENVIRON 180C: Alvar Escriva Bou: N/A
+ENVIRON 180C: Felicia Federico: N/A
+ENVIRON 180C: Noah Garrison: 1.0
+ENVIRON 180C: Thomas Gillespie: N/A
+ENVIRON 180C: Mark Gold: N/A
+ENVIRON 180C: Kathryn Goldman: N/A
+ENVIRON 180C: Margaret Isied: N/A
+ENVIRON 180C: Jennifer Jay: N/A
+ENVIRON 180C: Karina Jimenez: N/A
+ENVIRON 180C: Peter Kareiva: N/A
+ENVIRON 180C: Andrew Kleinhesselink: N/A
+ENVIRON 180C: Stephanie Landregan: N/A
+ENVIRON 180C: Jinghui Lim: N/A
+ENVIRON 180C: Emily Lindsey: N/A
+ENVIRON 180C: Travis Longcore: N/A
+ENVIRON 180C: Juan Matute: N/A
+ENVIRON 180C: Moana McClellan: N/A
+ENVIRON 180C: Michael McGuire: N/A
+ENVIRON 180C: Alesia Montgomery: N/A
+ENVIRON 180C: Kevin Njabo: N/A
+ENVIRON 180C: Cully Nordby: N/A
+ENVIRON 180C: Gregory Pierce: N/A
+ENVIRON 180C: Stephanie Pincetl: N/A
+ENVIRON 180C: Deepak Rajagopal: N/A
+ENVIRON 180C: Elizabeth Rich: N/A
+ENVIRON 180C: Pablo Saide Peralta: N/A
+ENVIRON 180C: Viraj Sawant: N/A
+ENVIRON 180C: Brad Shaffer: N/A
+ENVIRON 180C: Howard Shaffer: N/A
+ENVIRON 180C: Debra Shier: N/A
+ENVIRON 180C: Rebecca Shipe: 4.4
+ENVIRON 180C: Ariel Simons: N/A
+ENVIRON 180C: Aradhna Tripati: N/A
+ENVIRON 180C: Brandon Winfrey: N/A
+ENVIRON 185A: Mingyi Chen: N/A
+ENVIRON 185A: Carl Maida: 4.0
+ENVIRON 185A: Alyssa Moreno: N/A
+ENVIRON 185A: David Scolari: N/A
+ENVIRON 185A: Jasmine Summers-Evans: N/A
+ENVIRON M155: Michael Jura: N/A
+ENVIRON M155: Matthew Kahn: 4.0
+ENVIRON M167: James Artiga-Purcell: N/A
+ENVIRON M167: Holly Buck: N/A
+ENVIRON M167: Rebecca Crane: N/A
+ENVIRON M167: Richard Guy: N/A
+ENVIRON M167: Tam Guy: 4.0
+ENVIRON M167: S Jimenez: N/A
+ENVIRON M167: Elizabeth Koslov: N/A
+ENVIRON M167: Celine Kuklowsky: N/A
+ENVIRON M167: Moana McClellan: 3.6
+ENVIRON M167: Alesia Montgomery: 5.0
+ENVIRON M167: Chase Niesner: N/A
+ENVIRON M167: Paul Ong: N/A
+ENVIRON M167: Kent Wong: N/A
+ENVIRON M167: Karna Wong: N/A
+ENVIRON M1B: Raffaella D'Auria: 4.0
+ENVIRON M1B: Adam Dorr: N/A
+ENVIRON M1B: Jennifer Jay: N/A
+ENVIRON M1B: Jennifer Nordby: N/A
+ENVIRON M1B: David Rice: N/A
+ENVIRON M1B: Keith Stolzenbach: N/A
+EPIDEM 220: Roger Detels: N/A
+EPIDEM 220: Scott Layne: 4.0
+EPIDEM 220: Soe Ohnmar Khin: N/A
+EPIDEM 220: Jee Park: N/A
+EPIDEM 220: Joshua Quint: N/A
+EPIDEM 220: Anne Rimoin: N/A
+EPIDEM 220: Lokachet Tanasugarn: N/A
+EPIDEM 240: Roger Detels: 4.0
+EPIDEM 240: Nathan Wong: N/A
+EPIDEM 246: Roger Detels: 4.0
+EPIDEM 246: Paul Hsu: N/A
+EPIDEM 250: Roger Detels: 4.0
+EPIDEM M403: Aryana Amoon: N/A
+EPIDEM M403: Lisa Smith: 4.0
+EPIDEM M403: Melissa Soohoo: N/A
+EPIDEM M403: Ranjana Wickramasekaran: N/A
+EPS SCI 13: Erik Derai Weidner: N/A
+EPS SCI 13: Carolina Lithgow-Bertelloni: 4.5
+EPS SCI 13: Kevin McKeegan: 4.5
+EPS SCI 13: Seul Gi Moon: N/A
+EPS SCI 13: Seul Moon: 4.0
+EPS SCI 13: Ailee Moon: 3.7
+EPS SCI 13: William Newman: 2.8
+EPS SCI 153: Jonathan Mitchell: 4.0
+EPS SCI 153: David Paige: 4.0
+GEOG 121: Derrick Hindery: 3.5
+GEOG 121: Justin Zackey: 4.8
+GEOG 167: Sierra Burkhart: 4.7
+GEOG 167: Nicholas Gessler: 4.4
+GEOG 167: Austin Madson: N/A
+GEOG 167: Jennifer Mason: N/A
+GEOG 167: ‪Jonathan Ocón: N/A
+GEOG 167: Michael Shin: 3.4
+GEOG 167: Jason Ward: N/A
+GEOG 167: Katherine Willis: N/A
+GEOG 167: Shengan Zhan: N/A
+GEOG 181A: Sierra Burkhart: 4.0
+GEOG 181A: Ruth Engel: N/A
+GEOG 181A: Yongwei Sheng: N/A
+GEOG 181A: Michael Shin: N/A
+GEOG 181A: Solomon Vimal: N/A
+GEOG 181A: Wenbo Xin: N/A
+GEOG 191: Pierre-Alexandre Balland: N/A
+GEOG 191: Stephen Boatright: N/A
+GEOG 191: Daniela Cusack: N/A
+GEOG 191: Lisa Davis: N/A
+GEOG 191: Bridget Gonzalez: N/A
+GEOG 191: Jamie Goodwin-White: N/A
+GEOG 191: Ali Hamdan: N/A
+GEOG 191: Joshua Herr: N/A
+GEOG 191: Lilia Illes: N/A
+GEOG 191: Kelly Kay: N/A
+GEOG 191: Dennis Lettenmaier: 4.0
+GEOG 191: Yue Li: N/A
+GEOG 191: Mario Picazo: N/A
+GEOG 191: Marilyn Raphael: N/A
+GEOG 191: Park Williams: N/A
+GEOG 282: Stephen Bell: 4.0
+GEOG 3: Heather Agnew: N/A
+GEOG 3: Luis Alvarez: N/A
+GEOG 3: Clare Beer: N/A
+GEOG 3: Catherine Bender: N/A
+GEOG 3: Stephen Boatright: 4.3
+GEOG 3: Troy Burnett: 4.5
+GEOG 3: Siyu Cai: N/A
+GEOG 3: Emma Colven: N/A
+GEOG 3: Denis Cosgrove: 4.1
+GEOG 3: Michael Curry: 1.8
+GEOG 3: J. Entrikin: 2.4
+GEOG 3: Lieba Faier: 3.9
+GEOG 3: Ashley Fent: N/A
+GEOG 3: Of Ford: N/A
+GEOG 3: Juan Herrera: 4.8
+GEOG 3: Sara Hughes: N/A
+GEOG 3: Fernanda Jahn Verri: N/A
+GEOG 3: Nour Joudah: N/A
+GEOG 3: Tuyen Le: N/A
+GEOG 3: Vener Macaspac: N/A
+GEOG 3: Adina Matisoff: N/A
+GEOG 3: John May: 4.6
+GEOG 3: Hudson Spivey: N/A
+GEOG 3: Clark Taylor: N/A
+GEOG 3: Mary Thomas: 4.8
+GEOG 3: Diane Ward: N/A
+GEOG 3: Jason Ward: N/A
+GEOG 3: Justin Wilford: 3.6
+GEOG 3: Wesley Wilson: N/A
+GEOG M171: Melissa Haller: N/A
+GEOG M171: David Rigby: 4.0
+GEOG M171: Michael Shin: 4.0
+GERMAN 109: Todd Presner: 4.0
+GERMAN 115: John McCumber: 4.0
+GERMAN 155: Cisca Brier: 4.6
+GERMAN 155: James Schultz: 3.2
+GERMAN 155: Magdalena Tarnawska Senel: 4.2
+GERMAN 155: Yasemin Yildiz: N/A
+GERMAN 164: Wolfgang Nehring: 4.0
+GJ STDS 127A: Tamir Hendelman: N/A
+GJ STDS 127A: Arturo O'Farrill: 4.0
+GJ STDS M25: Lucas Avidan: N/A
+GJ STDS M25: Marc Bolin: N/A
+GJ STDS M25: William Matczynski: N/A
+GJ STDS M25: Edwin Porras: N/A
+GJ STDS M25: Alfredo Rivera: N/A
+GJ STDS M25: Christopher Rorke: N/A
+GJ STDS M25: Delaney Ross: N/A
+GJ STDS M25: Mehrenegar Rostami: N/A
+GJ STDS M25: Jesse Ruskin: 4.0
+GJ STDS M25: Otto Stuparitz: N/A
+GJ STDS M25: Timothy Taylor: N/A
+GJ STDS M25: Kim Tran: N/A
+GJ STDS M50A: Lucas Avidan: N/A
+GJ STDS M50A: Marc Bolin: N/A
+GJ STDS M50A: Paul de Castro: 4.0
+GJ STDS M50A: Juan Francisco Cristobal: N/A
+GJ STDS M50A: Kathleen Hood: N/A
+GJ STDS M50A: Steven Loza: N/A
+GJ STDS M50A: Alfredo Rivera: N/A
+GJ STDS M50A: Christopher Rorke: N/A
+GJ STDS M50A: Dexter Story: N/A
+GJ STDS M50A: Otto Stuparitz: N/A
+GLB HLT 191: Victor Agadjanian: N/A
+GLB HLT 191: Ippolytos Kalofonos: N/A
+GLBL ST 100B: Hannah Appel: 5.0
+GLBL ST 100B: Russell Burgos: 4.8
+GLBL ST 100B: Yanina Gori: N/A
+GLBL ST 100B: Laurie Hart: 2.3
+GLBL ST 100B: Laurie Kain Hart: N/A
+GLBL ST 100B: Jananie Kalyanaraman: N/A
+GLBL ST 100B: Purnima Mankekar: 5.0
+GLBL ST 100B: Tanya Matthan: N/A
+GLBL ST 100B: Kal Raustiala: N/A
+GLBL ST 100B: David Rigby: 3.2
+GLBL ST 100B: D Thomas: 4.2
+GLBL ST 103: Eric Min: 4.0
+GLBL ST 103: Alfredo Trejo: N/A

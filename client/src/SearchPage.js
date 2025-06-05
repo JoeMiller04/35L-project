@@ -28,19 +28,21 @@ function SearchPage() {
     const [description, setDescription] = useState('');
     const [units, setUnits] = useState('');
     const [title, setTitle] = useState('');
+    const [professorRatings, setProfessorRatings] = useState([]);
 
 
     useEffect(() => {
         const userObj = JSON.parse(localStorage.getItem('user_id'));
         getCourseRating();
         getCourseDescription();
+        getProfessorRatings();
         if (userObj && userObj._id) {
             setId(userObj._id);   
         }
         if (passedObject) {
             classQuery();
         } else {
-        alert("No class information provided.");}
+        console.log("No class information provided.");}
             
     }, []);
 
@@ -66,6 +68,40 @@ function SearchPage() {
             setInstructor(possibleClasses[0].instructor || '');
         }
     }, [possibleClasses]);
+
+    async function getProfessorRatings() {
+
+      
+    
+
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/professor_ratings/${passedObject.subject}/${passedObject.catalog}`, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data) {
+                    
+                    setProfessorRatings(data.professors);
+                } else {
+                    console.log("NOO");
+                    return [];
+                }
+            } else {
+                console.log("No professor ratings found for this course.");
+                return [];
+            }
+        } catch (error) {   
+            console.log("Error fetching professor ratings: " + error.message);
+            return [];
+        }
+
+    }
 
 
     function capitalizeWords(str) {
@@ -102,17 +138,17 @@ function SearchPage() {
                 
               
             } else if (response.status === 400) {
-                alert("NOOO")
+                console.log("NOOO")
                 
                 
             } else {
                 
-                alert(response.status);
+                console.log(response.status);
                 
                 
             }
         } catch (error) {
-            alert("It is bad if we are here");
+            console.log("It is bad if we are here");
         }
         }
 
@@ -185,7 +221,7 @@ function SearchPage() {
                 setDescription(data.description);
                 return data.description; 
             } else {
-                alert("No description found for this course");
+                console.log("No description found for this course");
                 return "No description available";
             }
         } catch (error) {
@@ -233,36 +269,8 @@ function getRatingColor(rating) {
                         <h1 style={{ textAlign: 'left', fontSize: '18px', fontWeight:'normal', marginTop:'10px', zIndex:5, marginLeft:'30px', marginRight:'50px' }}>{description}</h1>
                     
                     
-                    
-                    </div>
-                    <div style={{ width: '35%', zIndex: 5, marginLeft:'-10%' }}>
-                        
-                        <h1 style={{ fontWeight:'bold', textAlign: 'center', fontSize: '20px', marginTop:'30px' }}>Overall Course Rating:</h1>
-                        <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight:'normal', marginTop:'10px', color: (() => {
-    let val = null;
-    if (courseRating && typeof courseRating === 'object' && typeof courseRating.rating === 'string' && courseRating.rating.includes(':')) {
-        val = parseFloat(courseRating.rating.split(':').pop().trim());
-    } else if (courseRating && typeof courseRating === 'object' && typeof courseRating.rating === 'number') {
-        val = courseRating.rating;
-    } else if (typeof courseRating === 'number') {
-        val = courseRating;
-    }
-    return getRatingColor(val);
-})() }}>
-    {courseRating && typeof courseRating === 'object' && typeof courseRating.rating === 'string' && courseRating.rating.includes(':')
-        ? courseRating.rating.split(':').pop().trim() || 'No rating available'
-        : courseRating && typeof courseRating === 'object' && courseRating.rating
-            ? courseRating.rating
-            : courseRating ?? 'N/A'}
-</h1>
-
-
-                    </div>
-                </div>
-
-
-                {gradesObj && Object.keys(gradesObj).length > 0 && (
-                <h1 style={{ textAlign: 'center', fontSize: '20px', fontWeight:'normal', marginTop:'-100px' }}>Grade Distribution for {term} {passedObject.subject} {passedObject.catalog} with {capitalizeWords(instructor.toLowerCase())}</h1>
+                     {gradesObj && Object.keys(gradesObj).length > 0 && (
+                <h1 style={{ textAlign: 'center', fontSize: '20px', fontWeight:'normal', marginTop:'50px', marginLeft:'-30px' }}>Grade Distribution for {term} {passedObject.subject} {passedObject.catalog} with {capitalizeWords(instructor.toLowerCase())}</h1>
                 )}
 
 
@@ -270,7 +278,7 @@ function getRatingColor(rating) {
 
 
 
-                <ResponsiveContainer width="70%" height={200} alignItems="center" justifyContent="center" style={{ margin: '0 auto', marginTop: '20px' }}>
+                <ResponsiveContainer width="80%" height={200} alignItems="center" justifyContent="center" style={{ margin: '0 auto', marginTop: '20px', marginLeft:'30px' }}>
                   {gradesObj && Object.keys(gradesObj).length > 0 ? (
                     <BarChart data={histogramData}>
                       <CartesianGrid strokeDasharray="3 3" />
@@ -293,11 +301,54 @@ function getRatingColor(rating) {
                         ))}
                     </select>
                  )}
+                    </div>
+                    <div style={{ width: '35%', zIndex: 5, marginLeft:'-10%' }}>
+                        
+                        <h1 style={{ fontWeight:'bold', textAlign: 'center', fontSize: '25px', marginTop:'30px' }}>Overall Course Rating:</h1>
+                        <h1 style={{ textAlign: 'center', fontSize: '60px', fontWeight:'normal', marginTop:'10px', color: (() => {
+    let val = null;
+    if (courseRating && typeof courseRating === 'object' && typeof courseRating.rating === 'string' && courseRating.rating.includes(':')) {
+        val = parseFloat(courseRating.rating.split(':').pop().trim());
+    } else if (courseRating && typeof courseRating === 'object' && typeof courseRating.rating === 'number') {
+        val = courseRating.rating;
+    } else if (typeof courseRating === 'number') {
+        val = courseRating;
+    }
+    return getRatingColor(val);
+})() }}>
+    {courseRating && typeof courseRating === 'object' && typeof courseRating.rating === 'string' && courseRating.rating.includes(':')
+        ? courseRating.rating.split(':').pop().trim() || 'No rating available'
+        : courseRating && typeof courseRating === 'object' && courseRating.rating
+            ? courseRating.rating
+            : courseRating ?? 'N/A'}
+
+    
+    {professorRatings && professorRatings.length > 0 && (
+        <div style={{ fontSize: '16px', marginTop: '100px', color: 'black', textAlign:'right', marginRight:'130px' }}>
+            <div style={{fontSize:'25px', color:'black', marginBottom:'20px', textAlign:'center', marginRight:'-130px', fontWeight:'bold'}}> Professors by Rating:</div>
+            {professorRatings
+              .filter(professor => professor.rating !== 'N/A')
+              .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
+              .slice(0, 10)
+              .map((professor, index) => (
+                <div key={index} style={{ marginBottom: '5px' }}>
+                  {professor.name}: {professor.rating}
+                </div>
+              ))}
+        </div>
+    )}
+</h1>
+
+
+                    </div>
+                </div>
+
+
+               
                 
                 
                
-         
-
+                 
 
 
 
