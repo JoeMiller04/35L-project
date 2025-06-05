@@ -127,11 +127,12 @@ function SearchPage() {
                 });
             if (response.ok) {
                 let data = await response.json();
-                // Filter out classes with null grades
+              
                 data = data.filter(cls => cls.grades != null);
                 setPossibleClasses(data);
                 if (data.length === 0) {
                     //alert("No classes found for the selected criteria.");
+                    console.log("No classes found for the selected criteria.");
                 }
 
                 
@@ -164,7 +165,6 @@ function SearchPage() {
             setInstructor('');
             return;
         }
-        // Remove grade entries with null values
         const filteredGrades = Object.entries(selectedClass.grades || {})
             .filter(([_, value]) => value !== null)
             .reduce((acc, [name, value]) => {
@@ -195,7 +195,7 @@ function SearchPage() {
                 });
             if (response.ok) {
                 const data = await response.json();
-                setCourseRating(data); // Store the result in courseRating state
+                setCourseRating(data);
             } else {
                 setCourseRating(null);
             }
@@ -251,7 +251,7 @@ function getRatingColor(rating) {
                 </div>
               
                 <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-                  <h1 style={{ margin: 0, fontSize: '30px', textAlign: 'center', fontWeight: 'bold' }}>{passedObject.subject} {passedObject.catalog}: {passedObject.title}</h1>
+                  <h1 style={{ margin: 0, fontSize: '30px', textAlign: 'center', fontWeight: 'bold' }}>{passedObject.subject} {passedObject.catalog}</h1>
                 </div>
                 
                 <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', right: 0, height: '100%' }}>

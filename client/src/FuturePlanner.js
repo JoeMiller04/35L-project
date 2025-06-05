@@ -269,31 +269,31 @@ if (majorObj && majorObj.major) {
   if (userId) loadSavedPlan();
 }, [userId]);
 
-   const handleValidation = async () => {
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.detail || 'Failed to fetch user course list');
-            }
-      const data = await response.json(); 
-      //const result = isValid(data); // Call isValid function with the current plan
+  //  const handleValidation = async () => {
+  //   try {
+  //     const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
+  //               method: 'GET',
+  //               headers: {
+  //                   'Content-Type': 'application/json',
+  //               },
+  //           });
+  //           if (!response.ok) {
+  //               const error = await response.json();
+  //               throw new Error(error.detail || 'Failed to fetch user course list');
+  //           }
+  //     const data = await response.json(); 
+  //     //const result = isValid(data); // Call isValid function with the current plan
       
 
-      if (data.validity) {
-        setValidationMessage("Your plan is valid!");
-      } else {
-        setValidationMessage("You plan is not valid"); // Assuming result is an error message from isValid
-      }
-    } catch (error) {
-      setValidationMessage("An error occurred while validating the plan: " + error.message);
-    }
-  };
+  //     if (data.validity) {
+  //       setValidationMessage("Your plan is valid!");
+  //     } else {
+  //       setValidationMessage("You plan is not valid"); // Assuming result is an error message from isValid
+  //     }
+  //   } catch (error) {
+  //     setValidationMessage("An error occurred while validating the plan: " + error.message);
+  //   }
+  // };
 
   // Add selected course to selected term in plan
   const addCourseToQuarter = () => {
@@ -436,11 +436,7 @@ function codeToDisplayTerm(code) {
           Add Course
         </button>
 
-          <button onClick={handleValidation} style={{ width: '100px', height: '30px', backgroundColor: 'white', border: '2px solid black', borderRadius: '4px', fontSize: '14px', cursor: 'pointer', marginLeft:'40px' }}>
-
-            Validate Plan
-
-          </button>
+      
 
         </>
         )}
