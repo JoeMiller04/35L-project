@@ -21,9 +21,11 @@ def split_course_name(full_name):
         return full_name.strip().upper(), ""  
 
 def export_to_mongodb():
-    with open("professor_reviews.txt", "r") as file:
+    with open("more_reviews.txt", "r") as file:
         for line in file:
             line = line.strip()
+            if not line or line.count(":") < 2:
+                continue  # skip empty or malformed lines
             course, prof, rating = [part.strip() for part in line.split(":", 2)]
             course_map[course].append({"name": prof, "rating": rating})
 

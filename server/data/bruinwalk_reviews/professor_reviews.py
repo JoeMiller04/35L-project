@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 import sys
 import os
 import time
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
 
@@ -78,7 +80,7 @@ def save_professor_reviews():
         original_name = printer[i]
         url = f"https://www.bruinwalk.com/classes/{normalized}/?page="
 
-        for page in range(1, 11):
+        for page in range(1, 5):
             class_scores = fetch_and_print_overall_rating(url, page)
             if class_scores:
                 for entry in class_scores:
@@ -90,7 +92,7 @@ def save_professor_reviews():
                     if key not in seen:
                         seen.add(key)
                         print(f"{course_name}: {professor_name}: {entry['rating']}")
-            time.sleep(1)  # Avoid hammering server
+            time.sleep(.001)  # Avoid hammering server
 
         
 

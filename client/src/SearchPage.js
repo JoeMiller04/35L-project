@@ -304,7 +304,7 @@ function getRatingColor(rating) {
                     </div>
                     <div style={{ width: '35%', zIndex: 5, marginLeft:'-10%' }}>
                         
-                        <h1 style={{ fontWeight:'bold', textAlign: 'center', fontSize: '20px', marginTop:'30px' }}>Overall Course Rating:</h1>
+                        <h1 style={{ fontWeight:'bold', textAlign: 'center', fontSize: '25px', marginTop:'30px' }}>Overall Course Rating:</h1>
                         <h1 style={{ textAlign: 'center', fontSize: '60px', fontWeight:'normal', marginTop:'10px', color: (() => {
     let val = null;
     if (courseRating && typeof courseRating === 'object' && typeof courseRating.rating === 'string' && courseRating.rating.includes(':')) {
@@ -324,11 +324,12 @@ function getRatingColor(rating) {
 
     
     {professorRatings && professorRatings.length > 0 && (
-        <div style={{ fontSize: '16px', marginTop: '100px', color: 'black' }}>
-            <div style={{fontSize:'20px', color:'black', marginBottom:'20px'}}> Professors by Rating:</div>
+        <div style={{ fontSize: '16px', marginTop: '100px', color: 'black', textAlign:'right', marginRight:'130px' }}>
+            <div style={{fontSize:'25px', color:'black', marginBottom:'20px', textAlign:'center', marginRight:'-130px', fontWeight:'bold'}}> Professors by Rating:</div>
             {professorRatings
               .filter(professor => professor.rating !== 'N/A')
               .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
+              .slice(0, 10)
               .map((professor, index) => (
                 <div key={index} style={{ marginBottom: '5px' }}>
                   {professor.name}: {professor.rating}
@@ -347,7 +348,6 @@ function getRatingColor(rating) {
                 
                 
                
-                 <button onClick={() => {getProfessorRatings(); console.log(professorRatings)}}></button>
                  
 
 
