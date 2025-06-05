@@ -4,6 +4,13 @@ UCLA CS 35L Project. Group members are Arian Dehnavizadeh, Johnny Duong, Samuel 
 
 ## Getting Started
 
+**Clone with:**
+
+```
+git clone https://github.com/JoeMiller04/35L-project.git
+cd 35L-project
+```
+
 **Create Conda Environment**
 
 ```
