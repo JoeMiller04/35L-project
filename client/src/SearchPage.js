@@ -244,18 +244,30 @@ function getRatingColor(rating) {
          <div style={{ display: 'flex', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
             <div style={{ position: 'fixed', left: 0, top: 0, width: '10%', backgroundColor: '#9cbcc5', height: '100vh', zIndex: 1 }}></div>
             <div style={{ width: '80%', marginLeft: '10%', zIndex: 2 }}>
-             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px', marginTop: '20px' }}>
+             <div style={{ display: 'flex', alignItems: 'center', position: 'relative', width: '100%', height: '100px', marginBottom: '20px', marginTop: '20px' }}>
              
-                <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
-                  <button onClick={() => navigate('/Home')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Home</button>
+                {/* Left button, 50px from the left */}
+                <div style={{ position: 'absolute', left: 50, top: 0, height: '100%', display: 'flex', alignItems: 'center' }}>
+                  <button
+                    onClick={() => navigate('/Home')}
+                    style={{
+                      cursor: 'pointer',
+                      backgroundColor: 'white',
+                      padding: '10px 20px',
+                      fontSize: '12px',
+                      marginTop: '10px',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    Home
+                  </button>
                 </div>
-              
-                <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-                  <h1 style={{ margin: 0, fontSize: '30px', textAlign: 'center', fontWeight: 'bold' }}>{passedObject.subject} {passedObject.catalog}</h1>
-                </div>
-                
-                <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', right: 0, height: '100%' }}>
-                  <button style={{ marginRight: '50px', fontSize: '12px', marginTop: '10px', borderWidth: '0px', width: '90px', backgroundColor: 'white', fontWeight: 'bold' }}></button>
+
+                {/* Centered title */}
+                <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                  <h1 style={{ margin: 0, fontSize: '30px', textAlign: 'center', fontWeight: 'bold' }}>
+                    {passedObject.subject} {passedObject.catalog}
+                  </h1>
                 </div>
               </div>
 
