@@ -87,21 +87,21 @@ async def isValid(previous_courses, sorted_list):
             total_units += 4
         else:
             result = await reqs.find_one({"course_name": course_name})
-
-            elective_true = result.get("elective_eligible")  
-            if elective_true:
-                specified_elective_counter += 1
+            if result:
+                elective_true = result.get("elective_eligible")  
+                if elective_true:
+                    specified_elective_counter += 1
             
-            # Add units
-            units = result.get("units")
-            if units is not None:
-                total_units += units
+                # Add units
+                units = result.get("units")
+                if units is not None:
+                    total_units += units
 
-            # Check pre-reqs
-            requisite_courses = result.get("requisites", [])
-            for group in requisite_courses:  # group is a list of course names
-                if not any(pre_req in taken_courses for pre_req in group):
-                    return False
+                # Check pre-reqs
+                requisite_courses = result.get("requisites", [])
+                for group in requisite_courses:  # group is a list of course names
+                    if not any(pre_req in taken_courses for pre_req in group):
+                        return False
 
     for course in sorted_list:
         course_name = course.get('course_name', '').strip()
@@ -134,21 +134,21 @@ async def isValid(previous_courses, sorted_list):
             total_units += 4
         else:
             result = await reqs.find_one({"course_name": course_name})
+            if result:
+                elective_true = result.get("elective_eligible")  
+                if elective_true:
+                    specified_elective_counter += 1
+                
+                # Add units
+                units = result.get("units")
+                if units is not None:
+                    total_units += units
 
-            elective_true = result.get("elective_eligible")  
-            if elective_true:
-                specified_elective_counter += 1
-            
-            # Add units
-            units = result.get("units")
-            if units is not None:
-                total_units += units
-
-            # Check pre-reqs
-            requisite_courses = result.get("requisites", [])
-            for group in requisite_courses:  # group is a list of course names
-                if not any(pre_req in taken_courses for pre_req in group):
-                    return False
+                # Check pre-reqs
+                requisite_courses = result.get("requisites", [])
+                for group in requisite_courses:  # group is a list of course names
+                    if not any(pre_req in taken_courses for pre_req in group):
+                        return False
 
     #Lower-div courses
     for element in ["PHYSICS 1A", "PHYSICS 1B", "PHYSICS 1C"]:
