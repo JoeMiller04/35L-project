@@ -111,9 +111,9 @@ async def isValid(previous_courses, sorted_list):
             for a in quarter_courses:
                 taken_courses.append(a) # add all previous quarter courses to taken courses
             quarter_courses = []
-            quarter_courses.append(course)
+            quarter_courses.append(course_name)
         else:
-            quarter_courses.append(course)
+            quarter_courses.append(course_name)
         if course_name == "GE":
             GE_counter += 1
             total_units += 5
@@ -149,7 +149,10 @@ async def isValid(previous_courses, sorted_list):
                 for group in requisite_courses:  # group is a list of course names
                     if not any(pre_req in taken_courses for pre_req in group):
                         return False
-
+                    
+    for course in quarter_courses:
+        taken_courses.append(course)
+        
     #Lower-div courses
     for element in ["PHYSICS 1A", "PHYSICS 1B", "PHYSICS 1C"]:
         if not any(course.strip().upper() == element for course in taken_courses):
@@ -255,7 +258,7 @@ async def executioner(user_id):
 
 
 async def main():
-    validity = await executioner('6840d18240100a7eb9ebc999')
+    validity = await executioner('68427295bc7219f9dee6337c')
     if validity:
         print("The list satisfies CS requirements")
     else:
