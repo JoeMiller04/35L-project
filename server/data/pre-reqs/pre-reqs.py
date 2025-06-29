@@ -3,9 +3,14 @@
 from collections import namedtuple
 from pymongo import MongoClient
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
+
 
 Prerequisite = namedtuple("Prerequisite", ["units", "elective_eligible", "requisites", "aliases"])
-
 Reverse_aliases = namedtuple("Alternate_name", "Main_name")
 
 def make_alias(alias_name):
@@ -300,8 +305,9 @@ def serialize_prereq(prereq, reverse_map):
     }
 
 def export_to_mongodb(classes):
-    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-    DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
+    if not MONGO_URI or not DATABASE_NAME:
+        print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+        return
 
     client = MongoClient(MONGO_URI)
     db = client[DATABASE_NAME]

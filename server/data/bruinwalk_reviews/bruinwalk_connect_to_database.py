@@ -3,20 +3,25 @@
 from pymongo import MongoClient
 import os
 import argparse
+from dotenv import load_dotenv
 
 """
 results.txt format:
 Every line should be in the format: 
 [subject] [catalog number]: [rating]
 E.g. "COM SCI 35L: 4.5"
-Running mulitple times will append to the existing data.
 """
 
 
-def export_to_mongodb(filename="results.txt"):
 
-    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-    DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
+def export_to_mongodb(filename="results.txt"):
+    load_dotenv()
+
+    MONGO_URI = os.getenv("MONGO_URI")
+    DATABASE_NAME = os.getenv("DATABASE_NAME")
+    if not MONGO_URI or not DATABASE_NAME:
+        print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+        return
 
     client = MongoClient(MONGO_URI)
     db = client[DATABASE_NAME]

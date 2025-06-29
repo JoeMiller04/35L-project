@@ -12,10 +12,11 @@ from pymongo import MongoClient
 import os
 from datetime import datetime
 import copy
+from dotenv import load_dotenv
+load_dotenv()
 
-# MongoDB connection details
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 
 # Subjects we want to clone
 SUBJECTS = ["COM SCI", "EC ENGR", "MATH", "PHYSICS"]
@@ -68,6 +69,9 @@ def clone_real_courses():
     """Clone existing courses with new term and time information"""
     try:
         # Connect to MongoDB
+        if not MONGO_URI or not DATABASE_NAME:
+            print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+            return
         client = MongoClient(MONGO_URI)
         db = client[DATABASE_NAME]
         collection = db["courses"]

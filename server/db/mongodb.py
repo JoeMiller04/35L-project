@@ -2,10 +2,12 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
+from dotenv import load_dotenv
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
-MONGO_DETAILS = "mongodb://localhost:27017" 
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
+MONGO_DETAILS = MONGO_URI
 
 client = MongoClient(MONGO_URI)
 db = client[DATABASE_NAME]

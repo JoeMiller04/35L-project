@@ -9,6 +9,14 @@ import pandas as pd
 import sys
 import os
 import argparse
+from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
+
 
 def process_grades_file(file_path):
     """Process the grades file and return a cleaned DataFrame"""
@@ -117,15 +125,13 @@ def process_grades_file(file_path):
 
 def export_to_mongodb(data):
     """Export the processed data to MongoDB"""
-    from pymongo import MongoClient
-    import os
-    
-    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-    DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
     
     try:
         # Connect to MongoDB
         print(f"Connecting to MongoDB at {MONGO_URI}...")
+        if not MONGO_URI or not DATABASE_NAME:
+            print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+            return
         client = MongoClient(MONGO_URI)
         db = client[DATABASE_NAME]
         
@@ -166,15 +172,13 @@ def fix_trailing_spaces():
     """Fix trailing spaces in several fields in existing MongoDB collection
     For some reason, the original data has trailing spaces in several columns.
     Currently fixes the catalog, subject, and section fields."""
-    from pymongo import MongoClient
-    import os
-    
-    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-    DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
     
     try:
         # Connect to MongoDB
         print(f"Connecting to MongoDB at {MONGO_URI}...")
+        if not MONGO_URI or not DATABASE_NAME:
+            print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+            return
         client = MongoClient(MONGO_URI)
         db = client[DATABASE_NAME]
         collection = db["courses"]
