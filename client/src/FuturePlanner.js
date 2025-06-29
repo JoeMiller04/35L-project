@@ -227,7 +227,7 @@ export default function FuturePlanner() {
   useEffect(() => {
   const loadSavedPlan = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/courses`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -271,7 +271,7 @@ if (majorObj && majorObj.major) {
 
   const handleValidation = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/validate-plan/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/validate-plan/${userId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -311,7 +311,7 @@ if (majorObj && majorObj.major) {
       }
     });
     
-    fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
+    fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/courses`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -337,7 +337,7 @@ const removeCourse = (termToRemove, courseToRemove) => {
   );
 
   // Remove from backend
-  fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
+  fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/courses`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

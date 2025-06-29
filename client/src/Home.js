@@ -77,7 +77,7 @@ function Home() {
             setId(userId);
         }
         try {
-            const response = await fetch(`http://127.0.0.1:8000/users/${userId}/course-list`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/course-list`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ function Home() {
             setId(userId);
         }
         try {
-            const response = await fetch(`http://127.0.0.1:8000/users/${userId}/course-list`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/course-list`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -211,7 +211,7 @@ function Home() {
         }
        
         try {
-            const response = await fetch(`http://127.0.0.1:8000/courses?${params.toString()}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/courses?${params.toString()}`, {
                 method: 'GET', 
                 headers: {
                     'Content-Type': 'application/json',
@@ -330,9 +330,9 @@ function Home() {
         }
        
         if (term === 'idk' || term === 'Any Term') {
-            url = `http://127.0.0.1:8000/courses/catalogs/${encodeURIComponent(subject)}`;
+            url = `${process.env.REACT_APP_API_URL}/courses/catalogs/${encodeURIComponent(subject)}`;
         } else {
-            url = `http://127.0.0.1:8000/courses/catalogs/${encodeURIComponent(subject)}?term=${encodeURIComponent(term)}`;
+            url = `${process.env.REACT_APP_API_URL}/courses/catalogs/${encodeURIComponent(subject)}?term=${encodeURIComponent(term)}`;
         }
         try {
             const response = await fetch(url, {

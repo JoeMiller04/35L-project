@@ -75,7 +75,7 @@ function SearchPage() {
     
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/professor_ratings/${passedObject.subject}/${passedObject.catalog}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/professor_ratings/${passedObject.subject}/${passedObject.catalog}`, {
                 method: 'GET', 
                 headers: {
                     'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ function SearchPage() {
     
        
         try {
-            const response = await fetch(`http://127.0.0.1:8000/courses?${params.toString()}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/courses?${params.toString()}`, {
                 method: 'GET', 
                 headers: {
                     'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ function SearchPage() {
     async function getCourseRating() {
         
         try {
-            const response = await fetch(`http://127.0.0.1:8000/ratings/${passedObject.subject}/${passedObject.catalog}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/ratings/${passedObject.subject}/${passedObject.catalog}`, {
                 method: 'GET', 
                 headers: {
                     'Content-Type': 'application/json',
@@ -207,7 +207,7 @@ function SearchPage() {
     async function getCourseDescription() {
         
         try {
-            const response = await fetch(`http://127.0.0.1:8000/description/${passedObject.subject}/${passedObject.catalog}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/description/${passedObject.subject}/${passedObject.catalog}`, {
                 method: 'GET', 
                 headers: {
                     'Content-Type': 'application/json',
