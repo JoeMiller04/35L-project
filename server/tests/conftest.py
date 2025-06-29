@@ -25,3 +25,11 @@ def client():
     """Create a test client for the FastAPI app."""
     with TestClient(app) as test_client:
         yield test_client
+
+@pytest.fixture(scope="session", autouse=True)
+def final_cleanup():
+    yield  # Run all the tests first.
+    # After tests are done, run the clean_db.py script.
+    # This prevents test courses from being left in the database
+    os.system("python server/data/clean_db.py")
+
