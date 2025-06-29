@@ -1,14 +1,20 @@
 from pymongo import MongoClient
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 
 
 def clean_db():
     """
     Clean the database by removing all courses that are not real.
     """
+    if not MONGO_URI or not DATABASE_NAME:
+        print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+        return
+
     client = MongoClient(MONGO_URI)
     db = client[DATABASE_NAME]
     collection = db["courses"]
