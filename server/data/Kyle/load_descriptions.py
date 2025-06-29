@@ -72,7 +72,7 @@ def load_descriptions(json_file_path, db, drop_existing=False):
             added_count += 1
 
             if added_count % 1000 == 0:
-                print(f"Added {added_count} courses so far...")
+                print(f"Added {added_count} course descriptions so far...")
             
         
         except Exception as e:

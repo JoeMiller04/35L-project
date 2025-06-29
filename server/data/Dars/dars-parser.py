@@ -6,13 +6,11 @@ import pandas as pd
 from pymongo import MongoClient
 import os
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
-
-client = MongoClient(MONGO_URI)
-db = client[DATABASE_NAME]
-collection = db["users"]
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 
 
 #This function Given a list of class names (e.g. ["Status_OK", ...]), returs "OK", "IP", "NO", or "NONE".
@@ -189,6 +187,13 @@ def parse_dars(html_text: str) -> dict:
     }
 
 def upload_courses_to_api(simplified_courses, user_id):
+    if not MONGO_URI or not DATABASE_NAME:
+        print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+        return
+
+    client = MongoClient(MONGO_URI)
+    db = client[DATABASE_NAME]
+    collection = db["users"]
     user_object_id = ObjectId(user_id)
     
     courses_to_add = []
