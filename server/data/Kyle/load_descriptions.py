@@ -11,13 +11,12 @@ import os
 import argparse
 from pymongo import MongoClient, ASCENDING
 from bson import json_util
+from dotenv import load_dotenv
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 
-client = MongoClient(MONGO_URI)
-db = client[DATABASE_NAME]
-collection = db["descriptions"]
 
 def load_descriptions(json_file_path, db, drop_existing=False):
     """
@@ -25,6 +24,12 @@ def load_descriptions(json_file_path, db, drop_existing=False):
     Returns:
         Tuple of (total_courses, added_courses)
     """
+    if not MONGO_URI or not DATABASE_NAME:
+        print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+        return None, None
+    client = MongoClient(MONGO_URI)
+    db = client[DATABASE_NAME]
+    collection = db["descriptions"]
     
     # Create index on subject and catalog for faster lookups
     collection.create_index([("subject", ASCENDING), ("catalog", ASCENDING)], unique=True)
@@ -67,7 +72,7 @@ def load_descriptions(json_file_path, db, drop_existing=False):
             added_count += 1
 
             if added_count % 1000 == 0:
-                print(f"Added {added_count} courses so far...")
+                print(f"Added {added_count} course descriptions so far...")
             
         
         except Exception as e:
@@ -97,6 +102,12 @@ def main():
     
     try:
         # Load the descriptions
+        if not MONGO_URI or not DATABASE_NAME:
+            print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+            return
+        client = MongoClient(MONGO_URI)
+        db = client[DATABASE_NAME]
+        collection = db["descriptions"]
         total, added = load_descriptions(args.file_path, db, args.drop)
         
         # Close connection

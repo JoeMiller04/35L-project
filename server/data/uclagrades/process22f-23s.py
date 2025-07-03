@@ -9,10 +9,16 @@ import pandas as pd
 import sys
 import os
 import argparse
+from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 
 
 def process_grades_file(file="grades-22f-23s.csv"):
-
     column_names = ['term', 'subject', 'catalog', 'section', 'grade',
         'grade_count', 'enrolled_total', 'instructor', 'unused_INSTR_CD', 'title',
         'unused_ENROL_TERM_SEQ_NBR', 'unused_INTL_CATL', 'unused_INTL_SECT', 'unused_CREATION_DATE',
@@ -107,15 +113,13 @@ def process_grades_file(file="grades-22f-23s.csv"):
 
 def export_to_mongodb(data):
     """Export the processed data to MongoDB"""
-    from pymongo import MongoClient
-    import os
-    
-    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-    DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
     
     try:
         # Connect to MongoDB
         print(f"Connecting to MongoDB at {MONGO_URI}...")
+        if not MONGO_URI or not DATABASE_NAME:
+            print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+            return
         client = MongoClient(MONGO_URI)
         db = client[DATABASE_NAME]
         
@@ -156,15 +160,14 @@ def fix_trailing_spaces():
     """Fix trailing spaces in several fields in existing MongoDB collection
     For some reason, the original data has trailing spaces in several columns.
     Currently fixes the catalog, subject, and section fields."""
-    from pymongo import MongoClient
-    import os
     
-    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-    DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
     
     try:
         # Connect to MongoDB
         print(f"Connecting to MongoDB at {MONGO_URI}...")
+        if not MONGO_URI or not DATABASE_NAME:
+            print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+            return
         client = MongoClient(MONGO_URI)
         db = client[DATABASE_NAME]
         collection = db["courses"]

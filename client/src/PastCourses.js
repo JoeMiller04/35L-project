@@ -37,7 +37,7 @@ export default function PastCourses() {
       formData.append('file', selectedFile);
       try {
           setUploadStatus('Uploading...');
-          const response = await fetch(`http://127.0.0.1:8000/users/${userId}/upload`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/upload`, {
               method: 'POST',
               body: formData,
           });
@@ -62,7 +62,7 @@ export default function PastCourses() {
 
 async function loadPastCourses() {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/courses`);
     const data = await response.json(); 
     
     const pastOnly = data.filter((entry) => entry.term === "PAST");
@@ -99,7 +99,7 @@ async function loadPastCourses() {
 
     // Update backend with add/remove action
     try {
-      const response = await fetch(`http://127.0.0.1:8000/users/${userId}/courses`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/courses`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

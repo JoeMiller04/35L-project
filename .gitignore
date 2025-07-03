@@ -16,3 +16,4 @@ server/uploads/myaudit.html
 courses_simple.json
 *.json
 server/data/Kyle/selenium_response_content.html
+client/.env

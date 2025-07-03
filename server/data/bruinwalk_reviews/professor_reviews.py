@@ -5,16 +5,16 @@ from bs4 import BeautifulSoup
 import sys
 import os
 import time
+from dotenv import load_dotenv
+
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
+
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
 
-MONGO_URI = "mongodb://localhost:27017"
-
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
-MONGO_DETAILS = "mongodb://localhost:27017" 
 
 client = MongoClient(MONGO_URI)
 db = client[DATABASE_NAME]

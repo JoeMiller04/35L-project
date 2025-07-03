@@ -7,9 +7,11 @@ import os
 from pymongo import MongoClient
 import json
 from bson import json_util
+from dotenv import load_dotenv
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 
 client = MongoClient(MONGO_URI)
 db = client[DATABASE_NAME]

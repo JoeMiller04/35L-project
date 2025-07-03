@@ -2,6 +2,7 @@
 
 from pymongo import MongoClient
 import os
+from dotenv import load_dotenv
 
 def sample():
     course_list = [
@@ -65,8 +66,13 @@ def sample():
     return course_list
     
 def upload_to_mongodb(course_list):
-    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-    DATABASE_NAME = os.getenv("DATABASE_NAME", "35L-project")
+    load_dotenv()
+    MONGO_URI = os.getenv("MONGO_URI")
+    DATABASE_NAME = os.getenv("DATABASE_NAME")
+
+    if not MONGO_URI or not DATABASE_NAME:
+        print("MONGO_URI or DATABASE_NAME is not set in the environment variables.")
+        return
 
     client = MongoClient(MONGO_URI)
     db = client[DATABASE_NAME]
@@ -76,5 +82,5 @@ def upload_to_mongodb(course_list):
     print(f"Inserted {len(result.inserted_ids)} documents.")
 
 if __name__ == "__main__":
-    sample = sample()
-    upload_to_mongodb(sample)
+    sample_var = sample()
+    upload_to_mongodb(sample_var)

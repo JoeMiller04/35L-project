@@ -4,8 +4,13 @@ from pymongo import MongoClient
 from collections import defaultdict
 import re
 import argparse
+import os
+from dotenv import load_dotenv
 
-MONGO_URI = "mongodb://localhost:27017"
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
+
 client = MongoClient(MONGO_URI)
 db = client["35L-project"]
 prof_ratings = db["professor_ratings"]
