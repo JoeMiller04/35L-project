@@ -38,7 +38,7 @@ export default function FuturePlanner() {
   const [selectedDegree, setSelectedDegree] = useState('CS');
   const [validationMessage, setValidationMessage] = useState('');
   const navigate = useNavigate();
-  const userObj = JSON.parse(localStorage.getItem("user_id"));
+  const userObj = JSON.parse(sessionStorage.getItem("user_id"));
   const userId = userObj._id;
   const [major, setMajor] = useState('CS');
   const [popup, setPopup] = useState(false);
@@ -214,7 +214,7 @@ export default function FuturePlanner() {
       : [];
 
       function updateMajor(maj) {
-    localStorage.setItem('major', JSON.stringify({major: maj}));
+    sessionStorage.setItem('major', JSON.stringify({major: maj}));
     setMajor(maj);
   }
 
@@ -256,7 +256,7 @@ export default function FuturePlanner() {
       console.error("Error loading saved plan:", err);
     }
     
-    const majorObj = JSON.parse(localStorage.getItem('major'));
+    const majorObj = JSON.parse(sessionStorage.getItem('major'));
 if (majorObj && majorObj.major) {
     setSelectedDegree(majorObj.major);
     setMajor(majorObj.major);
@@ -374,7 +374,7 @@ function codeToDisplayTerm(code) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px' }}>
           {/* Left button group */}
           <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
-            <button onClick={() => navigate('/Home')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Home</button>
+            <button onClick={() => navigate('/')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Home</button>
             <button onClick={() => navigate('/PastCourses')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '20px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Past Courses</button>
           </div>
           {/* Centered title */}

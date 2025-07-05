@@ -32,7 +32,7 @@ function SearchPage() {
 
 
     useEffect(() => {
-        const userObj = JSON.parse(localStorage.getItem('user_id'));
+        const userObj = JSON.parse(sessionStorage.getItem('user_id'));
         getCourseRating();
         getCourseDescription();
         getProfessorRatings();
@@ -249,7 +249,7 @@ function getRatingColor(rating) {
                 {/* Left button, 50px from the left */}
                 <div style={{ position: 'absolute', left: 50, top: 0, height: '100%', display: 'flex', alignItems: 'center' }}>
                   <button
-                    onClick={() => navigate('/Home')}
+                    onClick={() => navigate('/')}
                     style={{
                       cursor: 'pointer',
                       backgroundColor: 'white',
@@ -378,5 +378,11 @@ function getRatingColor(rating) {
         </div>
     );
 }
+
+
+
+
+
+
 
 export default SearchPage;

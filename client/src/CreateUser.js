@@ -37,7 +37,7 @@ function CreateUser() {
                 setUserAlreadyExists(false);
                 setPasswordLengthError(false);
                 setUserTooShort(false);
-                navigate('/'); // Redirect to login page after successful creation
+                navigate('/LogIn'); // Redirect to login page after successful creation
             } else if (response.status === 400) {
                 setError(false);
                 setPasswordLengthError(false);
@@ -120,7 +120,7 @@ function CreateUser() {
                 
              <button
                     onClick={() => {
-                        navigate('/');
+                        navigate('/LogIn');
                         setError(false);
                         setUserAlreadyExists(false);
                         setPasswordLengthError(false);

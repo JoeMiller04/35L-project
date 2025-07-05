@@ -12,8 +12,8 @@ function Navigation() {
     <div>
      
     <Routes>
-      <Route path="/" element={<LogIn />} /> {/* Default route */}
-      <Route path="/Home" element={<Home />} />
+      <Route path="/" element={<Home />} /> {/* Default route */}
+      <Route path="/LogIn" element={<LogIn />} />
       <Route path="/SearchPage" element={<SearchPage />} />
       <Route path="/InfoPage" element={<InfoPage />} />
       <Route path="/CreateUser" element={<CreateUser />} /> 

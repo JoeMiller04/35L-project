@@ -47,6 +47,7 @@ function Home() {
     const [error, setError] = useState(null);
     const [popup, setPopup] = useState(false);
     const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const [notLoggedIn, setNotLoggedIn] = useState(false);
 
     // Run changeColor every time a ne w class is rendered
     useEffect(() => {
@@ -57,7 +58,7 @@ function Home() {
 
     // update class list when user loads in
     useEffect(() => {
-        const userObj = JSON.parse(localStorage.getItem('user_id'));
+        const userObj = JSON.parse(sessionStorage.getItem('user_id'));
         if (userObj && userObj._id) {
             setId(userObj._id);
             setClasses([]);
@@ -72,10 +73,16 @@ function Home() {
     //fetch classes from backend
     async function updateUserCourseList(userId, courseId) {
         if (!userId) {
-            userId = JSON.parse(localStorage.getItem('user_id'));
+            userId = JSON.parse(sessionStorage.getItem('user_id'));
+            if (!userId) {
+                setNotLoggedIn(true);
+             return;
+        }
             userId = userId._id;
             setId(userId);
         }
+
+        
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/course-list`, {
                 method: 'POST',
@@ -100,16 +107,25 @@ function Home() {
     }
 
     function addClass(id, courseId, action) {
+        if(id) {
         updateUserCourseList(id, courseId, action);
+        } else {
+            setNotLoggedIn(true);
+        }
     }
 
     async function getClasses(userId) {
         setClasses([]);
         if (!userId) {
-            userId = JSON.parse(localStorage.getItem('user_id'));
+            userId = JSON.parse(sessionStorage.getItem('user_id'));
+            if (!userId) {
+            setNotLoggedIn(true);
+            return;
+        }
             userId = userId._id;
             setId(userId);
         }
+
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/course-list`, {
                 method: 'GET',
@@ -361,9 +377,9 @@ function Home() {
     }
 
     function logOut() {
-        localStorage.removeItem('user_id');
-        localStorage.removeItem('major');
-        navigate('/');
+        sessionStorage.removeItem('user_id');
+        sessionStorage.removeItem('major');
+        navigate('/LogIn');
     }
     
     return (
@@ -373,7 +389,7 @@ function Home() {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px', marginTop:'10px' }}>
                     
                     <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
-                        <button onClick={() => logOut()} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Logout</button>
+                        <button onClick={() => logOut()} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Login</button>
                         <button onClick={() => navigate('/PastCourses')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '20px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Past Courses</button>
                     </div>
                     
@@ -583,6 +599,10 @@ function Home() {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
             <button style={{ backgroundColor:'white', cursor:'pointer' }} onClick={() => {
+                if (!id) {
+                    setNotLoggedIn(true);
+                    return;
+                }
               addClass(id._id, item._id, "add");
               setDataFromQuery(prev => prev.filter(i => i._id !== item._id));
               runGetClasses(id._id);
@@ -639,6 +659,24 @@ function Home() {
                 </div>
                 </>
             )}
+
+              {notLoggedIn && (<>
+            <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 999 }}>
+                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', zIndex: 1000, minWidth: '300px' }}>
+                    <button onClick={() => setNotLoggedIn(false)}
+                        style={{ position: 'absolute', top: 10, right: 10, background: 'none', border: 'none', fontSize: '24px', color: '#888', cursor: 'pointer', fontWeight: 'bold' }}
+                        aria-label="Close error popup"
+                    >
+                        ×
+                    </button>
+                    <h2 style={{ marginTop: '10px' }}>Error</h2>
+                    <p>Please log in to use this feature</p>
+                </div>
+                </div>
+                </>
+            )}
+
+
 
 
 

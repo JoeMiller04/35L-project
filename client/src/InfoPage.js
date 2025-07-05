@@ -13,7 +13,7 @@ function InfoPage() {
 
 
     useEffect(() => {
-            const userObj = JSON.parse(localStorage.getItem('user_id'));
+            const userObj = JSON.parse(sessionStorage.getItem('user_id'));
             if (userObj && userObj._id) {
                 setId(userObj._id);
                 setClasses([]);
@@ -26,7 +26,7 @@ function InfoPage() {
     async function getClasses(userId) {
         setClasses([]);
         if (!userId) {
-            userId = JSON.parse(localStorage.getItem('user_id'));
+            userId = JSON.parse(sessionStorage.getItem('user_id'));
             userId = userId._id;
             setId(userId);
         }
@@ -78,7 +78,7 @@ function InfoPage() {
 
     async function updateUserCourseList(userId, courseId) {
         if (!userId) {
-            userId = JSON.parse(localStorage.getItem('user_id'));
+            userId = JSON.parse(sessionStorage.getItem('user_id'));
             userId = userId._id;
             setId(userId);
         }
@@ -122,7 +122,7 @@ function InfoPage() {
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px' }}>
               {/* Left button group */}
               <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
-                <button onClick={() => navigate('/Home')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Go to Home</button>
+                <button onClick={() => navigate('/')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Go to Home</button>
               </div>
               {/* Centered title */}
               <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>

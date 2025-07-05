@@ -7,7 +7,7 @@ export default function PastCourses() {
   const [takenCourses, setTakenCourses] = useState({});
   const [selectedDegree, setSelectedDegree] = useState('');
   const navigate = useNavigate();
-  const userObj = JSON.parse(localStorage.getItem("user_id"));
+  const userObj = JSON.parse(sessionStorage.getItem("user_id"));
   const userId = userObj._id;
   const [popup, setPopup] = useState(false);
   const [major, setMajor] = useState('');
@@ -79,10 +79,11 @@ async function loadPastCourses() {
 };
 
   useEffect(() => {
-    const majorObj = JSON.parse(localStorage.getItem('major'));
+    const majorObj = JSON.parse(sessionStorage.getItem('major'));
     const majorStr = majorObj ? majorObj.major : 'CS';
     setSelectedDegree(majorStr);
     setMajor(majorStr);
+
     loadPastCourses();
   }, [userId]);
 
@@ -120,7 +121,7 @@ async function loadPastCourses() {
   }
 
   function updateMajor(maj) {
-    localStorage.setItem('major', JSON.stringify({major: maj}));
+    sessionStorage.setItem('major', JSON.stringify({major: maj}));
     setMajor(maj);
     setTakenCourses({}); 
   }
@@ -138,7 +139,7 @@ async function loadPastCourses() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', marginBottom: '20px', marginTop: '20px' }}>
        
           <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: 0, height: '100%' }}>
-            <button onClick={() => navigate('/Home')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Home</button>
+            <button onClick={() => navigate('/')} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '50px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Home</button>
             <button onClick={() => toggleFilePopup()} style={{ cursor: 'pointer', backgroundColor: 'white', marginLeft: '20px', padding: '10px 20px', fontSize: '12px', marginTop: '10px', fontWeight: 'bold' }}>Upload</button>
           </div>
         

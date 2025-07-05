@@ -27,8 +27,8 @@ function LogIn() {
 
             if (response.ok) {
                 const data = await response.json();
-                navigate('/Home'); // Redirect to the home page after successful login
-                localStorage.setItem('user_id', JSON.stringify(data));
+                navigate('/'); // Redirect to the home page after successful login
+                sessionStorage.setItem('user_id', JSON.stringify(data));
             } else if (response.status === 401) {
                 setNoUserOrPassword(false);
                 setIncorrectInfo(true); // Handle incorrect username or password
