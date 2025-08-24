@@ -31,7 +31,7 @@ function InfoPage() {
             setId(userId);
         }
         try {
-            const response = await fetch(`http://127.0.0.1:8000/users/${userId}/course-list`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/course-list`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ function InfoPage() {
             setId(userId);
         }
         try {
-            const response = await fetch(`http://127.0.0.1:8000/users/${userId}/course-list`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/course-list`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
