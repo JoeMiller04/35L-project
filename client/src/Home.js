@@ -49,13 +49,6 @@ function Home() {
     const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const [notLoggedIn, setNotLoggedIn] = useState(false);
 
-    // Run changeColor every time a ne w class is rendered
-    useEffect(() => {
-        if (classes.length > 0) {
-            changeColor();
-        }
-    }, [classes, index]); 
-
     // update class list when user loads in
     useEffect(() => {
         const userObj = JSON.parse(sessionStorage.getItem('user_id'));
@@ -270,15 +263,6 @@ function Home() {
         // 12 rows per hour, starting at 8am
         let row = 2 + (hour - 8) * 12 + Math.floor(minute / 5);
         return row;
-    }
-
-    //change color of class blocks
-    function changeColor() {
-        if (index === 9) {
-            setIndex(0);
-        } else {
-            setIndex(index + 1);
-        }
     }
 
   
@@ -612,9 +596,9 @@ function Home() {
                     setNotLoggedIn(true);
                     return;
                 }
-              addClass(id._id, item._id, "add");
+              addClass(id, item._id, "add");
               setDataFromQuery(prev => prev.filter(i => i._id !== item._id));
-              runGetClasses(id._id);
+              runGetClasses(id);
             }}>Add to Plan</button>
             <button style={{ backgroundColor:'white', cursor:'pointer' }} onClick={() => {
               navigate('/SearchPage', { state: { classInfo: item } });
